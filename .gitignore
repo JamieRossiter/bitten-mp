@@ -1,3 +1,4 @@
 # Godot 4+ specific ignores
 game/.godot/
 server/node_modules
+server/dist
