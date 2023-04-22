@@ -6,9 +6,9 @@
 import WebSocket from "ws";
 import http from "http";
 import { generateRandomFixedInteger, generateRandomAlphanumericalString } from "../utils";
-import { PlayerInit } from "../types";
+import { ConnectionQueryData } from "../types";
 
-export function extractPlayerInitData(socket: WebSocket.WebSocket, req: http.IncomingMessage) {
+export function extractPlayerData(socket: WebSocket.WebSocket, req: http.IncomingMessage) {
 
     let url: string = "";
     if(req.url) url = req.url;
@@ -34,9 +34,9 @@ function getQueryFromUrl(url: string): object {
 
 }
 
-function validatePlayerInitData(query: object, socket: WebSocket.WebSocket): PlayerInit {
+function validatePlayerInitData(query: object, socket: WebSocket.WebSocket): ConnectionQueryData {
 
-    const initData: PlayerInit = { 
+    const initData: ConnectionQueryData = { 
         socket: socket, 
         id: generateRandomAlphanumericalString(10), 
         username: `User#${generateRandomFixedInteger(6)}`, 
