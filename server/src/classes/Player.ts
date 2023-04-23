@@ -4,11 +4,10 @@
 */
 
 import WebSocket from "ws";
-import { PlayerInit, PlayerPos } from "../types";
-import Room from "./Room";
+import { ConnectionQueryData, PlayerPos } from "../types";
 import { MessageEventCode } from "../enums";
 
-class Player {
+export class Player {
 
     private _id: string;
     private _username: string;
@@ -16,7 +15,7 @@ class Player {
     private _socket: WebSocket.WebSocket;
     private _pos: PlayerPos;
 
-    constructor(init: PlayerInit){
+    constructor(init: ConnectionQueryData){
         this._id = init.id;
         this._username = init.username;
         this._isHost = init.isHost;
@@ -73,5 +72,3 @@ class Player {
     }
 
 }
-
-export default Player;

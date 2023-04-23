@@ -3,10 +3,7 @@
  * @description Represents an arbitrary channel within the server where I/O for individual game sessions take place.
 */
 
-import { MessageEventCode } from "../enums";
-import Player from "./Player";
-
-class Room {
+export class Room {
 
     private _code: string;
     private _maxPlayers: number;
@@ -21,5 +18,3 @@ class Room {
     }
 
 }
-
-export default Room;

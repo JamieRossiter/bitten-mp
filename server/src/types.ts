@@ -5,9 +5,9 @@
 
 import WebSocket from "ws";
 import { MessageEventCode } from "./enums";
-import Player from "./classes/Player";
+import { Player, Room } from "./classes";
 
-export type PlayerInit = {
+export type ConnectionQueryData = {
     socket: WebSocket.WebSocket,
     id: string,
     username: string,
@@ -15,19 +15,14 @@ export type PlayerInit = {
     room: string
 }
 
-export type RoomCodeToPlayerMap = {
-    [ roomCode: string ]: Set<Player>
+export type PlayerRoom = {
+    roomCode: string,
+    player: Player
 }
 
 export type ServerMessage = {
     event: MessageEventCode,
     message: any
-}
-
-export type PlayerDisconnectMessage = {
-    playerId: string,
-    code: number,
-    message: string
 }
 
 export type PlayerPos = {

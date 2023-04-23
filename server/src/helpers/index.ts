@@ -3,8 +3,8 @@
  * @description Barrel file for helper functions
 */
 
-export * from "./handleServerConnection";
-export * from "./handleServerDisconnection";
-export * from "./handleRoomAssignment";
-export * from "./handleRoomDeassignment";
+export * from "./connectPlayerToServer";
+export * from "./disconnectPlayerFromServer";
+export * from "./assignPlayerToRoom";
+export * from "./unassignPlayerFromRoom";
 export * from "./extractPlayerInitData";
