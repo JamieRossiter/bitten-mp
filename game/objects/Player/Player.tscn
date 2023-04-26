@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://df8apskwqwr2d"]
+[gd_scene load_steps=6 format=3 uid="uid://df8apskwqwr2d"]
 
 [ext_resource type="Script" path="res://objects/Player/Player.cs" id="1_ocrhd"]
 [ext_resource type="SpriteFrames" uid="uid://drlnarxxvngiq" path="res://objects/Player/PlayerAnimation.tres" id="1_wkg2a"]
+[ext_resource type="Script" path="res://objects/Player/PlayerMovement.cs" id="3_rjog2"]
+[ext_resource type="Script" path="res://objects/Player/PlayerAnimation.cs" id="4_g6y6s"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_oybfq"]
 radius = 17.0
@@ -18,3 +20,9 @@ animation = &"south"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 2)
 shape = SubResource("CapsuleShape2D_oybfq")
+
+[node name="Movement" type="Node" parent="."]
+script = ExtResource("3_rjog2")
+
+[node name="Animation" type="Node" parent="."]
+script = ExtResource("4_g6y6s")

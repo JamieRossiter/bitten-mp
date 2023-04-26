@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Godot Projects"
-run/main_scene="res://objects/Player/Player.tscn"
+run/main_scene="res://objects/map/TestMap.tscn"
 config/features=PackedStringArray("4.0", "C#", "Mobile")
 
 [dotnet]
