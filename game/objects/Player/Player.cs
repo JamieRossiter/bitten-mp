@@ -43,8 +43,10 @@ public partial class Player : CharacterBody2D
 		this.directions["southwest"] = Input.IsActionPressed("move_south") && Input.IsActionPressed("move_west");
 	}
 
-	public Dictionary<string, bool> Directions {
-		get {
+	public Dictionary<string, bool> Directions 
+	{
+		get 
+		{
 			return directions;
 		}
 	}

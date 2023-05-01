@@ -21,7 +21,7 @@ export function unassignPlayerFromRoom(roomManager: RoomManager, room: Room,  pl
     }
     
     // Broadcast the player unassignment
-    roomManager.broadcastMessageToRoom(room, MessageEventCode.PlayerDisconnected, unassignmentMessage);
+    roomManager.broadcastMessageToRoom(room, MessageEventCode.PlayerLeftRoom, unassignmentMessage);
 
     // Remove room from server if there are no players
     if(roomManager.getAllPlayersInRoom(room).length <= 0){

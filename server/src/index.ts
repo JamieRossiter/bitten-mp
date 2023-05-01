@@ -9,8 +9,9 @@ import { Player, Room, Server, PlayerManager, RoomManager} from "./classes"
 import { connectPlayerToServer, extractPlayerData, disconnectPlayerFromServer, assignPlayerToRoom, unassignPlayerFromRoom } from "./helpers";
 import { ConnectionQueryData } from "./types";
 import { logServerMessage } from "./utils";
+import { MessageEventCode } from "./enums";
 
-const server: Server = new Server(3000);
+const server: Server = new Server(5000);
 const playerManager: PlayerManager = new PlayerManager();
 const roomMananger: RoomManager = new RoomManager();
 
@@ -26,11 +27,14 @@ server.io.on("connection", (socket: WebSocket.WebSocket, req: http.IncomingMessa
     room = assignPlayerToRoom(roomMananger, connQueryData.room, player);
     if(!room){
         logServerMessage(`There was an error assigning player ${player.username}(${player.id}) to a room.`);
+
+        // If the player is attempting to join a room that doesn't exist, let them know
+        player.sendMessage(MessageEventCode.RoomNoExist, { RoomCode: connQueryData.room }); 
         return;
     }
 
     // Connect the player to the server
-    connectPlayerToServer(playerManager, player, room);
+    connectPlayerToServer(playerManager, roomMananger, player, room);
 
     // Handle disconnection
     socket.on("close", (closeCode: number) => {

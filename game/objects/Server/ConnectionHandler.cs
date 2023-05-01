@@ -8,19 +8,19 @@ public partial class ConnectionHandler : Node
 
     // FOR TESTING
     private string username = "jimothy";
-    private string isHost = "false";
-    private string roomname = "";
+    private string isHost = "true";
+    private string roomName = "testRoom";
 
     [Export]
     public string ServerUrl {get; set;} = "ws://127.0.0.0";
     [Export]
-    public string ServerPort {get; set;} = "3000";
+    public string ServerPort {get; set;} = "5000";
 
     public override void _Ready()
     {
         this.messageProcessor = (MessageProcessor)this.GetNode("../MessageProcessor");
         
-        Error connectionError = this.socket.ConnectToUrl(this.ServerUrl + ":" + this.ServerPort + "/?username=" + this.username + "&isHost=" + this.isHost);        
+        Error connectionError = this.socket.ConnectToUrl($"{this.ServerUrl}:{this.ServerPort}/?username={this.username}&isHost={this.isHost}");        
         if(connectionError > 0)
         {
             this.HandleConnectionError(connectionError);

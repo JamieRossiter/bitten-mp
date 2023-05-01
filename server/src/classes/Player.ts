@@ -24,7 +24,7 @@ export class Player {
     }
 
     public sendMessage(event: MessageEventCode, message: object): void{
-        this._socket.send(JSON.stringify( {event, message} ));
+        this._socket.send(JSON.stringify( {Event: event, Message: `${JSON.stringify(message)}`} ));
     }
 
     public setDirection(dir: number): void{

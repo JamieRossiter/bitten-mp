@@ -47,7 +47,7 @@ export class RoomManager {
 
     public broadcastMessageToRoom(room: Room, event: MessageEventCode, message: object): void {
         Array.from(this._playerRooms).forEach((playerRoom: PlayerRoom) => {
-            if(playerRoom.roomCode === room.code) playerRoom.player.socket.send(JSON.stringify({ event, message }));
+            if(playerRoom.roomCode === room.code) playerRoom.player.socket.send(JSON.stringify({ Event: event, Message: JSON.stringify(message) }));
         });
     }
 

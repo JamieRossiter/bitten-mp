@@ -6,7 +6,6 @@
 import { Player, Room } from "../classes";
 import RoomManager from "../classes/RoomManager";
 import { generateRandomAlphabeticalString } from "../utils";
-import { MessageEventCode } from "../enums";
 
 export function assignPlayerToRoom(roomManager: RoomManager, roomCode: string, player: Player): Room | undefined {
     
@@ -26,8 +25,6 @@ export function assignPlayerToRoom(roomManager: RoomManager, roomCode: string, p
         return room;
     }
 
-    // If the player is attempting to join a room that doesn't exist, let them know
-    player.sendMessage(MessageEventCode.RoomNoExist, { roomCode });
     return;
 
 }
