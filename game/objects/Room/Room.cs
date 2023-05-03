@@ -4,7 +4,6 @@ using System.Collections.Generic;
 public partial class Room : Node
 {
 
-    private int maxPlayers;
     private string code;
 
     public string Code { get; }

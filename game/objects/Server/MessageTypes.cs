@@ -12,11 +12,25 @@ namespace MessageTypes
         public string RoomCode { get; set; }
     }
 
-    public struct PlayerJoinedRoomMesage
+    public struct RoomInformationMessage
+    {
+        public string RoomCode { get; set; }
+        public string[] RoomPlayers { get; set; } 
+    }
+
+    public struct PlayerJoinedRoomMessage
     {
         public string PlayerId { get; set; }
         public string PlayerUsername { get; set; }
         public string RoomCode { get; set; }
+    }
+
+    public struct PlayerLeftRoomMessage
+    {
+        public string PlayerId { get; set; }
+        public string PlayerUsername { get; set; }
+        public int DisconnectCode { get; set; }
+        public string DisconnectMessage { get; set; }
     }
 }
 

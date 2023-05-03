@@ -6,11 +6,9 @@
 export class Room {
 
     private _code: string;
-    private _maxPlayers: number;
 
-    constructor(code: string, maxPlayers: number){
+    constructor(code: string){
         this._code = code;
-        this._maxPlayers = maxPlayers;
     }
 
     get code(): string{

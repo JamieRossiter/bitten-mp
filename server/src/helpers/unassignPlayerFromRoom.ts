@@ -10,7 +10,12 @@ import { MessageEventCode } from "../enums";
 export function unassignPlayerFromRoom(roomManager: RoomManager, room: Room,  player: Player, closeCode: number): void{
     
     // Create an unassignment message
-    const unassignmentMessage: { playerId: string, code: number, message: string} = createUnassignmentMessage(player, closeCode);
+    const unassignmentMessage: { 
+        PlayerId: string, 
+        PlayerUsername: string,
+        DisconnectCode: number, 
+        DisconnectMessage: string
+    } = createUnassignmentMessage(player, closeCode);
 
     // Remove player from room 
     try{
@@ -30,29 +35,34 @@ export function unassignPlayerFromRoom(roomManager: RoomManager, room: Room,  pl
     
 }
 
-function createUnassignmentMessage(player: Player, closeCode: number): { playerId: string, code: number, message: string} {
+function createUnassignmentMessage(player: Player, closeCode: number): { PlayerId: string, PlayerUsername: string, DisconnectCode: number, DisconnectMessage: string} {
 
-    let message: { playerId: string, code: number, message: string} = { playerId: player.id, code: closeCode, message: "unknown"};
+    let message: { 
+        PlayerId: string,
+        PlayerUsername: string, 
+        DisconnectCode: number, 
+        DisconnectMessage: string
+    } = { PlayerId: player.id, PlayerUsername: player.username, DisconnectCode: closeCode, DisconnectMessage: "unknown"};
 
     switch(closeCode){
         case 1000:
         case 1001:
-            message.message = "player left";
+            message.DisconnectMessage = "player left";
             break;
         case 1005:
-            message.message = "player disconnected for an unknown reason";
+            message.DisconnectMessage = "player disconnected for an unknown reason";
             break;
         case 1011:
-            message.message = "server error";
+            message.DisconnectMessage = "server error";
             break;
         case 1012:
-            message.message = "server restart";
+            message.DisconnectMessage = "server restart";
             break;
         case 4000:
-            message.message = "player was kicked";
+            message.DisconnectMessage = "player was kicked";
             break;
         default:
-            message.message = "miscellaneous/unknown error";
+            message.DisconnectMessage = "miscellaneous/unknown error";
             break;
     }
     

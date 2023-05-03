@@ -1,10 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://bjeqnao8si3k8"]
 
-[ext_resource type="PackedScene" uid="uid://df8apskwqwr2d" path="res://objects/Player/Player.tscn" id="1_1rh3g"]
 [ext_resource type="PackedScene" uid="uid://c7p5k7hos471u" path="res://objects/Server/Server.tscn" id="2_87oeh"]
+[ext_resource type="PackedScene" uid="uid://c6cmjnowpcv8m" path="res://objects/Room/Room.tscn" id="2_gii00"]
 
 [node name="TestMap" type="Node2D"]
 
 [node name="Server" parent="." instance=ExtResource("2_87oeh")]
 
-[node name="Player" parent="Server" instance=ExtResource("1_1rh3g")]
+[node name="Room" parent="Server" instance=ExtResource("2_gii00")]

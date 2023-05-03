@@ -15,6 +15,12 @@ export class RoomManager {
     constructor(){
         this._rooms = new Set();
         this._playerRooms = new Set();
+        this.TESTaddTestRoom(); // FOR TESTING PURPOSES ONLY
+    }
+
+    // FOR TESTING PURPOSES ONLY
+    private TESTaddTestRoom(): void {
+        this._rooms.add(new Room("TESTROOM"));
     }
 
     public addRoom(room: Room): void {

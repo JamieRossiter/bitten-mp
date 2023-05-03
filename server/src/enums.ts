@@ -6,5 +6,6 @@
 export enum MessageEventCode {
     RoomNoExist = "roomNoExist",
     PlayerLeftRoom = "playerLeftRoom",
-    PlayerJoinedRoom = "playerJoinedRoom"
+    PlayerJoinedRoom = "playerJoinedRoom",
+    RoomInformation = "roomInformation"
 }

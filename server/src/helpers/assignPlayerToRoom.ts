@@ -19,7 +19,7 @@ export function assignPlayerToRoom(roomManager: RoomManager, roomCode: string, p
 
     // If the player is creating a new room as a host
     if(player.isHost){
-        room = new Room(generateRandomAlphabeticalString(6, "uppercase"), 8);
+        room = new Room(generateRandomAlphabeticalString(6, "uppercase"));
         roomManager.addRoom(room);
         roomManager.addPlayerToRoom(room, player);
         return room;

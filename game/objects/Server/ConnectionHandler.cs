@@ -8,7 +8,7 @@ public partial class ConnectionHandler : Node
 
     // FOR TESTING
     private string username = "jimothy";
-    private string isHost = "true";
+    private string isHost = "false";
     private string roomName = "testRoom";
 
     [Export]
@@ -20,7 +20,7 @@ public partial class ConnectionHandler : Node
     {
         this.messageProcessor = (MessageProcessor)this.GetNode("../MessageProcessor");
         
-        Error connectionError = this.socket.ConnectToUrl($"{this.ServerUrl}:{this.ServerPort}/?username={this.username}&isHost={this.isHost}");        
+        Error connectionError = this.socket.ConnectToUrl($"{this.ServerUrl}:{this.ServerPort}/?username={this.username}&isHost={this.isHost}&room={this.roomName}");        
         if(connectionError > 0)
         {
             this.HandleConnectionError(connectionError);
