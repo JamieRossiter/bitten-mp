@@ -1,15 +1,28 @@
 namespace MessageTypes 
 {
+
+    public enum IncomingMessageType {
+        Broadcast,
+        Individual
+    }
+
     // A generic incoming JSON message
     public struct IncomingMessage
     {
         public string Event { get; set; }
         public string Message { get; set; }
+        public IncomingMessageType Type { get; set; }
     }
 
     public struct RoomNoExistMessage
     {
         public string RoomCode { get; set; }
+    }
+
+    public struct PlayerInformationMessage
+    {
+        public string PlayerId { get; set; }
+        public string PlayerUsername { get; set; }
     }
 
     public struct RoomInformationMessage

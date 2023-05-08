@@ -5,7 +5,7 @@
 
 import WebSocket from "ws";
 import { ConnectionQueryData, PlayerPos } from "../types";
-import { MessageEventCode } from "../enums";
+import { MessageEventCode, MessageType } from "../enums";
 
 export class Player {
 
@@ -24,7 +24,7 @@ export class Player {
     }
 
     public sendMessage(event: MessageEventCode, message: object): void{
-        this._socket.send(JSON.stringify( {Event: event, Message: `${JSON.stringify(message)}`} ));
+        this._socket.send(JSON.stringify( {Type: MessageType.Individual, Event: event, Message: `${JSON.stringify(message)}`} ));
     }
 
     public setDirection(dir: number): void{

@@ -4,7 +4,7 @@
 */
 
 import WebSocket from "ws";
-import { MessageEventCode } from "./enums";
+import { MessageEventCode, MessageType } from "./enums";
 import { Player, Room } from "./classes";
 
 export type ConnectionQueryData = {
@@ -21,6 +21,7 @@ export type PlayerRoom = {
 }
 
 export type ServerMessage = {
+    type: MessageType
     event: MessageEventCode,
     message: any
 }

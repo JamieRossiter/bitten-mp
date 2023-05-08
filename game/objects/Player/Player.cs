@@ -5,6 +5,9 @@ public partial class Player : CharacterBody2D
 {
 
 	private Dictionary<string, bool> directions;
+	private string id;
+	private string username;
+	private bool isCurrentPlayer;
 
 
 	public override void _Ready()
@@ -43,12 +46,29 @@ public partial class Player : CharacterBody2D
 		this.directions["southwest"] = Input.IsActionPressed("move_south") && Input.IsActionPressed("move_west");
 	}
 
+	public void SetId(string id)
+	{
+		this.id = id;
+	}
+
+	public void SetUsername(string username)
+	{
+		this.username = username;
+	}
+
 	public Dictionary<string, bool> Directions 
 	{
-		get 
-		{
-			return directions;
-		}
+		get { return this.directions; }
+	}
+
+	public string Id 
+	{
+		get { return this.id; }
+	}
+
+	public string Username
+	{
+		get { return this.username; }
 	}
 
 }

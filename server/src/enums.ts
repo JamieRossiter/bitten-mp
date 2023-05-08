@@ -7,5 +7,11 @@ export enum MessageEventCode {
     RoomNoExist = "roomNoExist",
     PlayerLeftRoom = "playerLeftRoom",
     PlayerJoinedRoom = "playerJoinedRoom",
-    RoomInformation = "roomInformation"
+    RoomInformation = "roomInformation",
+    PlayerInformation = "playerInformation"
+}
+
+export enum MessageType {
+    Broadcast,
+    Individual
 }

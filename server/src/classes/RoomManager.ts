@@ -5,7 +5,7 @@
 
 import { Player, Room } from "./";
 import { PlayerRoom } from "../types";
-import { MessageEventCode } from "../enums";
+import { MessageEventCode, MessageType } from "../enums";
 
 export class RoomManager {
 
@@ -51,9 +51,15 @@ export class RoomManager {
         .map((playerRoom: PlayerRoom) => playerRoom.player);
     }
 
-    public broadcastMessageToRoom(room: Room, event: MessageEventCode, message: object): void {
+    public broadcastMessageToRoom(room: Room, event: MessageEventCode, message: object, currentPlayer?: Player): void {
         Array.from(this._playerRooms).forEach((playerRoom: PlayerRoom) => {
-            if(playerRoom.roomCode === room.code) playerRoom.player.socket.send(JSON.stringify({ Event: event, Message: JSON.stringify(message) }));
+            
+            // Exclude current player from broadcast
+            if(currentPlayer && (currentPlayer.id === playerRoom.player.id)) return;
+
+            if(playerRoom.roomCode === room.code){
+                playerRoom.player.socket.send(JSON.stringify({ Type: MessageType.Broadcast, Event: event, Message: JSON.stringify(message) }));
+            }
         });
     }
 
