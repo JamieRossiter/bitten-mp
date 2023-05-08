@@ -12,7 +12,7 @@ public partial class ConnectionHandler : Node
     private string roomName = "testRoom";
 
     [Export]
-    public string ServerUrl {get; set;} = "ws://127.0.0.0";
+    public string ServerUrl {get; set;} = "ws://localhost";
     [Export]
     public string ServerPort {get; set;} = "5000";
 
