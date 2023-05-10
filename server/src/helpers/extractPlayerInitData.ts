@@ -41,7 +41,7 @@ function validatePlayerInitData(query: object, socket: WebSocket.WebSocket): Con
         id: generateRandomAlphanumericalString(10), 
         username: `User#${generateRandomFixedInteger(6)}`, 
         isHost: false,
-        room: "" 
+        roomCode: "" 
     };
     
     if("username" in query){
@@ -50,8 +50,8 @@ function validatePlayerInitData(query: object, socket: WebSocket.WebSocket): Con
     if("isHost" in query){
         initData.isHost = (query.isHost === "true"); // convert to boolean
     }
-    if("room" in query){
-        if(query.room) initData.room = query.room.toString();
+    if("roomCode" in query){
+        if(query.roomCode) initData.roomCode = query.roomCode.toString();
     }
 
     return initData;

@@ -24,12 +24,12 @@ server.io.on("connection", (socket: WebSocket.WebSocket, req: http.IncomingMessa
     let room: Room | undefined;
     
     // Assign the player to a new or existing room, handle if cannot
-    room = assignPlayerToRoom(roomMananger, connQueryData.room, player);
+    room = assignPlayerToRoom(roomMananger, connQueryData.roomCode, player);
     if(!room){
         logServerMessage(`There was an error assigning player ${player.username}(${player.id}) to a room.`);
 
         // If the player is attempting to join a room that doesn't exist, let them know
-        player.sendMessage(MessageEventCode.RoomNoExist, { RoomCode: connQueryData.room }); 
+        player.sendMessage(MessageEventCode.RoomNoExist, { RoomCode: connQueryData.roomCode }); 
         return;
     }
 
