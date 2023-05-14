@@ -18,11 +18,13 @@ export function connectPlayerToServer(playerManager: PlayerManager, roomManager:
     player.sendMessage(MessageEventCode.PlayerInformation, { PlayerId: player.id, PlayerUsername: player.username })
 
     // Send a separate message to the player containing information about the room (i.e. who is in it)
-    const playerIds: string[] = roomManager.getAllPlayersInRoom(room)
+    const playerData: {Id:  string, Username: string}[] = roomManager.getAllPlayersInRoom(room)
     .filter((playerInRoom: Player) => playerInRoom.id !== player.id )
-    .map((otherPlayer: Player) => otherPlayer.id);
+    .map((otherPlayer: Player) => {
+        return { Id: otherPlayer.id, Username: otherPlayer.username }
+    });
     
-    player.sendMessage(MessageEventCode.RoomInformation, { RoomCode: room.code, RoomPlayers: playerIds });
+    player.sendMessage(MessageEventCode.RoomInformation, { RoomCode: room.code, RoomPlayers: playerData });
 
     // Broadcast to room that player has connected to room
     roomManager.broadcastMessageToRoom(room, MessageEventCode.PlayerJoinedRoom, { PlayerId: player.id, PlayerUsername: player.username, RoomCode: room.code }, player);

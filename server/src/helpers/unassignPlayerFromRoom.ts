@@ -14,8 +14,9 @@ export function unassignPlayerFromRoom(roomManager: RoomManager, room: Room,  pl
         PlayerId: string, 
         PlayerUsername: string,
         DisconnectCode: number, 
-        DisconnectMessage: string
-    } = createUnassignmentMessage(player, closeCode);
+        DisconnectMessage: string,
+        RoomCode: string
+    } = createUnassignmentMessage(player, room.code, closeCode);
 
     // Remove player from room 
     try{
@@ -29,20 +30,21 @@ export function unassignPlayerFromRoom(roomManager: RoomManager, room: Room,  pl
     roomManager.broadcastMessageToRoom(room, MessageEventCode.PlayerLeftRoom, unassignmentMessage);
 
     // Remove room from server if there are no players
-    if(roomManager.getAllPlayersInRoom(room).length <= 0){
-        roomManager.removeRoom(room);
-    }
+    // if(roomManager.getAllPlayersInRoom(room).length <= 0){
+    //     roomManager.removeRoom(room);
+    // }
     
 }
 
-function createUnassignmentMessage(player: Player, closeCode: number): { PlayerId: string, PlayerUsername: string, DisconnectCode: number, DisconnectMessage: string} {
+function createUnassignmentMessage(player: Player, roomCode: string, closeCode: number): { PlayerId: string, PlayerUsername: string, DisconnectCode: number, DisconnectMessage: string, RoomCode: string} {
 
     let message: { 
         PlayerId: string,
         PlayerUsername: string, 
         DisconnectCode: number, 
-        DisconnectMessage: string
-    } = { PlayerId: player.id, PlayerUsername: player.username, DisconnectCode: closeCode, DisconnectMessage: "unknown"};
+        DisconnectMessage: string,
+        RoomCode: string
+    } = { PlayerId: player.id, PlayerUsername: player.username, DisconnectCode: closeCode, DisconnectMessage: "unknown", RoomCode: roomCode};
 
     switch(closeCode){
         case 1000:
