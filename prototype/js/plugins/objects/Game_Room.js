@@ -18,7 +18,7 @@ Game_Room.prototype.addPlayer = function(player){
 
 Game_Room.prototype.removePlayerById = function(id){
     const playerArr = Array.from(this._players);
-    const targetPlayer = playerArr.find(player => player.id() === id);
+    const targetPlayer = playerArr.find(player => player.id === id);
 
     if(!targetPlayer) return;
     this._players.delete(targetPlayer);

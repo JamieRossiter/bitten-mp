@@ -14,7 +14,8 @@ Util_MessageProcessor.broadcast = {};
 //====================================================
 
 Util_MessageProcessor.individual.roomNoExist = function(message){
-    // Handle room no exist
+    $gameServer.disconnect(CloseCode.Kicked);
+    window.alert(`Room code ${message.RoomCode.toUpperCase()} doesn't exist!`);
 }
 
 Util_MessageProcessor.individual.playerInformation = function(message){
@@ -23,7 +24,7 @@ Util_MessageProcessor.individual.playerInformation = function(message){
         // Handle error
         return;
     }
-    $gamePlayer.setOnlineData(new Game_OnlinePlayer(message.PlayerId, message.PlayerUsername));
+    $gameServer.joinGame($gamePlayer, new Game_OnlinePlayer(message.PlayerId, message.PlayerUsername));
 }
 
 Util_MessageProcessor.individual.roomInformation = function(message){
@@ -43,7 +44,9 @@ Util_MessageProcessor.individual.roomInformation = function(message){
             // Handle error
             return;
         }
-        $gameRoom.addPlayer(new Game_OnlinePlayer(player.Id, player.Username));
+        const newOnlinePlayer = new Game_OnlinePlayer(player.Id, player.Username);
+        const newPlayerEvent = $gameMap.events().find(event => event.isPlayer && !event.onlinePlayer);
+        $gameServer.joinGame(newPlayerEvent, newOnlinePlayer);
     })
 }
 
@@ -54,11 +57,19 @@ Util_MessageProcessor.individual.roomInformation = function(message){
 Util_MessageProcessor.broadcast.playerJoinedRoom = function(message){
     if(!("PlayerId" in message || "PlayerUsername" in message || "RoomCode" in message)){
         // Handle error
+        return;
     }
     if(message.RoomCode !== $gameRoom.code()){
         // Handle error
+        return;
     }
-    $gameRoom.addPlayer(new Game_OnlinePlayer(message.PlayerId, message.PlayerUsername));
+    const newOnlinePlayer = new Game_OnlinePlayer(message.PlayerId, message.PlayerUsername);
+    const newPlayerEvent = $gameMap.events().find(event => event.isPlayer && !event.onlinePlayer);
+    if(!newPlayerEvent){
+        // Handle error
+        return;
+    }
+    $gameServer.joinGame(newPlayerEvent, newOnlinePlayer);
     console.info(`${message.PlayerUsername}(${message.PlayerId}) has joined ${message.RoomCode}`);
 }
 

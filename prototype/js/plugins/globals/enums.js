@@ -25,3 +25,15 @@ const BroadcastMessageEventCode = {
     PlayerLeftRoom: "playerLeftRoom",
     PlayerJoinedRoom: "playerJoinedRoom",
 }
+
+/** 
+ * @enum
+ * @description Codes for closing WebSocket connections
+*/
+const CloseCode = {
+    PlayerLeft: 1000,
+    Unknown: 1005,
+    ServerError: 1011,
+    ServerRestart: 1012,
+    Kicked: 4000
+}
