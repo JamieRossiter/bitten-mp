@@ -36,6 +36,20 @@ server.io.on("connection", (socket: WebSocket.WebSocket, req: http.IncomingMessa
     // Connect the player to the server
     connectPlayerToServer(playerManager, roomMananger, player, room);
 
+    // Handle client message
+    socket.on("message", (message: WebSocket.RawData) => {
+        const data: any = JSON.parse(message.toString());
+        const event: MessageEventCode = data.Event;
+        const targetRoom: Room | undefined = roomMananger.getRoomByCode(data.RoomCode);
+
+        if(!targetRoom){
+            // Handle error
+            return;
+        }
+
+        roomMananger.broadcastMessageToRoom(targetRoom, event, data.Message, player);
+    })
+
     // Handle disconnection
     socket.on("close", (closeCode: number) => {
 

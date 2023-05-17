@@ -24,6 +24,7 @@ const IndividualMessageEventCode = {
 const BroadcastMessageEventCode = {
     PlayerLeftRoom: "playerLeftRoom",
     PlayerJoinedRoom: "playerJoinedRoom",
+    PlayerUpdatePosition: "playerUpdatePosition"
 }
 
 /** 

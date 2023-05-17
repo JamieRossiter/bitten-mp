@@ -24,7 +24,9 @@ Util_MessageProcessor.individual.playerInformation = function(message){
         // Handle error
         return;
     }
-    $gameServer.joinGame($gamePlayer, new Game_OnlinePlayer(message.PlayerId, message.PlayerUsername));
+    const currentPlayer = new Game_OnlinePlayer(message.PlayerId, message.PlayerUsername);
+    $gameRoom.setCurrentPlayer(currentPlayer);
+    $gameRoom.joinGame($gamePlayer, currentPlayer);
 }
 
 Util_MessageProcessor.individual.roomInformation = function(message){
@@ -45,8 +47,8 @@ Util_MessageProcessor.individual.roomInformation = function(message){
             return;
         }
         const newOnlinePlayer = new Game_OnlinePlayer(player.Id, player.Username);
-        const newPlayerEvent = $gameMap.events().find(event => event.isPlayer && !event.onlinePlayer);
-        $gameServer.joinGame(newPlayerEvent, newOnlinePlayer);
+        const newPlayerEvent = $gameMap.events().find(event => event.isPlayer);
+        $gameRoom.joinGame(newPlayerEvent, newOnlinePlayer);
     })
 }
 
@@ -64,12 +66,12 @@ Util_MessageProcessor.broadcast.playerJoinedRoom = function(message){
         return;
     }
     const newOnlinePlayer = new Game_OnlinePlayer(message.PlayerId, message.PlayerUsername);
-    const newPlayerEvent = $gameMap.events().find(event => event.isPlayer && !event.onlinePlayer);
+    const newPlayerEvent = $gameMap.events().find(event => event.isPlayer);
     if(!newPlayerEvent){
         // Handle error
         return;
     }
-    $gameServer.joinGame(newPlayerEvent, newOnlinePlayer);
+    $gameRoom.joinGame(newPlayerEvent, newOnlinePlayer);
     console.info(`${message.PlayerUsername}(${message.PlayerId}) has joined ${message.RoomCode}`);
 }
 
@@ -88,4 +90,16 @@ Util_MessageProcessor.broadcast.playerLeftRoom = function(message){
     }
     $gameRoom.removePlayerById(message.PlayerId);
     console.info(`${message.PlayerUsername}(${message.PlayerId}) has left ${message.RoomCode} due to ${message.DisconnectMessage}(${message.DisconnectCode})`);
+}
+
+Util_MessageProcessor.broadcast.playerUpdatePosition = function(message){
+    const targetPlayerId = message.PlayerId;
+    const pos = { x: message.X, y: message.Y, dir: message.Dir };
+    const targetPlayer = $gameRoom.findPlayerById(targetPlayerId);
+    if(!targetPlayer){
+        // Handle error
+        return;
+    }
+    targetPlayer.mapEvent.setPosition(pos.x, pos.y);
+    targetPlayer.mapEvent.setDirection(pos.dir);
 }

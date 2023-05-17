@@ -91,24 +91,17 @@ Game_Server.prototype.processBroadcastMessage = function(event, message){
         case BroadcastMessageEventCode.PlayerLeftRoom:
             Util_MessageProcessor.broadcast.playerLeftRoom(message);
             break;
+        case BroadcastMessageEventCode.PlayerUpdatePosition:
+            Util_MessageProcessor.broadcast.playerUpdatePosition(message);
+            break;
     }
 
 }
 
-Game_Server.prototype.joinGame = function(parent, onlinePlayer){
-    parent.setTransparent(false);
-    parent.setPattern(2);
-    $gameRoom.addPlayer(onlinePlayer);
-    parent.setOnlinePlayer(onlinePlayer);
-    parent.setPosition(8, 6);
-    parent.createUsernameWindow();
-}
-
-Game_Server.prototype.leaveGame = function(parent){
-    parent.setTransparent(true);
-    parent.setOnlinePlayer(null);
-    parent.setPosition(-100, -100);
-    parent.destroyUsernameWindow();
+Game_Server.prototype.sendMessage = function(event, message, targetRoom, targetPlayer){
+    const messageObj = { Event: event, Message: message, RoomCode: targetRoom };
+    if(targetPlayer) messageObj.PlayerId = targetPlayer;
+    this._socket.send(JSON.stringify(messageObj));
 }
 
 Game_Server.prototype.isConnected = function(){
