@@ -18,7 +18,7 @@ Game_Server.prototype.connect = function(username, isHost, roomCode){
         return;
     }
     const hostStatus = Boolean(isHost);
-    this._socket = new WebSocket(`ws://localhost:5000?username=${username}&isHost=${hostStatus}${roomCode ? "&roomCode=" + roomCode : ""}`);
+    this._socket = new WebSocket(`ws://192.168.1.17:5000?username=${username}&isHost=${hostStatus}${roomCode ? "&roomCode=" + roomCode : ""}`);
     this.listen();
     this._isConnected = true;
 }

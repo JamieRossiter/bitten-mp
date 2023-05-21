@@ -89,6 +89,7 @@ Util_MessageProcessor.broadcast.playerLeftRoom = function(message){
         // Handle error
     }
     $gameRoom.removePlayerById(message.PlayerId);
+    $gameRoom.leaveGame($gameRoom.findPlayerById(message.PlayerId));
     console.info(`${message.PlayerUsername}(${message.PlayerId}) has left ${message.RoomCode} due to ${message.DisconnectMessage}(${message.DisconnectCode})`);
 }
 
@@ -100,6 +101,10 @@ Util_MessageProcessor.broadcast.playerUpdatePosition = function(message){
         // Handle error
         return;
     }
-    targetPlayer.mapEvent.setPosition(pos.x, pos.y);
-    targetPlayer.mapEvent.setDirection(pos.dir);
+
+    targetPlayer.mapEvent.moveStraight(pos.dir);
+    // if(!(targetPlayer.mapEvent.x === pos.x && targetPlayer.mapEvent.y === pos.y)){
+    //     targetPlayer.mapEvent.setPosition(pos.x, pos.y);
+    // }
+    console.log("Update position");
 }

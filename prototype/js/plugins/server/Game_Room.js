@@ -46,7 +46,6 @@ Game_Room.prototype.setCurrentPlayer = function(player){
     this._currentPlayer = player;
 }
 
-// TODO: Run this method in execute move or similar method
 Game_Room.prototype.broadcastPlayerPositionUpdate = function(coords){
     $gameServer.sendMessage(
         BroadcastMessageEventCode.PlayerUpdatePosition, 

@@ -7,6 +7,7 @@ var $plugins =
 {"name":"utils/Util_MessageProcessor","status":true,"description":"","parameters":{}},
 {"name":"server/Game_Server","status":true,"description":"","parameters":{}},
 {"name":"server/Game_Room","status":true,"description":"","parameters":{}},
+{"name":"onlinePlayer/Game_Player","status":true,"description":"","parameters":{}},
 {"name":"onlinePlayer/Game_Event","status":true,"description":"","parameters":{}},
 {"name":"onlinePlayer/Game_OnlinePlayer","status":true,"description":"","parameters":{}},
 {"name":"onlinePlayer/Window_Username","status":true,"description":"","parameters":{}},
