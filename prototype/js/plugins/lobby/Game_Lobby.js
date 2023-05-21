@@ -2,13 +2,13 @@
  * @class
  * @description A representation of the player lobby.
 */
-function Game_Lobby(){
-    this.initialize();
-}
+function Game_Lobby(){}
 
-Game_Lobby.prototype.initialize = function(){
-}
-
+/** 
+ * @public @method
+ * @returns {void}
+ * @description Displays the prompts for connecting to the server when the player enters the lobby.
+*/
 Game_Lobby.prototype.showPrompts = function(){
     const username = window.prompt("Please enter your username.");
     const roomCode = window.prompt("Please enter the room code.");

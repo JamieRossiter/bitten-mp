@@ -5,7 +5,6 @@
 
 import { Player, PlayerManager } from "../classes";
 import { logServerMessage } from "../utils";
-import { MessageEventCode } from "../enums";
 
 export function disconnectPlayerFromServer(playerManager: PlayerManager, player: Player, closeCode: number): void{
     

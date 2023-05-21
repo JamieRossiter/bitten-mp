@@ -5,7 +5,7 @@
 
 import { Player, Room } from "./";
 import { PlayerRoom } from "../types";
-import { MessageEventCode, MessageType } from "../enums";
+import { IndividualMessageEventCode, BroadcastMessageEventCode, MessageType } from "../enums";
 
 export class RoomManager {
 
@@ -51,7 +51,7 @@ export class RoomManager {
         .map((playerRoom: PlayerRoom) => playerRoom.player);
     }
 
-    public broadcastMessageToRoom(room: Room, event: MessageEventCode, message: object, currentPlayer?: Player): void {
+    public broadcastMessageToRoom(room: Room, event: IndividualMessageEventCode | BroadcastMessageEventCode, message: object, currentPlayer?: Player): void {
         Array.from(this._playerRooms).forEach((playerRoom: PlayerRoom) => {
             
             // Exclude current player from broadcast

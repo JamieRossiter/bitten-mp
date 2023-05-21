@@ -5,7 +5,7 @@
 
 import { Player, Room } from "../classes";
 import RoomManager from "../classes/RoomManager";
-import { MessageEventCode } from "../enums";
+import { BroadcastMessageEventCode } from "../enums";
 
 export function unassignPlayerFromRoom(roomManager: RoomManager, room: Room,  player: Player, closeCode: number): void{
     
@@ -27,7 +27,7 @@ export function unassignPlayerFromRoom(roomManager: RoomManager, room: Room,  pl
     }
     
     // Broadcast the player unassignment
-    roomManager.broadcastMessageToRoom(room, MessageEventCode.PlayerLeftRoom, unassignmentMessage);
+    roomManager.broadcastMessageToRoom(room, BroadcastMessageEventCode.PlayerLeftRoom, unassignmentMessage);
 
     // Remove room from server if there are no players
     // if(roomManager.getAllPlayersInRoom(room).length <= 0){

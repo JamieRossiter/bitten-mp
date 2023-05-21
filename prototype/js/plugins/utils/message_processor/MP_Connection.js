@@ -1,23 +1,25 @@
 /** 
- * @class
- * @static
- * @description Processes various messages from the server
+ * @namespace MessageProcessor
+ * @description Contains all methods for processing connection-related messages from the server
 */
-
-function Util_MessageProcessor(){}
-
-Util_MessageProcessor.individual = {};
-Util_MessageProcessor.broadcast = {};
 
 //====================================================
 // INDIVIDUAL MESSAGES
 //====================================================
 
+/**
+ * @public @method
+ * @arg { {RoomCode: string} } message 
+ */
 Util_MessageProcessor.individual.roomNoExist = function(message){
     $gameServer.disconnect(CloseCode.Kicked);
     window.alert(`Room code ${message.RoomCode.toUpperCase()} doesn't exist!`);
 }
 
+/**
+ * @public @method
+ * @arg { {PlayerId: string, PlayerUsername: string} } message 
+ */
 Util_MessageProcessor.individual.playerInformation = function(message){
     
     if(!("PlayerId" in message || "PlayerUsername" in message)){
@@ -29,6 +31,10 @@ Util_MessageProcessor.individual.playerInformation = function(message){
     $gameRoom.joinGame($gamePlayer, currentPlayer);
 }
 
+/**
+ * @public @method
+ * @arg { {RoomCode: string, RoomPlayers: Array<{Id: string, Username: string}> } } message 
+ */
 Util_MessageProcessor.individual.roomInformation = function(message){
     
     if(!("RoomCode" in message || "RoomPlayers" in message)){
@@ -42,13 +48,15 @@ Util_MessageProcessor.individual.roomInformation = function(message){
     // Set room players
     message.RoomPlayers.forEach(player => {
 
-        if(!("Id" in player || "Username" in player)){
+        if(!("Id" in player || "Username" in player || "Position" in player)){
             // Handle error
             return;
         }
         const newOnlinePlayer = new Game_OnlinePlayer(player.Id, player.Username);
         const newPlayerEvent = $gameMap.events().find(event => event.isPlayer);
         $gameRoom.joinGame(newPlayerEvent, newOnlinePlayer);
+        newPlayerEvent.setPosition(player.Position.x, player.Position.y);
+        newPlayerEvent.setDirection(player.Position.dir);
     })
 }
 
@@ -56,12 +64,16 @@ Util_MessageProcessor.individual.roomInformation = function(message){
 // BROADCAST MESSAGES
 //====================================================
 
+/**
+ * @public @method
+ * @arg { {PlayerId: string, PlayerUsername: string} } message 
+ */
 Util_MessageProcessor.broadcast.playerJoinedRoom = function(message){
     if(!("PlayerId" in message || "PlayerUsername" in message || "RoomCode" in message)){
         // Handle error
         return;
     }
-    if(message.RoomCode !== $gameRoom.code()){
+    if(message.RoomCode !== $gameRoom.code){
         // Handle error
         return;
     }
@@ -75,6 +87,10 @@ Util_MessageProcessor.broadcast.playerJoinedRoom = function(message){
     console.info(`${message.PlayerUsername}(${message.PlayerId}) has joined ${message.RoomCode}`);
 }
 
+/**
+ * @public @method
+ * @arg { {PlayerId: string, PlayerUsername: string, DisconnectCode: number, DisconnectMessage: string, RoomCode: string} } message 
+ */
 Util_MessageProcessor.broadcast.playerLeftRoom = function(message){
     if(
         !("PlayerId" in message 
@@ -85,26 +101,9 @@ Util_MessageProcessor.broadcast.playerLeftRoom = function(message){
     )){
         // Handle error
     }
-    if(message.RoomCode !== $gameRoom.code()){
+    if(message.RoomCode !== $gameRoom.code){
         // Handle error
     }
-    $gameRoom.removePlayerById(message.PlayerId);
     $gameRoom.leaveGame($gameRoom.findPlayerById(message.PlayerId));
     console.info(`${message.PlayerUsername}(${message.PlayerId}) has left ${message.RoomCode} due to ${message.DisconnectMessage}(${message.DisconnectCode})`);
-}
-
-Util_MessageProcessor.broadcast.playerUpdatePosition = function(message){
-    const targetPlayerId = message.PlayerId;
-    const pos = { x: message.X, y: message.Y, dir: message.Dir };
-    const targetPlayer = $gameRoom.findPlayerById(targetPlayerId);
-    if(!targetPlayer){
-        // Handle error
-        return;
-    }
-
-    targetPlayer.mapEvent.moveStraight(pos.dir);
-    // if(!(targetPlayer.mapEvent.x === pos.x && targetPlayer.mapEvent.y === pos.y)){
-    //     targetPlayer.mapEvent.setPosition(pos.x, pos.y);
-    // }
-    console.log("Update position");
 }

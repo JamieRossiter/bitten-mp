@@ -6,11 +6,20 @@ function Game_Server(){
     this.initialize();
 }
 
+/**
+ * @private @method
+ */
 Game_Server.prototype.initialize = function(){
     this._socket = null;
     this._isConnected = false;
 }
 
+/**
+ * @public @method
+ * @arg {string} username 
+ * @arg {boolean} isHost 
+ * @arg {string} roomCode 
+ */
 Game_Server.prototype.connect = function(username, isHost, roomCode){
     if(!username){
         // Handle error
@@ -18,11 +27,15 @@ Game_Server.prototype.connect = function(username, isHost, roomCode){
         return;
     }
     const hostStatus = Boolean(isHost);
-    this._socket = new WebSocket(`ws://192.168.1.17:5000?username=${username}&isHost=${hostStatus}${roomCode ? "&roomCode=" + roomCode : ""}`);
+    this._socket = new WebSocket(`ws://192.168.1.37:5000?username=${username}&isHost=${hostStatus}${roomCode ? "&roomCode=" + roomCode : ""}`);
     this.listen();
     this._isConnected = true;
 }
 
+/**
+ * @public @method
+ * @arg {number} code 
+ */
 Game_Server.prototype.disconnect = function(code){
     if(!this._socket){
         // Handle error
@@ -30,6 +43,10 @@ Game_Server.prototype.disconnect = function(code){
     this._socket.close(code);
 }
 
+/**
+ * @private @method
+ * @desc Listens to the various WebSocket events
+ */
 Game_Server.prototype.listen = function(){
 
     this._socket.addEventListener("open", connectEvent => {
@@ -50,62 +67,43 @@ Game_Server.prototype.listen = function(){
         
         const parsedMessage = JSON.parse(messageEvent.data);
         const serverMessage = { type: parsedMessage.Type, event: parsedMessage.Event, message: JSON.parse(parsedMessage.Message)};
-
-        switch(serverMessage.type)
-        {
-            case MessageType.Individual:
-                this.processIndividualMessage(serverMessage.event, serverMessage.message);
-                break;
-            case MessageType.Broadcast:
-                this.processBroadcastMessage(serverMessage.event, serverMessage.message);
-                break;
-        }
+        Util_MessageProcessor.processMessage(serverMessage);
 
     })
 }
 
-Game_Server.prototype.processIndividualMessage = function(event, message){
-
-    switch(event)
-    {
-        case IndividualMessageEventCode.RoomNoExist:
-            Util_MessageProcessor.individual.roomNoExist(message);
-            break;
-        case IndividualMessageEventCode.PlayerInformation:
-            Util_MessageProcessor.individual.playerInformation(message);
-            break;
-        case IndividualMessageEventCode.RoomInformation:
-            Util_MessageProcessor.individual.roomInformation(message);
-            break;
-    }
-
-}
-
-Game_Server.prototype.processBroadcastMessage = function(event, message){
-
-    switch(event)
-    {
-        case BroadcastMessageEventCode.PlayerJoinedRoom:
-            Util_MessageProcessor.broadcast.playerJoinedRoom(message);
-            break;
-        case BroadcastMessageEventCode.PlayerLeftRoom:
-            Util_MessageProcessor.broadcast.playerLeftRoom(message);
-            break;
-        case BroadcastMessageEventCode.PlayerUpdatePosition:
-            Util_MessageProcessor.broadcast.playerUpdatePosition(message);
-            break;
-    }
-
-}
-
-Game_Server.prototype.sendMessage = function(event, message, targetRoom, targetPlayer){
-    const messageObj = { Event: event, Message: message, RoomCode: targetRoom };
-    if(targetPlayer) messageObj.PlayerId = targetPlayer;
+/**
+ * @public @method
+ * @arg {string} event The event code to send 
+ * @arg {object} message The contents of the message
+ * @arg {string} targetPlayer The room code of the target room
+ */
+Game_Server.prototype.sendMessageToPlayer = function(event, message, targetPlayer){
+    const messageObj = { Type: MessageType.Individual, Event: event, Message: message, RoomCode: $gameRoom.code, PlayerId: targetPlayer };
     this._socket.send(JSON.stringify(messageObj));
 }
 
-Game_Server.prototype.isConnected = function(){
-    return this._isConnected;
+/**
+ * @public @method
+ * @arg {string} event The event code to send 
+ * @arg {object} message The contents of the message
+ * @arg {string} targetRoom The room code of the target room
+ */
+Game_Server.prototype.broadcastMessageToRoom = function(event, message){
+    const messageObj = { Type: MessageType.Broadcast, Event: event, Message: message, RoomCode: $gameRoom.code };
+    this._socket.send(JSON.stringify(messageObj));
 }
+
+Object.defineProperties(Game_Server.prototype, {
+    /**
+     * @public @property
+     * @type {boolean}
+     */
+    isConnected: {
+        get(){
+            return this._isConnected;
+        }
+    }
+})
 
 const $gameServer = new Game_Server();

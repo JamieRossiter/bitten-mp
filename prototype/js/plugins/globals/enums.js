@@ -4,7 +4,8 @@
 */
 const MessageType = {
     Broadcast: 0,
-    Individual: 1
+    Individual: 1,
+    Server: 2
 }
 
 /** 
@@ -24,7 +25,7 @@ const IndividualMessageEventCode = {
 const BroadcastMessageEventCode = {
     PlayerLeftRoom: "playerLeftRoom",
     PlayerJoinedRoom: "playerJoinedRoom",
-    PlayerUpdatePosition: "playerUpdatePosition"
+    PlayerMoveStraight: "playerMoveStraight"
 }
 
 /** 
