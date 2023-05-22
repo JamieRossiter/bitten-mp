@@ -6,6 +6,7 @@
  */
 const onlinePlayer_gamePlayer_executeMove_alias = Game_Player.prototype.executeMove;
 Game_Player.prototype.executeMove = function(direction) {
+    if(!$gameServer.isConnected || $gameServer.connectionError) return;
     onlinePlayer_gamePlayer_executeMove_alias.call(this, direction);
     $gameRoom.broadcastPlayerMoveStraight({x: $gamePlayer.x, y: $gamePlayer.y, dir: direction});
 };

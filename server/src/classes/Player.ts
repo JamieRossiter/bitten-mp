@@ -20,7 +20,7 @@ export class Player {
         this._username = init.username;
         this._isHost = init.isHost;
         this._socket = init.socket;
-        this._pos = { x: 0, y: 0, dir: 2 };
+        this._pos = { x: init.position.x, y: init.position.y, dir: init.position.dir };
     }
 
     public sendMessage(event: IndividualMessageEventCode | BroadcastMessageEventCode, message: object): void{

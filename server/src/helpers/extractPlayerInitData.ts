@@ -25,6 +25,7 @@ function getQueryFromUrl(url: string): object {
 
     rawParams.forEach((param: string) => {
         if(param.includes("%20")) param = param.replace(/%20/g, " "); // Check if params include spaces
+        if(param.includes("%22")) param = param.replace(/%22/g, '"'); // Check if params include spaces
 
         const splitParam: string[] = param.split("="); 
         query[splitParam[0]] = splitParam[1];
@@ -41,7 +42,8 @@ function validatePlayerInitData(query: object, socket: WebSocket.WebSocket): Con
         id: generateRandomAlphanumericalString(10), 
         username: `User#${generateRandomFixedInteger(6)}`, 
         isHost: false,
-        roomCode: "" 
+        roomCode: "",
+        position: {x: 0, y: 0, dir: 0}
     };
     
     if("username" in query){
@@ -52,6 +54,12 @@ function validatePlayerInitData(query: object, socket: WebSocket.WebSocket): Con
     }
     if("roomCode" in query){
         if(query.roomCode) initData.roomCode = query.roomCode.toString();
+    }
+    if("position" in query){
+        if(query.position){
+            const playerPositionString: string = query.position as string;
+            initData.position = JSON.parse(playerPositionString);
+        }
     }
 
     return initData;

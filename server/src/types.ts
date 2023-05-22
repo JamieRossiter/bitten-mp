@@ -12,7 +12,8 @@ export type ConnectionQueryData = {
     id: string,
     username: string,
     isHost: boolean,
-    roomCode: string
+    roomCode: string,
+    position: PlayerPos
 }
 
 export type PlayerRoom = {

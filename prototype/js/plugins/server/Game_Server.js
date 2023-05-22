@@ -12,6 +12,7 @@ function Game_Server(){
 Game_Server.prototype.initialize = function(){
     this._socket = null;
     this._isConnected = false;
+    this._isError = false;
 }
 
 /**
@@ -19,17 +20,20 @@ Game_Server.prototype.initialize = function(){
  * @arg {string} username 
  * @arg {boolean} isHost 
  * @arg {string} roomCode 
+ * @arg {string} positionData Stringified JSON
  */
-Game_Server.prototype.connect = function(username, isHost, roomCode){
+Game_Server.prototype.connect = function(username, isHost, roomCode, positionData){
+    this._isError = false; // Clear any previous errors on connection attempt
     if(!username){
         // Handle error
         console.error("Username not provided for connection.");
         return;
     }
     const hostStatus = Boolean(isHost);
-    this._socket = new WebSocket(`ws://192.168.1.37:5000?username=${username}&isHost=${hostStatus}${roomCode ? "&roomCode=" + roomCode : ""}`);
+    this._socket = new WebSocket
+        (`ws://192.168.1.37:5000?username=${username}&isHost=${hostStatus}${roomCode ? "&roomCode=" + roomCode : ""}&position=${positionData}`);
+    Graphics.startLoading();
     this.listen();
-    this._isConnected = true;
 }
 
 /**
@@ -43,13 +47,21 @@ Game_Server.prototype.disconnect = function(code){
     this._socket.close(code);
 }
 
+Game_Server.prototype.handleError = function(){
+    this._isError = true;
+    this._isConnected = false;
+}
+
 /**
  * @private @method
  * @desc Listens to the various WebSocket events
  */
 Game_Server.prototype.listen = function(){
 
-    this._socket.addEventListener("open", connectEvent => {
+    this._socket.addEventListener("open", _ => {
+        Graphics.endLoading();
+        this._isConnected = true;
+        this._isError = false;
     })
 
     this._socket.addEventListener("close", closeEvent => {
@@ -57,10 +69,9 @@ Game_Server.prototype.listen = function(){
         this._isConnected = false;
     })
 
-    this._socket.addEventListener("error", errorEvent => {
-        // Handle connection error here!
-        console.error(errorEvent);
-        this._isConnected = false;
+    this._socket.addEventListener("error", _ => {
+        Graphics.endLoading();
+        this.handleError();
     })
 
     this._socket.addEventListener("message", messageEvent => {
@@ -102,6 +113,15 @@ Object.defineProperties(Game_Server.prototype, {
     isConnected: {
         get(){
             return this._isConnected;
+        }
+    },
+    /**
+     * @public @property
+     * @type {boolean}
+     */
+    isError: {
+        get(){
+            return this._isError;
         }
     }
 })

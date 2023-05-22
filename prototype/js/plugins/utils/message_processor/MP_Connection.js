@@ -12,8 +12,7 @@
  * @arg { {RoomCode: string} } message 
  */
 Util_MessageProcessor.individual.roomNoExist = function(message){
-    $gameServer.disconnect(CloseCode.Kicked);
-    window.alert(`Room code ${message.RoomCode.toUpperCase()} doesn't exist!`);
+    $gameLobby.handleRoomNoExist(message.RoomCode.toUpperCase());
 }
 
 /**
