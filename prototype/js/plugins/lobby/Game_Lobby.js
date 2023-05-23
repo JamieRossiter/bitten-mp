@@ -81,5 +81,5 @@ Scene_Map.prototype.update = function(){
     gameLobby_sceneMap_update_alias.call(this);
     
     if(!$dataMap.note.includes($gameLobby.tag)) return;
-    $gameLobby.update();
+    // $gameLobby.update();
 }

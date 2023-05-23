@@ -13,5 +13,8 @@ var $plugins =
 {"name":"rmmz/Game_Event","status":true,"description":"","parameters":{}},
 {"name":"server/Game_Server","status":true,"description":"","parameters":{}},
 {"name":"room/Game_Room","status":true,"description":"","parameters":{}},
-{"name":"lobby/Game_Lobby","status":true,"description":"","parameters":{}}
+{"name":"lobby/Game_Lobby","status":true,"description":"","parameters":{}},
+{"name":"chat/Game_Chat","status":true,"description":"","parameters":{}},
+{"name":"chat/input/Game_ChatInput","status":true,"description":"","parameters":{}},
+{"name":"chat/input/Window_ChatInput","status":true,"description":"","parameters":{}}
 ];
