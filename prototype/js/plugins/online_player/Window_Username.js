@@ -11,19 +11,19 @@ Object.setPrototypeOf(Window_Username.prototype, Window_Base.prototype);
 Window_Username.prototype.constructor = Window_Username;
 
 /**
- * @private @method
+ * @private 
  * @arg {Game_OnlinePlayer} player The online player to which the username window is attached
 */
 Window_Username.prototype.initialize = function(player){
     Window_Base.prototype.initialize.call(this, new Rectangle(0, 0, 200, 60));
     /**
-     * @private @field
+     * @private 
      * @type {Game_OnlinePlayer}
      */
     this._player = player;
 
     /**
-     * @private @field
+     * @private 
      * @type {string}
      */
     this._username = this._player.username ?? "player";
@@ -33,14 +33,14 @@ Window_Username.prototype.initialize = function(player){
 }
 
 /**
- * @private @method
+ * @private 
  */
 Window_Username.prototype.update = function(){
     this.updateMovement();
 }
 
 /**
- * @private @method
+ * @private 
  */
 Window_Username.prototype.updateMovement = function(){
     this.width = this.textWidth(this._username) + 25;
@@ -49,7 +49,7 @@ Window_Username.prototype.updateMovement = function(){
 }
 
 /**
- * @private @method
+ * @private 
  */
 Window_Username.prototype.drawUsername = function(){
     this.drawTextEx(this._username, 0, 0);

@@ -8,23 +8,23 @@ function Game_Room(){
 }
 
 /**
- * @private @method
+ * @private 
  */
 Game_Room.prototype.initialize = function(){
     /**
-     * @private @field
+     * @private 
      * @type {string}
      */
     this._code = "";
 
     /**
-     * @private @field
+     * @private 
      * @type {Set<Game_Player>}
      */
     this._players = new Set();
 
     /**
-     * @private @field
+     * @private 
      * @type {Game_OnlinePlayer}
      * @desc This game instance's controlling player
      */
@@ -32,7 +32,6 @@ Game_Room.prototype.initialize = function(){
 }
 
 /**
- * @public @method
  * @arg {Game_OnlinePlayer} player 
  */
 Game_Room.prototype.addPlayer = function(player){
@@ -40,7 +39,6 @@ Game_Room.prototype.addPlayer = function(player){
 }
 
 /**
- * @public @method
  * @arg {string} id 
  */
 Game_Room.prototype.removePlayerById = function(id){
@@ -55,7 +53,6 @@ Game_Room.prototype.removePlayerById = function(id){
 }
 
 /**
- * @public @method
  * @arg {string} id 
  * @returns {Game_Player}
  */
@@ -66,7 +63,6 @@ Game_Room.prototype.findPlayerById = function(id){
 }
 
 /**
- * @public @method
  * @arg {string} code 
  */
 Game_Room.prototype.setCode = function(code){
@@ -74,7 +70,6 @@ Game_Room.prototype.setCode = function(code){
 }
 
 /**
- * @public @method
  * @arg {Game_OnlinePlayer} player 
  */
 Game_Room.prototype.setCurrentPlayer = function(player){
@@ -82,7 +77,6 @@ Game_Room.prototype.setCurrentPlayer = function(player){
 }
 
 /**
- * @public @method
  * @arg { {x: number, y: number, dir: number} } coords 
  * @desc Broadcasts that the player has moved straight to the room
  */
@@ -93,14 +87,21 @@ Game_Room.prototype.broadcastPlayerMoveStraight = function(coords){
     );
 }
 
+Game_Room.prototype.broadcastChatMessage = function(chatMessage){
+    $gameServer.broadcastMessageToRoom(
+        BroadcastMessageEventCode.ChatMessage,
+        { PlayerId: this._currentPlayer.id, ChatMessage: chatMessage }
+    )
+}
+
 /**
- * @public @method
  * @arg {Game_Event} mapEvent
  * @arg {Game_OnlinePlayer} onlinePlayer
  */
 Game_Room.prototype.joinGame = function(mapEvent, onlinePlayer){
     onlinePlayer.setMapEvent(mapEvent);   
     onlinePlayer.createUsernameWindow();
+    onlinePlayer.createChatBubbleWindow();
     onlinePlayer.mapEvent.setTransparent(false);
     onlinePlayer.mapEvent.setPattern(2);
     onlinePlayer.mapEvent.setPosition(8, 6);
@@ -108,7 +109,6 @@ Game_Room.prototype.joinGame = function(mapEvent, onlinePlayer){
 }
 
 /**
- * @public @method
  * @arg {Game_OnlinePlayer} onlinePlayer
  */
 Game_Room.prototype.leaveGame = function(onlinePlayer){
@@ -120,8 +120,9 @@ Game_Room.prototype.leaveGame = function(onlinePlayer){
 
 Object.defineProperties(Game_Room.prototype, {
     /**
-     * @public @property
-     * @type {string}
+     * @instance
+     * @memberof Game_Room
+     * @member {string}
      */
     code: {
         get(){
@@ -130,8 +131,9 @@ Object.defineProperties(Game_Room.prototype, {
     },
 
     /**
-     * @public @property
-     * @type {Game_OnlinePlayer}
+     * @instance
+     * @memberof Game_Room
+     * @member {Game_OnlinePlayer}
      */
     currentPlayer: {
         get(){

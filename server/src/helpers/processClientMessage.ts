@@ -41,21 +41,34 @@ function processBroadcastClientMessage(event: BroadcastMessageEventCode, message
         return;
     }
 
+    // Declare player
+    const player: Player | undefined = playerManager.getPlayerById(message.PlayerId);
+    if(!player){
+        // Handle error
+        return;
+    }
+
     switch(event){
         case BroadcastMessageEventCode.PlayerMoveStraight:
-            
+
             if(!("PlayerId" in message || "X" in message || "Y" in message || "Dir" in message)){
                 // Handle error
                 return;
             }
-            
-            const player: Player | undefined = playerManager.getPlayerById(message.PlayerId);
-            if(!player) return;
             player.setX(message.X);
             player.setY(message.Y);
             player.setDirection(message.Dir);
 
-            roomManager.broadcastMessageToRoom(targetRoom, event, message, player);
+            break;
+        case BroadcastMessageEventCode.ChatMessage:
+    
+            if(!("PlayerId" in message || "ChatMessage" in message)){
+                // Handle error
+                return;
+            }
+
             break;
     }
+
+    roomManager.broadcastMessageToRoom(targetRoom, event, message, player);
 }

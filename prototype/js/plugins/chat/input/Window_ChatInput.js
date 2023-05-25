@@ -3,6 +3,7 @@ function Window_ChatInput(){
 }
 
 Object.setPrototypeOf(Window_ChatInput.prototype, Window_Base.prototype);
+Window_ChatInput.prototype.constructor = Window_ChatInput;
 
 Window_ChatInput.prototype.initialize = function(){
     Window_Base.prototype.initialize.call(this, new Rectangle(0, 0, Graphics.boxWidth, 60));
@@ -10,7 +11,8 @@ Window_ChatInput.prototype.initialize = function(){
     this._cursor = null;
     this._cursorFrames = 0;
     this._cursorDuration = 30;
-    this._currentInput = $gameChat.input.currentInput;
+
+    this._currentInput = $gameChat.currentInput;
     this._currentInputWidth = 0;
     this.drawCursor();
 }
@@ -26,10 +28,9 @@ Window_ChatInput.prototype.drawCursor = function(){
 }
 
 Window_ChatInput.prototype.drawInput = function(){
-    this._currentInput = $gameChat.inp
-    ut.currentInput;
+    this._currentInput = $gameChat.currentInput;
     this._currentInputWidth = this.textWidth(this._currentInput);
-    this.drawTextEx(this._currentInput, 8, 0);
+    this.drawText(this._currentInput, 8, 0, this._currentInputWidth + 25, "left");
 }
 
 Window_ChatInput.prototype.updateCursorPosition = function(){
@@ -55,6 +56,6 @@ Window_ChatInput.prototype.update = function(){
     this.drawInput();
     this.updateCursorPosition();
 
-    if(!$gameChat.input.isInputting) this.updateCursorBlink();
+    if(!$gameChat.isInputting) this.updateCursorBlink();
     else this._cursor.show();
 }

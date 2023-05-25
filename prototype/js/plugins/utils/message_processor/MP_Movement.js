@@ -1,5 +1,5 @@
 /**
- * @namespace MessageProcessor
+ * @memberof MessageProcessor
  */
 
 //====================================================
@@ -7,7 +7,7 @@
 //====================================================
 
 /**
- * @public @method
+ * @static
  * @arg {{ X: number, Y: number, Dir: number }} message 
  */
 Util_MessageProcessor.broadcast.playerMoveStraight = function(message){

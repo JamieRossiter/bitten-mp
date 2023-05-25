@@ -7,25 +7,25 @@ function Game_OnlinePlayer(){
 }
 
 /**
- * @private @method
+ * @private 
  * @arg {string} id Online player ID
  * @arg {string} username Online player username
 */
 Game_OnlinePlayer.prototype.initialize = function(id, username){
     /** 
-     * @private @field 
+     * @private 
      * @type {string} 
     */
     this._id = id;
 
     /** 
-     * @private @field 
+     * @private 
      * @type {string} 
     */
     this._username = username;
 
     /** 
-     * @private @field 
+     * @private 
      * @type {Game_Event} 
      * @description The physical event that represents the online player object 
      * */
@@ -33,7 +33,6 @@ Game_OnlinePlayer.prototype.initialize = function(id, username){
 }
 
 /**
- * @public @method
  * @arg {Game_Event} event
 */
 Game_OnlinePlayer.prototype.setMapEvent = function(event){
@@ -41,7 +40,6 @@ Game_OnlinePlayer.prototype.setMapEvent = function(event){
 }
 
 /**
- * @public @method
  * @desc Creates the username window that follows the player around
 */
 Game_OnlinePlayer.prototype.createUsernameWindow = function(){
@@ -50,7 +48,6 @@ Game_OnlinePlayer.prototype.createUsernameWindow = function(){
 }
 
 /**
- * @public @method
  * @desc Creates the username window that follows the player around
 */
 Game_OnlinePlayer.prototype.destroyUsernameWindow = function(){
@@ -58,10 +55,16 @@ Game_OnlinePlayer.prototype.destroyUsernameWindow = function(){
     this._usernameWindow = null;
 }
 
+Game_OnlinePlayer.prototype.createChatBubbleWindow = function(){
+    this._chatBubbleWindow = new Window_ChatBubble(this);
+    SceneManager._scene.addChild(this._chatBubbleWindow);
+}
+
 Object.defineProperties(Game_OnlinePlayer.prototype, {
     /** 
-     * @public @property 
-     * @type {string} 
+     * @instance
+     * @memberof Game_OnlinePlayer
+     * @member {string} 
     */
     id: {
         get: function(){
@@ -70,8 +73,9 @@ Object.defineProperties(Game_OnlinePlayer.prototype, {
     },
 
     /** 
-     * @public @property 
-     * @type {string} 
+     * @instance
+     * @memberof Game_OnlinePlayer
+     * @member {string}
     */
     username: {
         get: function(){
@@ -80,12 +84,19 @@ Object.defineProperties(Game_OnlinePlayer.prototype, {
     },
 
     /** 
-     * @public @property 
-     * @type {Game_Event} 
+     * @instance
+     * @memberof Game_OnlinePlayer
+     * @member {Game_Event} 
     */
     mapEvent: {
         get: function(){
             return this._mapEvent;
+        }
+    },
+
+    chatBubbleWindow: {
+        get(){
+            return this._chatBubbleWindow;
         }
     }
 })

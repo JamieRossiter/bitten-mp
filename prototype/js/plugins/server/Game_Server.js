@@ -7,7 +7,7 @@ function Game_Server(){
 }
 
 /**
- * @private @method
+ * @private 
  */
 Game_Server.prototype.initialize = function(){
     this._socket = null;
@@ -16,7 +16,7 @@ Game_Server.prototype.initialize = function(){
 }
 
 /**
- * @public @method
+ * @public 
  * @arg {string} username 
  * @arg {boolean} isHost 
  * @arg {string} roomCode 
@@ -37,7 +37,7 @@ Game_Server.prototype.connect = function(username, isHost, roomCode, positionDat
 }
 
 /**
- * @public @method
+ * @public 
  * @arg {number} code 
  */
 Game_Server.prototype.disconnect = function(code){
@@ -53,7 +53,7 @@ Game_Server.prototype.handleError = function(){
 }
 
 /**
- * @private @method
+ * @private
  * @desc Listens to the various WebSocket events
  */
 Game_Server.prototype.listen = function(){
@@ -84,7 +84,7 @@ Game_Server.prototype.listen = function(){
 }
 
 /**
- * @public @method
+ * @public 
  * @arg {string} event The event code to send 
  * @arg {object} message The contents of the message
  * @arg {string} targetPlayer The room code of the target room
@@ -95,7 +95,7 @@ Game_Server.prototype.sendMessageToPlayer = function(event, message, targetPlaye
 }
 
 /**
- * @public @method
+ * @public 
  * @arg {string} event The event code to send 
  * @arg {object} message The contents of the message
  * @arg {string} targetRoom The room code of the target room
@@ -107,8 +107,9 @@ Game_Server.prototype.broadcastMessageToRoom = function(event, message){
 
 Object.defineProperties(Game_Server.prototype, {
     /**
-     * @public @property
-     * @type {boolean}
+     * @instance
+     * @memberof Game_Server
+     * @member {boolean}
      */
     isConnected: {
         get(){
@@ -116,8 +117,9 @@ Object.defineProperties(Game_Server.prototype, {
         }
     },
     /**
-     * @public @property
-     * @type {boolean}
+     * @instance
+     * @memberof Game_Server
+     * @member {boolean}
      */
     isError: {
         get(){

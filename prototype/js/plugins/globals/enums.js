@@ -1,5 +1,5 @@
 /** 
- * @enum 
+ * @enum {number}
  * @description The types of messages that can be received by the client from the server
 */
 const MessageType = {
@@ -9,7 +9,7 @@ const MessageType = {
 }
 
 /** 
- * @enum
+ * @enum {string}
  * @description Potential individual message event codes that could be received by the client from the server
 */
 const IndividualMessageEventCode = {
@@ -19,17 +19,18 @@ const IndividualMessageEventCode = {
 }
 
 /** 
- * @enum
+ * @enum {string}
  * @description Potential broadcast message event codes that could be received by the client from the server
 */
 const BroadcastMessageEventCode = {
     PlayerLeftRoom: "playerLeftRoom",
     PlayerJoinedRoom: "playerJoinedRoom",
-    PlayerMoveStraight: "playerMoveStraight"
+    PlayerMoveStraight: "playerMoveStraight",
+    ChatMessage: "chatMessage"
 }
 
 /** 
- * @enum
+ * @enum {number}
  * @description Codes for closing WebSocket connections
 */
 const CloseCode = {

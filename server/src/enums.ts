@@ -12,7 +12,8 @@ export enum IndividualMessageEventCode {
 export enum BroadcastMessageEventCode {
     PlayerLeftRoom = "playerLeftRoom",
     PlayerJoinedRoom = "playerJoinedRoom",
-    PlayerMoveStraight = "playerMoveStraight"
+    PlayerMoveStraight = "playerMoveStraight",
+    ChatMessage = "chatMessage"
 }
 
 export enum MessageType {

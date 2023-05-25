@@ -1,5 +1,5 @@
 /** 
- * @namespace MessageProcessor
+ * @memberof MessageProcessor
  * @description Contains all methods for processing connection-related messages from the server
 */
 
@@ -8,15 +8,20 @@
 //====================================================
 
 /**
- * @public @method
+ * @static
  * @arg { {RoomCode: string} } message 
  */
 Util_MessageProcessor.individual.roomNoExist = function(message){
+    
+    if(!("RoomCode" in message)){
+        // Handle error
+        return;
+    }
     $gameLobby.handleRoomNoExist(message.RoomCode.toUpperCase());
 }
 
 /**
- * @public @method
+ * @static
  * @arg { {PlayerId: string, PlayerUsername: string} } message 
  */
 Util_MessageProcessor.individual.playerInformation = function(message){
@@ -31,7 +36,7 @@ Util_MessageProcessor.individual.playerInformation = function(message){
 }
 
 /**
- * @public @method
+ * @static
  * @arg { {RoomCode: string, RoomPlayers: Array<{Id: string, Username: string}> } } message 
  */
 Util_MessageProcessor.individual.roomInformation = function(message){
@@ -64,7 +69,7 @@ Util_MessageProcessor.individual.roomInformation = function(message){
 //====================================================
 
 /**
- * @public @method
+ * @static
  * @arg { {PlayerId: string, PlayerUsername: string} } message 
  */
 Util_MessageProcessor.broadcast.playerJoinedRoom = function(message){
@@ -87,7 +92,7 @@ Util_MessageProcessor.broadcast.playerJoinedRoom = function(message){
 }
 
 /**
- * @public @method
+ * @static
  * @arg { {PlayerId: string, PlayerUsername: string, DisconnectCode: number, DisconnectMessage: string, RoomCode: string} } message 
  */
 Util_MessageProcessor.broadcast.playerLeftRoom = function(message){

@@ -10,21 +10,21 @@
 function Util_MessageProcessor(){}
 
 /**
- * @public @property
- * @type {object}
+ * @static
+ * @member {object}
  * @desc Contains all methods for processing server messages tagged as "individual" messages (not to be broadcasted)
  */
 Util_MessageProcessor.individual = {};
 
 /**
- * @public @property
- * @type {object}
+ * @static 
+ * @member {object}
  * @desc Contains all methods for processing server messages tagged as "broadcast" messages
  */
 Util_MessageProcessor.broadcast = {};
 
 /**
- * @public @method
+ * @static
  * @arg {object} message 
  * @desc Processes a message received from the server
  */
@@ -41,7 +41,7 @@ Util_MessageProcessor.processMessage = function(message){
 }
 
 /**
- * @public @method
+ * @static 
  * @arg {string} event 
  * @arg {object} message 
  * @desc Processes a message received from the server marked as an "individual" message (not to be broadcasted)
@@ -64,7 +64,7 @@ Util_MessageProcessor.processIndividualMessage = function(event, message){
 }
 
 /**
- * @public @method
+ * @static
  * @arg {string} event 
  * @arg {object} message 
  * @desc Processes a message received from the server marked as a "broadcast" message
@@ -81,6 +81,9 @@ Util_MessageProcessor.processBroadcastMessage = function(event, message){
             break;
         case BroadcastMessageEventCode.PlayerMoveStraight:
             Util_MessageProcessor.broadcast.playerMoveStraight(message);
+            break;
+        case BroadcastMessageEventCode.ChatMessage:
+            Util_MessageProcessor.broadcast.chatMessage(message);
             break;
     }
 

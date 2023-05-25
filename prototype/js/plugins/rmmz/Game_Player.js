@@ -1,10 +1,10 @@
+const onlinePlayer_gamePlayer_executeMove_alias = Game_Player.prototype.executeMove;
 /**
  * @external
- * @public @alias @method
+ * @memberof Game_Player
  * @param {number} direction
  * @description Broadcasts the player's position during the execute move method 
  */
-const onlinePlayer_gamePlayer_executeMove_alias = Game_Player.prototype.executeMove;
 Game_Player.prototype.executeMove = function(direction) {
     if(!$gameServer.isConnected || $gameServer.connectionError) return;
     onlinePlayer_gamePlayer_executeMove_alias.call(this, direction);
@@ -13,8 +13,7 @@ Game_Player.prototype.executeMove = function(direction) {
 
 /**
  * @external
- * @public @method
- * @param {number} direction 
+ * @memberof Game_Player
  * @description Movement by touch input no longer defaults to dashing speed
  */
 Game_Player.prototype.updateDashing = function() {
