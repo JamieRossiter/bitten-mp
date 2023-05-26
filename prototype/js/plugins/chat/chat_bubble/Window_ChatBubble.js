@@ -6,7 +6,7 @@ Object.setPrototypeOf(Window_ChatBubble.prototype, Window_Base.prototype);
 Window_ChatBubble.prototype.constructor = Window_ChatBubble;
 
 Window_ChatBubble.prototype.initialize = function(player){
-    Window_Base.prototype.initialize.call(this, new Rectangle(player.mapEvent.screenX(), player.mapEvent.screenY(), Graphics.boxWidth, 100));
+    Window_Base.prototype.initialize.call(this, new Rectangle(player.mapEvent.screenX(), player.mapEvent.screenY(), Graphics.boxWidth, 200));
     this.initMembers(player);
 
     this.contents.fontSize = this._fontSize;
@@ -90,20 +90,39 @@ Window_ChatBubble.prototype.drawChatMessage = function(text){
     this.width = this.textWidth(text) + (this._paddingWidth + 5);
     this.height = 45;
 
-    const word = text.split(" ");
+    const words = text.split(" ");
     let x2 = 0;
     let y2 = -10;
     let lines = 1;
+    let largestWidth = 0;
+    let longestWord = "";
 
-    word.forEach(word => {
+    words.forEach(word => {
         const width = this.textWidth(word + " "); // Get word width
 
         // If the width of the previous words + the incoming words is as wide as or wider than the max width
         if ((x2 + width) + this._paddingWidth >= this._maxWidth) {
-            this.width = x2 + this._paddingWidth; // Make width of window as wide as the last word that fits on the line
-            y2 += this.lineHeight() - this._fontSize;
+            
+            // Crop the window width to the largest width
+            if(largestWidth < (x2 + this._paddingWidth)){
+                largestWidth = x2 + (this._paddingWidth);
+                this.width = largestWidth;
+            }
+
+            // Check that width of longest word is not longer than current window width
+            if(longestWord.length < word.length && (this.textWidth(word) + this._paddingWidth) > this.width){
+                longestWord = word;
+                this.width = this.textWidth(longestWord) + (this._paddingWidth + 5);
+            }
+            
             x2 = 0;
-            lines++;
+
+            // Handle long one word messages
+            if(!(words.length === 1)){
+                y2 += this.lineHeight() - this._fontSize;
+                lines++;
+            }
+            
             switch(lines){
                 case 2:
                     this.height = 63;
@@ -111,10 +130,18 @@ Window_ChatBubble.prototype.drawChatMessage = function(text){
                 case 3:
                     this.height = 85;
                     break;
-                default:
-                    this.height = 300;
+                case 4:
+                    this.height = 102;
+                    break;
+                case 5:
+                    this.height = 120;
+                    break;
+                case 6: 
+                    this.height = 143;
+                    break;
             }
         }
+
         this.drawText(word + " ", x2, y2);
         x2 += width;
     })

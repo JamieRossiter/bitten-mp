@@ -14,13 +14,11 @@ Input.keyMapper = {
     32: "ok", // space
     33: "pageup", // pageup
     34: "pagedown", // pagedown
-    37: "left", // left arrow
-    38: "up", // up arrow
-    39: "right", // right arrow
-    40: "down", // down arrow
-    81: "pageup", // Q
+    65: "left", // left arrow
+    87: "up", // up arrow
+    68: "right", // right arrow
+    83: "down", // down arrow
     84: "chat", // T
-    87: "pagedown", // W
     90: "ok", // Z
     98: "down", // numpad 2
     100: "left", // numpad 4

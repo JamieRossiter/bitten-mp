@@ -6,7 +6,7 @@ Object.setPrototypeOf(Window_ChatInput.prototype, Window_Base.prototype);
 Window_ChatInput.prototype.constructor = Window_ChatInput;
 
 Window_ChatInput.prototype.initialize = function(){
-    Window_Base.prototype.initialize.call(this, new Rectangle(0, 0, Graphics.boxWidth, 60));
+    Window_Base.prototype.initialize.call(this, new Rectangle(0, 0, Graphics.boxWidth - (Graphics.boxWidth / 6), 60));
     this.y = Graphics.boxHeight - this.height;
     this._cursor = null;
     this._cursorFrames = 0;
@@ -28,13 +28,19 @@ Window_ChatInput.prototype.drawCursor = function(){
 }
 
 Window_ChatInput.prototype.drawInput = function(){
-    this._currentInput = $gameChat.currentInput;
+    if($gameChat.currentInput.length > 0){
+        this.changeTextColor("white");
+        this._currentInput = $gameChat.currentInput;
+    } else {
+        this.changeTextColor("grey");
+        this._currentInput = "Write a message";
+    }
     this._currentInputWidth = this.textWidth(this._currentInput);
-    this.drawText(this._currentInput, 8, 0, this._currentInputWidth + 25, "left");
+    this.drawText(this._currentInput, 6, 0, this._currentInputWidth + 25, "left");
 }
 
 Window_ChatInput.prototype.updateCursorPosition = function(){
-    if(this._currentInput){
+    if($gameChat.currentInput){
         this._cursor.x = this._currentInputWidth + 23;
     } else {
         this._cursor.x = 20;

@@ -6,7 +6,7 @@ const onlinePlayer_gamePlayer_executeMove_alias = Game_Player.prototype.executeM
  * @description Broadcasts the player's position during the execute move method 
  */
 Game_Player.prototype.executeMove = function(direction) {
-    if(!$gameServer.isConnected || $gameServer.connectionError) return;
+    if(!$gameServer.isConnected || $gameServer.connectionError || $gameChat.isActive) return;
     onlinePlayer_gamePlayer_executeMove_alias.call(this, direction);
     $gameRoom.broadcastPlayerMoveStraight({x: $gamePlayer.x, y: $gamePlayer.y, dir: direction});
 };

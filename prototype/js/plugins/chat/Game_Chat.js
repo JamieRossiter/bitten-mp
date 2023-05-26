@@ -3,10 +3,18 @@ function Game_Chat(){
 }
 
 Game_Chat.prototype.initialize = function(){
+    this.initMembers();
+}
+
+Game_Chat.prototype.initMembers = function(){
     this._isActive = false;
     this._currentInput = "";
+    this._scrolledInput = "";
     this._isInputting = false;
     this._chatInputWindow = null;
+
+    this._maxInputCharacters = 50; 
+    this._maxCharacters = 100;
 
     this._keyInputListener = this.keyboardInputListener.bind(this);
     this._keyReleaseListener = this.keyboardReleaseListener.bind(this);
@@ -14,16 +22,43 @@ Game_Chat.prototype.initialize = function(){
 
 Game_Chat.prototype.keyboardInputListener = function(keyEvent){
     const key = keyEvent.key;
+    const totalInput = this._scrolledInput + this._currentInput;
     
-    if(this.isKeySpace(key)) this._currentInput += " ";
-    else if(this.isKeyBackspace(key)) this._currentInput = this._currentInput.slice(0, -1);
-    else if(this.isKeyEnter(key)){
-        this.activatePlayerChatBubble($gameRoom.currentPlayer, this._currentInput);
-        $gameRoom.broadcastChatMessage(this._currentInput);
+    // Handle key press
+    if(this.isKeySpace(key) && (totalInput.length <= this._maxCharacters)){
+
+        this._currentInput += " ";
+
+    } else if(this.isKeyBackspace(key)){
+        
+        // Handle text scroll
+        if(this._scrolledInput.length > 0){
+            this._currentInput = this._scrolledInput[this._scrolledInput.length - 1] + this._currentInput;
+            this._scrolledInput = this._scrolledInput.slice(0, -1);
+        }
+        this._currentInput = this._currentInput.slice(0, -1);
+
+    } else if(this.isKeyEnter(key)){
+        
+        if(!totalInput.trim()) return; 
+        this.activatePlayerChatBubble($gameRoom.currentPlayer, totalInput.trim());
+        $gameRoom.broadcastChatMessage(totalInput.trim());
         this._currentInput = "";
+        this._scrolledInput = "";
+
+    } else if(this.isKeyValid(key) && ((totalInput.length) <= this._maxCharacters)){
+        
+        this._currentInput += key;
+
+    } else return;
+
+    // Handle text scroll
+    if(this._currentInput.length >= this._maxInputCharacters){
+    
+        this._scrolledInput += this._currentInput[this._maxInputCharacters - this._currentInput.length];
+        this._currentInput = this._currentInput.substring(1);
+    
     }
-    else if(this.isKeyValid(key)) this._currentInput += keyEvent.key;
-    else return;
 
     this._isInputting = true;
 }
