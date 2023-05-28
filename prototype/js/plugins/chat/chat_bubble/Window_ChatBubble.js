@@ -24,6 +24,9 @@ Window_ChatBubble.prototype.initMembers = function(player){
     this._targetOpenFrames = 300;
     this._fadeSpeed = 35;
 
+    this._typingIndicator = ".";
+    this._typingIndicatorFrames = 0;
+
     this._isActive = false;
 
     this._player = player;
@@ -146,3 +149,11 @@ Window_ChatBubble.prototype.drawChatMessage = function(text){
         x2 += width;
     })
 }
+
+Object.defineProperties(Window_ChatBubble.prototype, {
+    isActive: {
+        get(){
+            return this._isActive;
+        }
+    }
+})

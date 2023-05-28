@@ -57,7 +57,9 @@ Util_MessageProcessor.individual.roomInformation = function(message){
             return;
         }
         const newOnlinePlayer = new Game_OnlinePlayer(player.Id, player.Username);
-        const newPlayerEvent = $gameMap.events().find(event => event.isPlayer);
+        const newPlayerEvent = $gameMap.events().find(event => {
+            return event.isPlayer() && !event.isPlaying
+        });
         $gameRoom.joinGame(newPlayerEvent, newOnlinePlayer);
         newPlayerEvent.setPosition(player.Position.x, player.Position.y);
         newPlayerEvent.setDirection(player.Position.dir);
@@ -82,7 +84,9 @@ Util_MessageProcessor.broadcast.playerJoinedRoom = function(message){
         return;
     }
     const newOnlinePlayer = new Game_OnlinePlayer(message.PlayerId, message.PlayerUsername);
-    const newPlayerEvent = $gameMap.events().find(event => event.isPlayer);
+    const newPlayerEvent = $gameMap.events().find(event => {
+        return event.isPlayer() && !event.isPlaying;
+    });
     if(!newPlayerEvent){
         // Handle error
         return;

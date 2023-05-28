@@ -30,6 +30,8 @@ Game_OnlinePlayer.prototype.initialize = function(id, username){
      * @description The physical event that represents the online player object 
      * */
     this._mapEvent = null;
+    this._chatBubbleWindow = null;
+    this._typingIndicatorWindow = null;
 }
 
 /**
@@ -58,6 +60,15 @@ Game_OnlinePlayer.prototype.destroyUsernameWindow = function(){
 Game_OnlinePlayer.prototype.createChatBubbleWindow = function(){
     this._chatBubbleWindow = new Window_ChatBubble(this);
     SceneManager._scene.addChild(this._chatBubbleWindow);
+}
+
+Game_OnlinePlayer.prototype.createTypingIndicatorWindow = function(){
+    this._typingIndicatorWindow = new Window_TypingIndicator(this);
+    SceneManager._scene.addChild(this._typingIndicatorWindow);
+}
+
+Game_OnlinePlayer.prototype.destroyTypingIndicatorWindow = function(){
+    SceneManager._scene.removeChild(this._typingIndicatorWindow);
 }
 
 Object.defineProperties(Game_OnlinePlayer.prototype, {
@@ -97,6 +108,12 @@ Object.defineProperties(Game_OnlinePlayer.prototype, {
     chatBubbleWindow: {
         get(){
             return this._chatBubbleWindow;
+        }
+    },
+
+    typingIndicatorWindow: {
+        get(){
+            return this._typingIndicatorWindow;
         }
     }
 })

@@ -18,5 +18,6 @@ var $plugins =
 {"name":"lobby/Game_Lobby","status":true,"description":"","parameters":{}},
 {"name":"chat/input/Window_ChatInput","status":true,"description":"","parameters":{}},
 {"name":"chat/Game_Chat","status":true,"description":"","parameters":{}},
-{"name":"chat/chat_bubble/Window_ChatBubble","status":true,"description":"","parameters":{}}
+{"name":"chat/chat_bubble/Window_ChatBubble","status":true,"description":"","parameters":{}},
+{"name":"chat/chat_bubble/Window_TypingIndicator","status":true,"description":"","parameters":{}}
 ];

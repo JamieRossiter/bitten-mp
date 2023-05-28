@@ -68,6 +68,11 @@ function processBroadcastClientMessage(event: BroadcastMessageEventCode, message
             }
 
             break;
+        case BroadcastMessageEventCode.PlayerIsTyping:
+
+            if(!("PlayerId" in message || "IsTyping" in message)) return;
+
+            break;
     }
 
     roomManager.broadcastMessageToRoom(targetRoom, event, message, player);

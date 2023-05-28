@@ -85,6 +85,8 @@ Util_MessageProcessor.processBroadcastMessage = function(event, message){
         case BroadcastMessageEventCode.ChatMessage:
             Util_MessageProcessor.broadcast.chatMessage(message);
             break;
+        case BroadcastMessageEventCode.PlayerIsTyping:
+            Util_MessageProcessor.broadcast.playerIsTyping(message);
     }
 
 }

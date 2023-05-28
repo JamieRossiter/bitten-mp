@@ -94,6 +94,13 @@ Game_Room.prototype.broadcastChatMessage = function(chatMessage){
     )
 }
 
+Game_Room.prototype.broadcastPlayerIsTyping = function(isTyping){
+    $gameServer.broadcastMessageToRoom(
+        BroadcastMessageEventCode.PlayerIsTyping,
+        { PlayerId: this._currentPlayer.id, IsTyping: isTyping }
+    )
+}
+
 /**
  * @arg {Game_Event} mapEvent
  * @arg {Game_OnlinePlayer} onlinePlayer
@@ -102,10 +109,12 @@ Game_Room.prototype.joinGame = function(mapEvent, onlinePlayer){
     onlinePlayer.setMapEvent(mapEvent);   
     onlinePlayer.createUsernameWindow();
     onlinePlayer.createChatBubbleWindow();
+    onlinePlayer.createTypingIndicatorWindow();
     onlinePlayer.mapEvent.setTransparent(false);
     onlinePlayer.mapEvent.setPattern(2);
     onlinePlayer.mapEvent.setPosition(8, 6);
     $gameRoom.addPlayer(onlinePlayer);
+    onlinePlayer.mapEvent.isPlaying = true;
 }
 
 /**

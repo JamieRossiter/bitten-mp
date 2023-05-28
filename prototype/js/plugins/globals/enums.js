@@ -26,7 +26,8 @@ const BroadcastMessageEventCode = {
     PlayerLeftRoom: "playerLeftRoom",
     PlayerJoinedRoom: "playerJoinedRoom",
     PlayerMoveStraight: "playerMoveStraight",
-    ChatMessage: "chatMessage"
+    ChatMessage: "chatMessage",
+    PlayerIsTyping: "playerIsTyping"
 }
 
 /** 

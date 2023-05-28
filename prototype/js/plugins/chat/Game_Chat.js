@@ -11,6 +11,8 @@ Game_Chat.prototype.initMembers = function(){
     this._currentInput = "";
     this._scrolledInput = "";
     this._isInputting = false;
+    this._isTyping = false;
+
     this._chatInputWindow = null;
 
     this._maxInputCharacters = 50; 
@@ -36,12 +38,23 @@ Game_Chat.prototype.keyboardInputListener = function(keyEvent){
             this._currentInput = this._scrolledInput[this._scrolledInput.length - 1] + this._currentInput;
             this._scrolledInput = this._scrolledInput.slice(0, -1);
         }
+        // If the player removes all text from input, deactivate typing indicator window
+        if(totalInput.length <= 1){
+            $gameRoom.broadcastPlayerIsTyping(false);
+            this.deactivatePlayerTypingIndicator($gameRoom.currentPlayer);
+            this._isTyping = false;
+        }
         this._currentInput = this._currentInput.slice(0, -1);
 
     } else if(this.isKeyEnter(key)){
         
         if(!totalInput.trim()) return; 
+
         this.activatePlayerChatBubble($gameRoom.currentPlayer, totalInput.trim());
+        $gameRoom.broadcastPlayerIsTyping(false);
+        this.deactivatePlayerTypingIndicator($gameRoom.currentPlayer);
+        this._isTyping = false;
+
         $gameRoom.broadcastChatMessage(totalInput.trim());
         this._currentInput = "";
         this._scrolledInput = "";
@@ -49,6 +62,13 @@ Game_Chat.prototype.keyboardInputListener = function(keyEvent){
     } else if(this.isKeyValid(key) && ((totalInput.length) <= this._maxCharacters)){
         
         this._currentInput += key;
+
+        // If the player has started typing and their chat bubble window is not active, activate the typing indicator window
+        if(!this._isTyping && !$gameRoom.currentPlayer.chatBubbleWindow.isActive){
+            $gameChat.activatePlayerTypingIndicator($gameRoom.currentPlayer);
+            $gameRoom.broadcastPlayerIsTyping(true);
+            this._isTyping = true;
+        }      
 
     } else return;
 
@@ -106,6 +126,14 @@ Game_Chat.prototype.activatePlayerChatBubble = function(player, message){
     player.chatBubbleWindow.activate();
 }
 
+Game_Chat.prototype.activatePlayerTypingIndicator = function(player){
+    player.typingIndicatorWindow.activate();
+}
+
+Game_Chat.prototype.deactivatePlayerTypingIndicator = function(player){
+    player.typingIndicatorWindow.deactivate();
+}
+
 Object.defineProperties(Game_Chat.prototype, {
     currentInput: {
         get(){
@@ -136,5 +164,8 @@ Scene_Map.prototype.update = function(){
         $gameChat.activate();
     } else if (Input.isTriggered("escape") && $gameChat.isActive){
         $gameChat.deactivate();
+        $gameRoom.broadcastPlayerIsTyping(false);
+        $gameChat._isTyping = false;
+        $gameChat.deactivatePlayerTypingIndicator($gameRoom.currentPlayer);
     }
 }
