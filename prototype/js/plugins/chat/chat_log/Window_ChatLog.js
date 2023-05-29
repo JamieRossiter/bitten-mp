@@ -29,7 +29,6 @@ Window_ChatLog.prototype.drawChatMessageLog = function(){
         let y = this.height - ($gameChat.chatInputWindow.height + (30 * (index + 1)));
 
         if(!player){
-            lines++;
             this.drawTextEx(message, x, y - 5);
             return;
         }
