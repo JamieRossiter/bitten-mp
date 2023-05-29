@@ -81,9 +81,24 @@ Game_Lobby.prototype.showPrompts = function(){
     $gameServer.connect(username, isHost, roomCode, playerPosition);
 }
 
+/**
+ * @param {Role} role 
+ */
 Game_Lobby.prototype.assignRole = function(role){
     $gameRoom.broadcastPlayerRoleAssignment(role);
     $gameRoom.currentPlayer.setRole(role);
+}
+
+/**
+ * @desc Tells the current player (must be a host) and every other player in the lobby to perform a map transfer to the game map in preparation for game start
+ */
+Game_Lobby.prototype.startGame = function(){
+    if(!$gameRoom.currentPlayer.isHost){
+        // Handle error
+        return;
+    }
+    $gameRoom.broadcastMapTransfer(2, {x: 0, y: 0, dir: 2}); // Transfer other players to map
+    $gamePlayer.reserveTransfer(2, 0, 0, 2, 0); // Transfer player to game map
 }
 
 /**
@@ -104,7 +119,7 @@ Game_Lobby.prototype.validatePromptInput = function(promptInput){
     const input = promptInput ?? "";
     const trimmed = input.trim();
     const isAlphanumerical = RegExp(/[A-Z][a-z][0-9]/).test(trimmed);
-    return (isAlphanumerical || trimmed);
+    return (isAlphanumerical || trimmed) || input === "";
 }
 
 

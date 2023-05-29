@@ -1,6 +1,6 @@
 /** 
  * @memberof MessageProcessor
- * @description Contains all methods for processing game start messages from the server
+ * @description Contains all methods for processing game setup messages from the server
 */
 
 /**

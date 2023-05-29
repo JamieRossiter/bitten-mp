@@ -11,7 +11,7 @@ function Game_OnlinePlayer(){
  * @arg {string} id Online player ID
  * @arg {string} username Online player username
 */
-Game_OnlinePlayer.prototype.initialize = function(id, username){
+Game_OnlinePlayer.prototype.initialize = function(id, username, isHost){
     /** 
      * @private 
      * @type {string} 
@@ -28,8 +28,11 @@ Game_OnlinePlayer.prototype.initialize = function(id, username){
      * @private 
      * @type {Game_Event} 
      * @description The physical event that represents the online player object 
-     * */
+    */
     this._mapEvent = null;
+
+    this._isHost = isHost;
+
     this._chatBubbleWindow = null;
     this._typingIndicatorWindow = null;
     this._role = null;
@@ -134,6 +137,12 @@ Object.defineProperties(Game_OnlinePlayer.prototype, {
     role: {
         get(){
             return this._role;
+        }
+    },
+
+    isHost: {
+        get(){
+            return this._isHost;
         }
     }
 })

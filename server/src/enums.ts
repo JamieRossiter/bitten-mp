@@ -15,7 +15,8 @@ export enum BroadcastMessageEventCode {
     PlayerMoveStraight = "playerMoveStraight",
     ChatMessage = "chatMessage",
     PlayerIsTyping = "playerIsTyping",
-    PlayerAssignedRole = "playerAssignedRole"
+    PlayerAssignedRole = "playerAssignedRole",
+    MapTransfer = "mapTransfer"
 }
 
 export enum MessageType {

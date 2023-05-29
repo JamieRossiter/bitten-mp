@@ -91,6 +91,9 @@ Util_MessageProcessor.processBroadcastMessage = function(event, message){
         case BroadcastMessageEventCode.RoleInformation:
             Util_MessageProcessor.broadcast.playerAssignedRole(message);
             break;
+        case BroadcastMessageEventCode.MapTransfer:
+            Util_MessageProcessor.broadcast.mapTransfer(message);
+            break;
     }
 
 }

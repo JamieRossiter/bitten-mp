@@ -36,15 +36,10 @@ function processBroadcastClientMessage(event: BroadcastMessageEventCode, message
         return;
     }
 
+    let broadcastingPlayer: Player | undefined;
+
     const message: any = messageData.Message;
     if(!message){
-        // Handle error
-        return;
-    }
-
-    // Declare player
-    const player: Player | undefined = playerManager.getPlayerById(message.PlayerId);
-    if(!player){
         // Handle error
         return;
     }
@@ -56,9 +51,11 @@ function processBroadcastClientMessage(event: BroadcastMessageEventCode, message
                 // Handle error
                 return;
             }
-            player.setX(message.X);
-            player.setY(message.Y);
-            player.setDirection(message.Dir);
+
+            broadcastingPlayer = playerManager.getPlayerById(message.PlayerId);
+            broadcastingPlayer?.setX(message.X);
+            broadcastingPlayer?.setY(message.Y);
+            broadcastingPlayer?.setDirection(message.Dir);
 
             break;
         case BroadcastMessageEventCode.ChatMessage:
@@ -68,10 +65,14 @@ function processBroadcastClientMessage(event: BroadcastMessageEventCode, message
                 return;
             }
 
+            broadcastingPlayer = playerManager.getPlayerById(message.PlayerId);
+
             break;
         case BroadcastMessageEventCode.PlayerIsTyping:
 
             if(!("PlayerId" in message || "IsTyping" in message)) return;
+
+            broadcastingPlayer = playerManager.getPlayerById(message.PlayerId);
 
             break;
 
@@ -82,10 +83,23 @@ function processBroadcastClientMessage(event: BroadcastMessageEventCode, message
                 return;
             }
 
+            broadcastingPlayer = playerManager.getPlayerById(message.PlayerId);
+
+        break;
+        
+        case BroadcastMessageEventCode.MapTransfer:
+                        
+            if(!("HostId" in message || "MapId" in message || "X" in message || "Y" in message || "Dir" in message)){
+                // Handle error
+                return;
+            }
+
+            broadcastingPlayer = playerManager.getPlayerById(message.HostId);
+            
         break;
     }
 
-    roomManager.broadcastMessageToRoom(targetRoom, event, message, player);
+    roomManager.broadcastMessageToRoom(targetRoom, event, message, broadcastingPlayer);
 }
 
 function processIndividualClientMessage(event: IndividualMessageEventCode, messageData: any, playerManager: PlayerManager){

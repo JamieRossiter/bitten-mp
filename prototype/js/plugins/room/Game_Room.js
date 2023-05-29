@@ -108,6 +108,13 @@ Game_Room.prototype.addMessageToLog = function(player, chatMessage){
 }
 
 /**
+ * @returns {Game_OnlinePlayer}
+ */
+Game_Room.prototype.getHost = function(){
+    return Array.from(this._players).find(player => player.isHost);
+}
+
+/**
  * @arg {string} code 
  */
 Game_Room.prototype.setCode = function(code){
@@ -160,6 +167,17 @@ Game_Room.prototype.broadcastPlayerRoleAssignment = function(role){
     $gameServer.broadcastMessageToRoom(
         BroadcastMessageEventCode.RoleInformation,
         { PlayerId: this._currentPlayer.id, Role: role }
+    )
+}
+
+/**
+ * @param {number} mapId 
+ * @param {{x: number, y: number, dir: number}} coords 
+ */
+Game_Room.prototype.broadcastMapTransfer = function(mapId, coords){
+    $gameServer.broadcastMessageToRoom(
+        BroadcastMessageEventCode.MapTransfer,
+        { HostId: this._currentPlayer.id, MapId: mapId, X: coords.x, Y: coords.y, Dir: coords.dir }
     )
 }
 

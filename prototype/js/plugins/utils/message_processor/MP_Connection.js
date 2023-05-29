@@ -26,18 +26,18 @@ Util_MessageProcessor.individual.roomNoExist = function(message){
  */
 Util_MessageProcessor.individual.playerInformation = function(message){
     
-    if(!("PlayerId" in message || "PlayerUsername" in message)){
+    if(!("PlayerId" in message || "PlayerUsername" in message || "IsHost" in message)){
         // Handle error
         return;
     }
-    const currentPlayer = new Game_OnlinePlayer(message.PlayerId, message.PlayerUsername);
+    const currentPlayer = new Game_OnlinePlayer(message.PlayerId, message.PlayerUsername, message.IsHost);
     $gameRoom.setCurrentPlayer(currentPlayer);
     $gameRoom.joinGame($gamePlayer, currentPlayer);
 }
 
 /**
  * @static
- * @arg { {RoomCode: string, RoomPlayers: Array<{Id: string, Username: string}> } } message 
+ * @arg { {RoomCode: string, RoomPlayers: Array<{Id: string, Username: string, Position: string, IsHost: boolean}> } } message 
  */
 Util_MessageProcessor.individual.roomInformation = function(message){
     
@@ -52,11 +52,11 @@ Util_MessageProcessor.individual.roomInformation = function(message){
     // Set room players
     message.RoomPlayers.forEach(player => {
 
-        if(!("Id" in player || "Username" in player || "Position" in player)){
+        if(!("Id" in player || "Username" in player || "Position" in player || "IsHost" in player)){
             // Handle error
             return;
         }
-        const newOnlinePlayer = new Game_OnlinePlayer(player.Id, player.Username);
+        const newOnlinePlayer = new Game_OnlinePlayer(player.Id, player.Username, player.IsHost);
         const newPlayerEvent = $gameMap.events().find(event => {
             return event.isPlayer() && !event.isPlaying
         });
