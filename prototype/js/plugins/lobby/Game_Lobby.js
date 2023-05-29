@@ -81,6 +81,11 @@ Game_Lobby.prototype.showPrompts = function(){
     $gameServer.connect(username, isHost, roomCode, playerPosition);
 }
 
+Game_Lobby.prototype.assignRole = function(role){
+    $gameRoom.broadcastPlayerRoleAssignment(role);
+    $gameRoom.currentPlayer.setRole(role);
+}
+
 /**
  * @param {string} roomCode 
  */

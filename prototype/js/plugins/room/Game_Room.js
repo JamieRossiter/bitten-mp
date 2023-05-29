@@ -153,6 +153,17 @@ Game_Room.prototype.broadcastPlayerIsTyping = function(isTyping){
 }
 
 /**
+ * @param {Game_OnlinePlayer} player 
+ * @param {number} role 
+ */
+Game_Room.prototype.broadcastPlayerRoleAssignment = function(role){
+    $gameServer.broadcastMessageToRoom(
+        BroadcastMessageEventCode.RoleInformation,
+        { PlayerId: this._currentPlayer.id, Role: role }
+    )
+}
+
+/**
  * @arg {Game_Event} mapEvent
  * @arg {Game_OnlinePlayer} onlinePlayer
  */
@@ -209,6 +220,17 @@ Object.defineProperties(Game_Room.prototype, {
     chatMessageLog: {
         get(){
             return this._chatMessageLog;
+        }
+    },
+
+    /**
+     * @instance
+     * @memberof Game_Room
+     * @type {Set<Game_OnlinePlayer>}
+     */
+    players: {
+        get(){
+            return this._players;
         }
     }
 })

@@ -8,6 +8,7 @@ var $plugins =
 {"name":"utils/message_processor/MP_Connection","status":true,"description":"","parameters":{}},
 {"name":"utils/message_processor/MP_Movement","status":true,"description":"","parameters":{}},
 {"name":"utils/message_processor/MP_Chat","status":true,"description":"","parameters":{}},
+{"name":"utils/message_processor/MP_GameStart","status":true,"description":"","parameters":{}},
 {"name":"online_player/Window_Username","status":true,"description":"","parameters":{}},
 {"name":"online_player/Game_OnlinePlayer","status":true,"description":"","parameters":{}},
 {"name":"rmmz/Game_Player","status":true,"description":"","parameters":{}},

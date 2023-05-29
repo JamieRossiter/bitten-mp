@@ -32,6 +32,7 @@ Game_OnlinePlayer.prototype.initialize = function(id, username){
     this._mapEvent = null;
     this._chatBubbleWindow = null;
     this._typingIndicatorWindow = null;
+    this._role = null;
 }
 
 /**
@@ -69,6 +70,19 @@ Game_OnlinePlayer.prototype.createTypingIndicatorWindow = function(){
 
 Game_OnlinePlayer.prototype.destroyTypingIndicatorWindow = function(){
     SceneManager._scene.removeChild(this._typingIndicatorWindow);
+}
+
+Game_OnlinePlayer.prototype.setRole = function(role){
+    this._role = role;
+
+    switch(this._role){
+        case Role.Vampire:
+            this.mapEvent.setImage("npc4", 3);
+            this.destroyUsernameWindow();
+            break;
+        case Role.Hunter:
+            break;
+    }
 }
 
 Object.defineProperties(Game_OnlinePlayer.prototype, {
@@ -114,6 +128,12 @@ Object.defineProperties(Game_OnlinePlayer.prototype, {
     typingIndicatorWindow: {
         get(){
             return this._typingIndicatorWindow;
+        }
+    },
+
+    role: {
+        get(){
+            return this._role;
         }
     }
 })

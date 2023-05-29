@@ -16,6 +16,10 @@ Game_Event.prototype.isPlayer = function(){
     return this.event().note.includes("player");
 }
 
+Game_Event.prototype.isNpc = function(){
+    return this.event().note.includes("npc");
+}
+
 Object.defineProperties(Game_Event.prototype, {
     isPlaying: {
         get(){

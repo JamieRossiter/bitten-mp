@@ -87,6 +87,10 @@ Util_MessageProcessor.processBroadcastMessage = function(event, message){
             break;
         case BroadcastMessageEventCode.PlayerIsTyping:
             Util_MessageProcessor.broadcast.playerIsTyping(message);
+            break;
+        case BroadcastMessageEventCode.RoleInformation:
+            Util_MessageProcessor.broadcast.playerAssignedRole(message);
+            break;
     }
 
 }

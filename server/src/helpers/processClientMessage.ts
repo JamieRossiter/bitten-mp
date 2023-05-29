@@ -21,6 +21,7 @@ export function processClientMessage(messageData: any, roomManager: RoomManager,
             processBroadcastClientMessage(event as BroadcastMessageEventCode, messageData, roomManager, playerManager);
             break;
         case MessageType.Individual:
+            processIndividualClientMessage(event as IndividualMessageEventCode, messageData, playerManager);
             break;
         case MessageType.Server:
             break;
@@ -73,7 +74,39 @@ function processBroadcastClientMessage(event: BroadcastMessageEventCode, message
             if(!("PlayerId" in message || "IsTyping" in message)) return;
 
             break;
+
+        case BroadcastMessageEventCode.PlayerAssignedRole:
+
+            if(!("PlayerId" in message || "Role" in message)){
+                // Handle error
+                return;
+            }
+
+        break;
     }
 
     roomManager.broadcastMessageToRoom(targetRoom, event, message, player);
+}
+
+function processIndividualClientMessage(event: IndividualMessageEventCode, messageData: any, playerManager: PlayerManager){
+    
+    if(!("PlayerId" in messageData)){
+        // Handle error
+        return;
+    }
+
+    // Declare player
+    const player: Player | undefined = playerManager.getPlayerById(messageData.PlayerId);
+    if(!player){
+        // Handle error
+        return;
+    }
+
+    // Extract message
+    const message: any = messageData.Message;
+    if(!message){
+        // Handle error
+        return;
+    }
+
 }

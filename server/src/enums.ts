@@ -14,7 +14,8 @@ export enum BroadcastMessageEventCode {
     PlayerJoinedRoom = "playerJoinedRoom",
     PlayerMoveStraight = "playerMoveStraight",
     ChatMessage = "chatMessage",
-    PlayerIsTyping = "playerIsTyping"
+    PlayerIsTyping = "playerIsTyping",
+    PlayerAssignedRole = "playerAssignedRole"
 }
 
 export enum MessageType {

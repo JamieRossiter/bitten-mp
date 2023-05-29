@@ -27,7 +27,8 @@ const BroadcastMessageEventCode = {
     PlayerJoinedRoom: "playerJoinedRoom",
     PlayerMoveStraight: "playerMoveStraight",
     ChatMessage: "chatMessage",
-    PlayerIsTyping: "playerIsTyping"
+    PlayerIsTyping: "playerIsTyping",
+    PlayerAssignedRole: "playerAssignedRole"
 }
 
 /** 
@@ -40,4 +41,9 @@ const CloseCode = {
     ServerError: 1011,
     ServerRestart: 1012,
     Kicked: 4000
+}
+
+const Role = {
+    Vampire: 0,
+    Hunter: 1
 }

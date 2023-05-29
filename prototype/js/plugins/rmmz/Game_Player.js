@@ -1,14 +1,26 @@
-const onlinePlayer_gamePlayer_executeMove_alias = Game_Player.prototype.executeMove;
 /**
  * @external
  * @memberof Game_Player
  * @param {number} direction
  * @description Broadcasts the player's position during the execute move method 
  */
-Game_Player.prototype.executeMove = function(direction) {
+Game_Player.prototype.moveStraight = function(d) {
     if(!$gameServer.isConnected || $gameServer.connectionError || $gameChat.isActive) return;
-    onlinePlayer_gamePlayer_executeMove_alias.call(this, direction);
-    $gameRoom.broadcastPlayerMoveStraight({x: $gamePlayer.x, y: $gamePlayer.y, dir: direction});
+    
+    this.setMovementSuccess(this.canPass(this._x, this._y, d));
+    if (this.isMovementSucceeded()) {
+        this.setDirection(d);
+        this._x = $gameMap.roundXWithDirection(this._x, d);
+        this._y = $gameMap.roundYWithDirection(this._y, d);
+        this._realX = $gameMap.xWithDirection(this._x, this.reverseDir(d));
+        this._realY = $gameMap.yWithDirection(this._y, this.reverseDir(d));
+        this.increaseSteps();
+        $gameRoom.broadcastPlayerMoveStraight({x: this._x, y: this._y, dir: d});
+    } else {
+        this.setDirection(d);
+        this.checkEventTriggerTouchFront(d);
+    }
+    
 };
 
 /**

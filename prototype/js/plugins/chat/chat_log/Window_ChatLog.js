@@ -23,6 +23,8 @@ Window_ChatLog.prototype.update = function(){
 
 Window_ChatLog.prototype.drawChatMessageLog = function(){
 
+    if(!$gameRoom.chatMessageLog) return;
+    
     $gameRoom.chatMessageLog.toReversed().forEach(({player, message}, index) => {
 
         let x = 10;
