@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: online_player/Window_Username.js</title>
+    <title>JSDoc: External: initialize</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,75 +17,97 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: online_player/Window_Username.js</h1>
+    <h1 class="page-title">External: initialize</h1>
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>/** 
- * @class
- * @description The username window that follows each player. 
-*/
+        <h2>initialize</h2>
+        
+    
+</header>
 
-function Window_Username(){
-    this.initialize(...arguments);
-}
+<article>
+    <div class="container-overview">
+    
+        
 
-Object.setPrototypeOf(Window_Username.prototype, Window_Base.prototype);
-Window_Username.prototype.constructor = Window_Username;
+        
 
-/**
- * @private 
- * @arg {Game_OnlinePlayer} player The online player to which the username window is attached
-*/
-Window_Username.prototype.initialize = function(player){
-    Window_Base.prototype.initialize.call(this, new Rectangle(0, 0, 200, 60));
-    /**
-     * @private 
-     * @type {Game_OnlinePlayer}
-     */
-    this._player = player;
 
-    /**
-     * @private 
-     * @type {string}
-     */
-    this._username = this._player.username ?? "player";
+<dl class="details">
 
-    this.setBackgroundType(2);
-    this.drawUsername();
-}
+    
 
-/**
- * @private 
- */
-Window_Username.prototype.update = function(){
-    this.updateMovement();
-}
+    
 
-/**
- * @private 
- */
-Window_Username.prototype.updateMovement = function(){
-    this.width = this.textWidth(this._username) + 25;
-    this.x = this._player.mapEvent.screenX() - this.width / 2;
-    this.y = this._player.mapEvent.screenY() - 10;
-}
+    
 
-/**
- * @private 
- */
-Window_Username.prototype.drawUsername = function(){
-    this.drawTextEx(this._username, 0, 0);
-}
+    
 
-</code></pre>
-        </article>
-    </section>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="rmmz_Game_Event.js.html">rmmz/Game_Event.js</a>, <a href="rmmz_Game_Event.js.html#line5">line 5</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

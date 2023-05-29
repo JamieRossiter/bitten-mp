@@ -29,6 +29,12 @@ Game_Room.prototype.initialize = function(){
      * @desc This game instance's controlling player
      */
     this._currentPlayer = null;
+
+    /**
+     * @private
+     * @type {Array<string>}
+     */
+    this._chatMessageLog = [];
 }
 
 /**
@@ -63,6 +69,45 @@ Game_Room.prototype.findPlayerById = function(id){
 }
 
 /**
+ * @param {Game_OnlinePlayer} player 
+ * @param {string} chatMessage 
+ */
+Game_Room.prototype.addMessageToLog = function(player, chatMessage){
+    if(!$gameChat.chatLogWindow) return;
+
+    let messageToLog = "";
+    let isWrapped = false;
+    const playerUsernameWidth = $gameChat.chatLogWindow.textWidth(player.username + ": ");
+    const tokens = chatMessage.split(" ");    
+
+    tokens.forEach(word => {
+        const currentWordWidth = $gameChat.chatLogWindow.textWidth(word + " ");
+        const currentMessageWidth = $gameChat.chatLogWindow.textWidth(messageToLog); // Get message width)
+
+        if (((currentMessageWidth + playerUsernameWidth + currentWordWidth) + 25) >= $gameChat.chatLogWindow.width) {           
+            if(isWrapped){
+                this._chatMessageLog.push({message: messageToLog.trim()});
+            } else {
+                this._chatMessageLog.push({player: player, message: messageToLog.trim()});
+            }
+            messageToLog = "";
+            isWrapped = true;
+        } 
+        
+        messageToLog += word + " ";
+    })
+
+    if(isWrapped){
+        this._chatMessageLog.push({message: messageToLog.trim()});
+        isWrapped = false;
+        return;
+    }
+
+    this._chatMessageLog.push({player: player, message: messageToLog.trim()});
+    
+}
+
+/**
  * @arg {string} code 
  */
 Game_Room.prototype.setCode = function(code){
@@ -87,6 +132,9 @@ Game_Room.prototype.broadcastPlayerMoveStraight = function(coords){
     );
 }
 
+/**
+ * @param {string} chatMessage 
+ */
 Game_Room.prototype.broadcastChatMessage = function(chatMessage){
     $gameServer.broadcastMessageToRoom(
         BroadcastMessageEventCode.ChatMessage,
@@ -94,6 +142,9 @@ Game_Room.prototype.broadcastChatMessage = function(chatMessage){
     )
 }
 
+/**
+ * @param {boolean} isTyping 
+ */
 Game_Room.prototype.broadcastPlayerIsTyping = function(isTyping){
     $gameServer.broadcastMessageToRoom(
         BroadcastMessageEventCode.PlayerIsTyping,
@@ -131,7 +182,7 @@ Object.defineProperties(Game_Room.prototype, {
     /**
      * @instance
      * @memberof Game_Room
-     * @member {string}
+     * @type {string}
      */
     code: {
         get(){
@@ -142,11 +193,22 @@ Object.defineProperties(Game_Room.prototype, {
     /**
      * @instance
      * @memberof Game_Room
-     * @member {Game_OnlinePlayer}
+     * @type {Game_OnlinePlayer}
      */
     currentPlayer: {
         get(){
             return this._currentPlayer;
+        }
+    },
+
+    /**
+     * @instance
+     * @memberof Game_Room
+     * @type {Array<playerUsername: string, chatMessage: string>}
+     */
+    chatMessageLog: {
+        get(){
+            return this._chatMessageLog;
         }
     }
 })

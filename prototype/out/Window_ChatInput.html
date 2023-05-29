@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Game_OnlinePlayer</title>
+    <title>JSDoc: Class: Window_ChatInput</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Game_OnlinePlayer</h1>
+    <h1 class="page-title">Class: Window_ChatInput</h1>
 
     
 
@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Game_OnlinePlayer<span class="signature">()</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Window_ChatInput<span class="signature">()</span><span class="type-signature"></span></h2>
         
     
 </header>
@@ -41,16 +41,12 @@
     
 
     
-    <h4 class="name" id="Game_OnlinePlayer"><span class="type-signature"></span>new Game_OnlinePlayer<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Window_ChatInput"><span class="type-signature"></span>new Window_ChatInput<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
 
 
-
-<div class="description">
-    A client-side representation of a server player
-</div>
 
 
 
@@ -93,7 +89,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="online_player_Game_OnlinePlayer.js.html">online_player/Game_OnlinePlayer.js</a>, <a href="online_player_Game_OnlinePlayer.js.html#line5">line 5</a>
+        <a href="chat_input_Window_ChatInput.js.html">chat/input/Window_ChatInput.js</a>, <a href="chat_input_Window_ChatInput.js.html#line4">line 4</a>
     </li></ul></dd>
     
 
@@ -143,7 +139,7 @@
 
         
             
-<h4 class="name" id="_id"><span class="type-signature">(private) </span>_id<span class="type-signature"> :string</span></h4>
+<h4 class="name" id="_currentInput"><span class="type-signature">(private) </span>_currentInput<span class="type-signature"> :string</span></h4>
 
 
 
@@ -193,7 +189,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="online_player_Game_OnlinePlayer.js.html">online_player/Game_OnlinePlayer.js</a>, <a href="online_player_Game_OnlinePlayer.js.html#line19">line 19</a>
+        <a href="chat_input_Window_ChatInput.js.html">chat/input/Window_ChatInput.js</a>, <a href="chat_input_Window_ChatInput.js.html#line44">line 44</a>
     </li></ul></dd>
     
 
@@ -211,13 +207,81 @@
 
         
             
-<h4 class="name" id="_mapEvent"><span class="type-signature">(private) </span>_mapEvent<span class="type-signature"> :Game_Event</span></h4>
+<h4 class="name" id="_currentInputWidth"><span class="type-signature">(private) </span>_currentInputWidth<span class="type-signature"> :number</span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chat_input_Window_ChatInput.js.html">chat/input/Window_ChatInput.js</a>, <a href="chat_input_Window_ChatInput.js.html#line50">line 50</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="_cursor"><span class="type-signature">(private) </span>_cursor<span class="type-signature"> :Sprite</span></h4>
 
 
 
 
 <div class="description">
-    The physical event that represents the online player object
+    The cursor sprite for the input window
 </div>
 
 
@@ -226,7 +290,7 @@
     <ul>
         <li>
             
-<span class="param-type">Game_Event</span>
+<span class="param-type">Sprite</span>
 
 
         </li>
@@ -265,7 +329,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="online_player_Game_OnlinePlayer.js.html">online_player/Game_OnlinePlayer.js</a>, <a href="online_player_Game_OnlinePlayer.js.html#line32">line 32</a>
+        <a href="chat_input_Window_ChatInput.js.html">chat/input/Window_ChatInput.js</a>, <a href="chat_input_Window_ChatInput.js.html#line24">line 24</a>
     </li></ul></dd>
     
 
@@ -283,10 +347,14 @@
 
         
             
-<h4 class="name" id="_username"><span class="type-signature">(private) </span>_username<span class="type-signature"> :string</span></h4>
+<h4 class="name" id="_cursorDuration"><span class="type-signature">(private) </span>_cursorDuration<span class="type-signature"> :number</span></h4>
 
 
 
+
+<div class="description">
+    The amount of time the cursors stays blinked or unblinked
+</div>
 
 
 
@@ -294,7 +362,7 @@
     <ul>
         <li>
             
-<span class="param-type">string</span>
+<span class="param-type">number</span>
 
 
         </li>
@@ -333,7 +401,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="online_player_Game_OnlinePlayer.js.html">online_player/Game_OnlinePlayer.js</a>, <a href="online_player_Game_OnlinePlayer.js.html#line25">line 25</a>
+        <a href="chat_input_Window_ChatInput.js.html">chat/input/Window_ChatInput.js</a>, <a href="chat_input_Window_ChatInput.js.html#line38">line 38</a>
     </li></ul></dd>
     
 
@@ -351,10 +419,14 @@
 
         
             
-<h4 class="name" id="id"><span class="type-signature"></span>id<span class="type-signature"> :string</span></h4>
+<h4 class="name" id="_cursorFrames"><span class="type-signature">(private) </span>_cursorFrames<span class="type-signature"> :number</span></h4>
 
 
 
+
+<div class="description">
+    Frames for keeping track of cursor blink
+</div>
 
 
 
@@ -362,7 +434,7 @@
     <ul>
         <li>
             
-<span class="param-type">string</span>
+<span class="param-type">number</span>
 
 
         </li>
@@ -401,143 +473,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="online_player_Game_OnlinePlayer.js.html">online_player/Game_OnlinePlayer.js</a>, <a href="online_player_Game_OnlinePlayer.js.html#line80">line 80</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="mapEvent"><span class="type-signature"></span>mapEvent<span class="type-signature"> :Game_Event</span></h4>
-
-
-
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Game_Event</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="online_player_Game_OnlinePlayer.js.html">online_player/Game_OnlinePlayer.js</a>, <a href="online_player_Game_OnlinePlayer.js.html#line102">line 102</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="username"><span class="type-signature"></span>username<span class="type-signature"> :string</span></h4>
-
-
-
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">string</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="online_player_Game_OnlinePlayer.js.html">online_player/Game_OnlinePlayer.js</a>, <a href="online_player_Game_OnlinePlayer.js.html#line91">line 91</a>
+        <a href="chat_input_Window_ChatInput.js.html">chat/input/Window_ChatInput.js</a>, <a href="chat_input_Window_ChatInput.js.html#line31">line 31</a>
     </li></ul></dd>
     
 
@@ -565,7 +501,7 @@
     
 
     
-    <h4 class="name" id="createUsernameWindow"><span class="type-signature"></span>createUsernameWindow<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="drawCursor"><span class="type-signature"></span>drawCursor<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -573,7 +509,7 @@
 
 
 <div class="description">
-    Creates the username window that follows the player around
+    Draw the cursor sprite
 </div>
 
 
@@ -617,7 +553,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="online_player_Game_OnlinePlayer.js.html">online_player/Game_OnlinePlayer.js</a>, <a href="online_player_Game_OnlinePlayer.js.html#line47">line 47</a>
+        <a href="chat_input_Window_ChatInput.js.html">chat/input/Window_ChatInput.js</a>, <a href="chat_input_Window_ChatInput.js.html#line58">line 58</a>
     </li></ul></dd>
     
 
@@ -653,7 +589,7 @@
     
 
     
-    <h4 class="name" id="destroyUsernameWindow"><span class="type-signature"></span>destroyUsernameWindow<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="drawInput"><span class="type-signature"></span>drawInput<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -661,7 +597,7 @@
 
 
 <div class="description">
-    Creates the username window that follows the player around
+    Draw the input text
 </div>
 
 
@@ -705,7 +641,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="online_player_Game_OnlinePlayer.js.html">online_player/Game_OnlinePlayer.js</a>, <a href="online_player_Game_OnlinePlayer.js.html#line55">line 55</a>
+        <a href="chat_input_Window_ChatInput.js.html">chat/input/Window_ChatInput.js</a>, <a href="chat_input_Window_ChatInput.js.html#line71">line 71</a>
     </li></ul></dd>
     
 
@@ -741,7 +677,7 @@
     
 
     
-    <h4 class="name" id="initialize"><span class="type-signature">(private) </span>initialize<span class="signature">(id, username)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="initialize"><span class="type-signature">(private) </span>initialize<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -754,78 +690,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Online player ID</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>username</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Online player username</td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -861,7 +725,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="online_player_Game_OnlinePlayer.js.html">online_player/Game_OnlinePlayer.js</a>, <a href="online_player_Game_OnlinePlayer.js.html#line14">line 14</a>
+        <a href="chat_input_Window_ChatInput.js.html">chat/input/Window_ChatInput.js</a>, <a href="chat_input_Window_ChatInput.js.html#line14">line 14</a>
     </li></ul></dd>
     
 
@@ -897,7 +761,7 @@
     
 
     
-    <h4 class="name" id="setMapEvent"><span class="type-signature"></span>setMapEvent<span class="signature">(event)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="update"><span class="type-signature">(private) </span>update<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -910,55 +774,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>event</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Game_Event</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -994,7 +809,175 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="online_player_Game_OnlinePlayer.js.html">online_player/Game_OnlinePlayer.js</a>, <a href="online_player_Game_OnlinePlayer.js.html#line40">line 40</a>
+        <a href="chat_input_Window_ChatInput.js.html">chat/input/Window_ChatInput.js</a>, <a href="chat_input_Window_ChatInput.js.html#line110">line 110</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="updateCursorBlink"><span class="type-signature">(private) </span>updateCursorBlink<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chat_input_Window_ChatInput.js.html">chat/input/Window_ChatInput.js</a>, <a href="chat_input_Window_ChatInput.js.html#line97">line 97</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="updateCursorPosition"><span class="type-signature">(private) </span>updateCursorPosition<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="chat_input_Window_ChatInput.js.html">chat/input/Window_ChatInput.js</a>, <a href="chat_input_Window_ChatInput.js.html#line86">line 86</a>
     </li></ul></dd>
     
 

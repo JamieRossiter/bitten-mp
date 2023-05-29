@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: online_player/Window_Username.js</title>
+    <title>JSDoc: Source: chat/chat_bubble/Window_TypingIndicator.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: online_player/Window_Username.js</h1>
+    <h1 class="page-title">Source: chat/chat_bubble/Window_TypingIndicator.js</h1>
 
     
 
@@ -26,64 +26,82 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/** 
+            <pre class="prettyprint source linenums"><code>/**
  * @class
- * @description The username window that follows each player. 
-*/
-
-function Window_Username(){
+ */
+function Window_TypingIndicator(){
     this.initialize(...arguments);
 }
 
-Object.setPrototypeOf(Window_Username.prototype, Window_Base.prototype);
-Window_Username.prototype.constructor = Window_Username;
+Object.setPrototypeOf(Window_TypingIndicator.prototype, Window_Base.prototype);
+Window_TypingIndicator.prototype.constructor = Window_TypingIndicator;
 
 /**
- * @private 
- * @arg {Game_OnlinePlayer} player The online player to which the username window is attached
-*/
-Window_Username.prototype.initialize = function(player){
-    Window_Base.prototype.initialize.call(this, new Rectangle(0, 0, 200, 60));
-    /**
-     * @private 
-     * @type {Game_OnlinePlayer}
-     */
+ * @private
+ * @param {Game_OnlinePlayer} player 
+ */
+Window_TypingIndicator.prototype.initialize = function(player){
+    Window_Base.prototype.initialize.call(this, new Rectangle(player.mapEvent.screenX(), player.mapEvent.screenY(), 58, 200))
     this._player = player;
-
-    /**
-     * @private 
-     * @type {string}
-     */
-    this._username = this._player.username ?? "player";
-
-    this.setBackgroundType(2);
-    this.drawUsername();
+    this._text = ".";
+    this._frames = 0;
+    this._targetFrames = 30;
+    this._isActive = false;
+    this.hide();
 }
 
 /**
- * @private 
+ * @private
  */
-Window_Username.prototype.update = function(){
-    this.updateMovement();
+Window_TypingIndicator.prototype.update = function(){
+    if(!this._isActive) return;
+    this.updatePosition();
+    this.updateTypingIndicator();
 }
 
 /**
- * @private 
+ * @private
  */
-Window_Username.prototype.updateMovement = function(){
-    this.width = this.textWidth(this._username) + 25;
+Window_TypingIndicator.prototype.updatePosition = function(){
     this.x = this._player.mapEvent.screenX() - this.width / 2;
-    this.y = this._player.mapEvent.screenY() - 10;
+    this.y = this._player.mapEvent.screenY() - (100 + this.height);
 }
 
 /**
- * @private 
+ * @private
  */
-Window_Username.prototype.drawUsername = function(){
-    this.drawTextEx(this._username, 0, 0);
+Window_TypingIndicator.prototype.updateTypingIndicator = function(){
+    this.contents.clear();
+    this.height = 45;
+
+    this._frames++;
+
+    if((this._frames > this._targetFrames) &amp;&amp; (this._frames &lt; (this._targetFrames * 2))){
+        this._text = "..";
+    } else if (this._frames > (this._targetFrames * 2) &amp;&amp; (this._frames &lt; (this._targetFrames * 3))){
+        this._text = "...";
+    } else if (this._frames > (this._targetFrames * 3)) {
+        this._text = ".";
+        this._frames = 0;
+    }
+    this.drawText(this._text, -3, -13);
 }
 
-</code></pre>
+/**
+ * @desc Activates and shows the typing indicator window
+ */
+Window_TypingIndicator.prototype.activate = function(){
+    this.show();
+    this._isActive = true;
+}
+
+/**
+ * @desc Deactivates and hides the typing indicator window
+ */
+Window_TypingIndicator.prototype.deactivate = function(){
+    this.hide();
+    this._isActive = false;
+}</code></pre>
         </article>
     </section>
 
