@@ -24,3 +24,12 @@ Util_MessageProcessor.broadcast.playerMoveStraight = function(message){
     // Move player
     targetPlayer.mapEvent.moveStraight(coords.dir);
 }
+
+Util_MessageProcessor.broadcast.playerIsMoving = function(message){
+
+    const targetPlayer = $gameRoom.findPlayerById(message.PlayerId);
+    targetPlayer.mapEvent.queuedDirection = message.Dir;
+    targetPlayer.mapEvent.isCurrentlyMoving = Boolean(message.IsMoving);
+    if(!Boolean(message.IsMoving)) targetPlayer.mapEvent._queuedPosition = {x: message.X, y: message.Y};
+
+}

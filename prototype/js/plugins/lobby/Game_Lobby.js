@@ -77,7 +77,7 @@ Game_Lobby.prototype.showPrompts = function(){
     let isHost = false;
     if(!roomCode) isHost = true;
 
-    const playerPosition = JSON.stringify({x: $gamePlayer.x, y: $gamePlayer.y, dir: $gamePlayer.direction()}).trim();
+    const playerPosition = JSON.stringify({x: 8, y: 6, dir: $gamePlayer.direction()}).trim();
     $gameServer.connect(username, isHost, roomCode, playerPosition);
 }
 
@@ -154,8 +154,8 @@ const gameLobby_sceneMap_update_alias = Scene_Map.prototype.update;
  * @desc Checks to see if the current map is the lobby map. If so, it calls update on the game lobby object's update method.
  */
 Scene_Map.prototype.update = function(){
-    gameLobby_sceneMap_update_alias.call(this);
-    
+    gameLobby_sceneMap_update_alias.call(this);    
+
     if(!$dataMap.note.includes($gameLobby.tag)) return;
     $gameLobby.update();
 }

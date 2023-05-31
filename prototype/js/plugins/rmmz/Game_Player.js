@@ -1,27 +1,36 @@
+const rmmz_gamePlayer_initialize_alias = Game_Player.prototype.initialize;
+Game_Player.prototype.initialize = function(){
+    rmmz_gamePlayer_initialize_alias.call(this);   
+    this._isCurrentlyMoving = false;
+    this._mostPreviousDirection = 0;
+    this._stopCountThreshold = 1;
+}
+
+const rmmz_gamePlayer_update_alias = Game_Player.prototype.update;
 /**
- * @external
- * @memberof Game_Player
- * @param {number} direction
- * @description Broadcasts the player's position during the execute move method 
+ * @param {boolean} sceneActive 
  */
-Game_Player.prototype.moveStraight = function(d) {
-    if(!$gameServer.isConnected || $gameServer.connectionError || $gameChat.isActive) return;
-    
-    this.setMovementSuccess(this.canPass(this._x, this._y, d));
-    if (this.isMovementSucceeded()) {
-        this.setDirection(d);
-        this._x = $gameMap.roundXWithDirection(this._x, d);
-        this._y = $gameMap.roundYWithDirection(this._y, d);
-        this._realX = $gameMap.xWithDirection(this._x, this.reverseDir(d));
-        this._realY = $gameMap.yWithDirection(this._y, this.reverseDir(d));
-        this.increaseSteps();
-        $gameRoom.broadcastPlayerMoveStraight({x: this._x, y: this._y, dir: d});
-    } else {
-        this.setDirection(d);
-        this.checkEventTriggerTouchFront(d);
+Game_Player.prototype.update = function(sceneActive){
+    rmmz_gamePlayer_update_alias.call(this, sceneActive)
+
+    if(!this._isCurrentlyMoving && this.isMoving()){
+        // If the player starts moving
+        this._isCurrentlyMoving = true;
+        this._mostPreviousDirection = this.direction();
+        $gameRoom.broadcastPlayerIsMoving(true, this.direction(), this._x, this._y);
+
+    } else if (this._isCurrentlyMoving && (this.direction() !== this._mostPreviousDirection)){
+        // If the player changes directions
+        this._mostPreviousDirection = this.direction();
+        $gameRoom.broadcastPlayerIsMoving(true, this.direction(), this._x, this._y);
+
+    } else if (this._isCurrentlyMoving && this._stopCount > this._stopCountThreshold){
+        // If the player stops
+        this._isCurrentlyMoving = false;
+        $gameRoom.broadcastPlayerIsMoving(false, this.direction(), this._x, this._y);
     }
-    
-};
+
+}
 
 /**
  * @external

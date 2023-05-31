@@ -58,6 +58,16 @@ function processBroadcastClientMessage(event: BroadcastMessageEventCode, message
             broadcastingPlayer?.setDirection(message.Dir);
 
             break;
+        case "playerIsMoving" as BroadcastMessageEventCode:
+
+            if(!("PlayerId" in message || "Dir" in message || "IsMoving" in message || "X" in message || "Y" in message)){
+                // Handle error
+                return;
+            }
+
+            broadcastingPlayer = playerManager.getPlayerById(message.playerId);
+
+            break;
         case BroadcastMessageEventCode.ChatMessage:
     
             if(!("PlayerId" in message || "ChatMessage" in message)){

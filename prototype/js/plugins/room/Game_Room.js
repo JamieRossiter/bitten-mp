@@ -139,6 +139,13 @@ Game_Room.prototype.broadcastPlayerMoveStraight = function(coords){
     );
 }
 
+Game_Room.prototype.broadcastPlayerIsMoving = function(isMoving, dir, x, y){
+    $gameServer.broadcastMessageToRoom(
+        "playerIsMoving",
+        { PlayerId: this._currentPlayer.id, IsMoving: isMoving, Dir: dir, X: x, Y: y}
+    )
+}
+
 /**
  * @param {string} chatMessage 
  */

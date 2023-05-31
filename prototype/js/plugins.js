@@ -3,6 +3,7 @@
 var $plugins =
 [
 {"name":"dev/MZPlusQuickStart","status":true,"description":"<MZPlusQuickStart> Skips the title for fast testing. (Will only skip the title in dev mode).  Credit to Quasi.","parameters":{"Dev Mode Only":"true"}},
+{"name":"dev/SceneAlwaysActive","status":true,"description":"The game will remain active even if it loses focus.","parameters":{}},
 {"name":"globals/enums","status":true,"description":"","parameters":{}},
 {"name":"utils/message_processor/Util_MessageProcessor","status":true,"description":"","parameters":{}},
 {"name":"utils/message_processor/MP_Connection","status":true,"description":"","parameters":{}},
