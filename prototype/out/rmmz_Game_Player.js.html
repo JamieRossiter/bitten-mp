@@ -26,22 +26,60 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const onlinePlayer_gamePlayer_executeMove_alias = Game_Player.prototype.executeMove;
+            <pre class="prettyprint source linenums"><code>const rmmz_gamePlayer_initialize_alias = Game_Player.prototype.initialize;
 /**
  * @external
- * @memberof Game_Player
- * @param {number} direction
- * @description Broadcasts the player's position during the execute move method 
  */
-Game_Player.prototype.executeMove = function(direction) {
-    if(!$gameServer.isConnected || $gameServer.connectionError || $gameChat.isActive) return;
-    onlinePlayer_gamePlayer_executeMove_alias.call(this, direction);
-    $gameRoom.broadcastPlayerMoveStraight({x: $gamePlayer.x, y: $gamePlayer.y, dir: direction});
-};
+Game_Player.prototype.initialize = function(){
+    rmmz_gamePlayer_initialize_alias.call(this);   
+    /**
+     * @private
+     * @desc Is the player currently moving (i.e. movement input has been pressed and not released)
+     * @type {boolean}
+     */
+    this._isCurrentlyMoving = false;
+    /**
+     * @private
+     * @desc The direction the player was last travelling in when they started moving or changed directions
+     */
+    this._mostPreviousDirection = 0;
+    /**
+     * @private
+     * @constant
+     * @desc The number of frames before the player is considered stopped
+     */
+    this._stopCountThreshold = 1;
+}
+
+const rmmz_gamePlayer_update_alias = Game_Player.prototype.update;
+/**
+ * @external
+ * @param {boolean} sceneActive 
+ */
+Game_Player.prototype.update = function(sceneActive){
+    rmmz_gamePlayer_update_alias.call(this, sceneActive)
+
+    if(!this._isCurrentlyMoving &amp;&amp; this.isMoving()){
+        // If the player starts moving
+        this._isCurrentlyMoving = true;
+        this._mostPreviousDirection = this.direction();
+        $gameRoom.broadcastPlayerIsMoving(true, this.direction(), this._x, this._y);
+
+    } else if (this._isCurrentlyMoving &amp;&amp; (this.direction() !== this._mostPreviousDirection)){
+        // If the player changes directions
+        this._mostPreviousDirection = this.direction();
+        $gameRoom.broadcastPlayerIsMoving(true, this.direction(), this._x, this._y);
+
+    } else if (this._isCurrentlyMoving &amp;&amp; this._stopCount > this._stopCountThreshold){
+        // If the player stops
+        this._isCurrentlyMoving = false;
+        $gameRoom.broadcastPlayerIsMoving(false, this.direction(), this._x, this._y);
+    }
+
+}
 
 /**
  * @external
- * @memberof Game_Player
  * @description Movement by touch input no longer defaults to dashing speed
  */
 Game_Player.prototype.updateDashing = function() {
@@ -64,13 +102,13 @@ Game_Player.prototype.updateDashing = function() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Externals</h3><ul><li><a href="Game_Event_external_initialize.html">initialize</a></li><li><a href="Game_Event_external_isPlayer.html">isPlayer</a></li><li><a href="Game_Player_external_executeMove.html">executeMove</a></li><li><a href="Game_Player_external_updateDashing.html">updateDashing</a></li><li><a href="Scene_Map_external_update.html">update</a></li></ul><h3>Namespaces</h3><ul><li><a href="MessageProcessor.html">MessageProcessor</a></li></ul><h3>Classes</h3><ul><li><a href="Game_Chat.html">Game_Chat</a></li><li><a href="Game_Lobby.html">Game_Lobby</a></li><li><a href="Game_OnlinePlayer.html">Game_OnlinePlayer</a></li><li><a href="Game_Room.html">Game_Room</a></li><li><a href="Game_Server.html">Game_Server</a></li><li><a href="Util_MessageProcessor.html">Util_MessageProcessor</a></li><li><a href="Window_ChatBubble.html">Window_ChatBubble</a></li><li><a href="Window_ChatInput.html">Window_ChatInput</a></li><li><a href="Window_TypingIndicator.html">Window_TypingIndicator</a></li><li><a href="Window_Username.html">Window_Username</a></li></ul><h3>Global</h3><ul><li><a href="global.html#BroadcastMessageEventCode">BroadcastMessageEventCode</a></li><li><a href="global.html#CloseCode">CloseCode</a></li><li><a href="global.html#IndividualMessageEventCode">IndividualMessageEventCode</a></li><li><a href="global.html#MessageType">MessageType</a></li><li><a href="global.html#currentInput">currentInput</a></li><li><a href="global.html#isActive">isActive</a></li><li><a href="global.html#isInputting">isInputting</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Externals</h3><ul><li><a href="Game_Event_external_initialize.html">initialize</a></li><li><a href="Game_Event_external_isNpc.html">isNpc</a></li><li><a href="Game_Event_external_isPlayer.html">isPlayer</a></li><li><a href="Game_Event_external_setQueuedPosition.html">setQueuedPosition</a></li><li><a href="Game_Event_external_update.html">update</a></li><li><a href="Game_Player_external_initialize.html">initialize</a></li><li><a href="Game_Player_external_update.html">update</a></li><li><a href="Game_Player_external_updateDashing.html">updateDashing</a></li><li><a href="Scene_Map_external_update.html">update</a></li></ul><h3>Namespaces</h3><ul><li><a href="MessageProcessor.html">MessageProcessor</a></li></ul><h3>Classes</h3><ul><li><a href="Game_Chat.html">Game_Chat</a></li><li><a href="Game_Lobby.html">Game_Lobby</a></li><li><a href="Game_OnlinePlayer.html">Game_OnlinePlayer</a></li><li><a href="Game_Room.html">Game_Room</a></li><li><a href="Game_Server.html">Game_Server</a></li><li><a href="Util_MessageProcessor.html">Util_MessageProcessor</a></li><li><a href="Window_ChatBubble.html">Window_ChatBubble</a></li><li><a href="Window_ChatInput.html">Window_ChatInput</a></li><li><a href="Window_TypingIndicator.html">Window_TypingIndicator</a></li><li><a href="Window_Username.html">Window_Username</a></li></ul><h3>Global</h3><ul><li><a href="global.html#BroadcastMessageEventCode">BroadcastMessageEventCode</a></li><li><a href="global.html#CloseCode">CloseCode</a></li><li><a href="global.html#IndividualMessageEventCode">IndividualMessageEventCode</a></li><li><a href="global.html#MessageType">MessageType</a></li><li><a href="global.html#_isCurrentlyMoving">_isCurrentlyMoving</a></li><li><a href="global.html#_isPlaying">_isPlaying</a></li><li><a href="global.html#_mostPreviousDirection">_mostPreviousDirection</a></li><li><a href="global.html#_queuedDirection">_queuedDirection</a></li><li><a href="global.html#_queuedPosition">_queuedPosition</a></li><li><a href="global.html#_stopCountThreshold">_stopCountThreshold</a></li><li><a href="global.html#chatInputWindow">chatInputWindow</a></li><li><a href="global.html#chatLogWindow">chatLogWindow</a></li><li><a href="global.html#currentInput">currentInput</a></li><li><a href="global.html#isActive">isActive</a></li><li><a href="global.html#isInputting">isInputting</a></li><li><a href="global.html#isTyping">isTyping</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon May 29 2023 10:29:56 GMT+1000 (Australian Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Jun 01 2023 08:20:51 GMT+1000 (Australian Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

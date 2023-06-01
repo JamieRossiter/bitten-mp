@@ -1,13 +1,32 @@
 const rmmz_gamePlayer_initialize_alias = Game_Player.prototype.initialize;
+/**
+ * @external
+ */
 Game_Player.prototype.initialize = function(){
     rmmz_gamePlayer_initialize_alias.call(this);   
+    /**
+     * @private
+     * @desc Is the player currently moving (i.e. movement input has been pressed and not released)
+     * @type {boolean}
+     */
     this._isCurrentlyMoving = false;
+    /**
+     * @private
+     * @desc The direction the player was last travelling in when they started moving or changed directions
+     */
     this._mostPreviousDirection = 0;
+    /**
+     * @private
+     * @constant
+     * @desc The number of frames before the player is considered stopped
+     */
     this._stopCountThreshold = 1;
 }
 
 const rmmz_gamePlayer_update_alias = Game_Player.prototype.update;
 /**
+ * @external
+ * @memberof Game_Player
  * @param {boolean} sceneActive 
  */
 Game_Player.prototype.update = function(sceneActive){
@@ -34,7 +53,6 @@ Game_Player.prototype.update = function(sceneActive){
 
 /**
  * @external
- * @memberof Game_Player
  * @description Movement by touch input no longer defaults to dashing speed
  */
 Game_Player.prototype.updateDashing = function() {

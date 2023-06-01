@@ -32,7 +32,7 @@ Game_Room.prototype.initialize = function(){
 
     /**
      * @private
-     * @type {Array<string>}
+     * @type {string[]}
      */
     this._chatMessageLog = [];
 }
@@ -128,20 +128,9 @@ Game_Room.prototype.setCurrentPlayer = function(player){
     this._currentPlayer = player;
 }
 
-/**
- * @arg { {x: number, y: number, dir: number} } coords 
- * @desc Broadcasts that the player has moved straight to the room
- */
-Game_Room.prototype.broadcastPlayerMoveStraight = function(coords){
-    $gameServer.broadcastMessageToRoom(
-        BroadcastMessageEventCode.PlayerMoveStraight, 
-        { PlayerId: this._currentPlayer.id, X: coords.x, Y: coords.y, Dir: coords.dir }
-    );
-}
-
 Game_Room.prototype.broadcastPlayerIsMoving = function(isMoving, dir, x, y){
     $gameServer.broadcastMessageToRoom(
-        "playerIsMoving",
+        BroadcastMessageEventCode.PlayerIsMoving,
         { PlayerId: this._currentPlayer.id, IsMoving: isMoving, Dir: dir, X: x, Y: y}
     )
 }
@@ -240,7 +229,7 @@ Object.defineProperties(Game_Room.prototype, {
     /**
      * @instance
      * @memberof Game_Room
-     * @type {Array<playerUsername: string, chatMessage: string>}
+     * @type {{playerUsername: string, chatMessage: string[]}}
      */
     chatMessageLog: {
         get(){

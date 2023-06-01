@@ -79,11 +79,8 @@ Util_MessageProcessor.processBroadcastMessage = function(event, message){
         case BroadcastMessageEventCode.PlayerLeftRoom:
             Util_MessageProcessor.broadcast.playerLeftRoom(message);
             break;
-        case "playerIsMoving":
+        case BroadcastMessageEventCode.PlayerIsMoving:
             Util_MessageProcessor.broadcast.playerIsMoving(message);
-            break;
-        case BroadcastMessageEventCode.PlayerMoveStraight:
-            Util_MessageProcessor.broadcast.playerMoveStraight(message);
             break;
         case BroadcastMessageEventCode.ChatMessage:
             Util_MessageProcessor.broadcast.chatMessage(message);

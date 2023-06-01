@@ -39,7 +39,7 @@ function Game_OnlinePlayer(){
  * @arg {string} id Online player ID
  * @arg {string} username Online player username
 */
-Game_OnlinePlayer.prototype.initialize = function(id, username){
+Game_OnlinePlayer.prototype.initialize = function(id, username, isHost){
     /** 
      * @private 
      * @type {string} 
@@ -52,14 +52,37 @@ Game_OnlinePlayer.prototype.initialize = function(id, username){
     */
     this._username = username;
 
+    /**
+     * @private
+     * @type {boolean}
+     */
+    this._isHost = isHost;
+
     /** 
      * @private 
      * @type {Game_Event} 
      * @description The physical event that represents the online player object 
-     * */
+    */
     this._mapEvent = null;
+
+    /**
+     * @private
+     * @type {Window_ChatBubble}
+     */
     this._chatBubbleWindow = null;
+
+    /**
+     * @private
+     * @type {Window_TypingIndicator}
+     */
     this._typingIndicatorWindow = null;
+
+    /**
+     * @private
+     * @type {string}
+     * @desc The role (vampire or hunter) the player assumes
+     */
+    this._role = null;
 }
 
 /**
@@ -85,18 +108,44 @@ Game_OnlinePlayer.prototype.destroyUsernameWindow = function(){
     this._usernameWindow = null;
 }
 
+/**
+ * @desc Creates the chat bubble window
+ */
 Game_OnlinePlayer.prototype.createChatBubbleWindow = function(){
     this._chatBubbleWindow = new Window_ChatBubble(this);
     SceneManager._scene.addChild(this._chatBubbleWindow);
 }
 
+/**
+ * @desc Creates the typing indicator window
+ */
 Game_OnlinePlayer.prototype.createTypingIndicatorWindow = function(){
     this._typingIndicatorWindow = new Window_TypingIndicator(this);
     SceneManager._scene.addChild(this._typingIndicatorWindow);
 }
 
+/**
+ * @desc Destroys the typing indicator window
+ */
 Game_OnlinePlayer.prototype.destroyTypingIndicatorWindow = function(){
     SceneManager._scene.removeChild(this._typingIndicatorWindow);
+}
+
+/**
+ * @desc Sets the player's role
+ * @param {string} role 
+ */
+Game_OnlinePlayer.prototype.setRole = function(role){
+    this._role = role;
+
+    switch(this._role){
+        case Role.Vampire:
+            this.mapEvent.setImage("npc4", 3);
+            this.destroyUsernameWindow();
+            break;
+        case Role.Hunter:
+            break;
+    }
 }
 
 Object.defineProperties(Game_OnlinePlayer.prototype, {
@@ -133,15 +182,47 @@ Object.defineProperties(Game_OnlinePlayer.prototype, {
         }
     },
 
+    /**
+     * @instance
+     * @memberof Game_OnlinePlayer
+     * @type {Window_ChatBubble}
+     */
     chatBubbleWindow: {
         get(){
             return this._chatBubbleWindow;
         }
     },
 
+    /** 
+     * @instance
+     * @memberof Game_OnlinePlayer
+     * @type {Window_TypingIndicator}
+     */
     typingIndicatorWindow: {
         get(){
             return this._typingIndicatorWindow;
+        }
+    },
+
+    /**
+     * @instance
+     * @memberof Game_OnlinePlayer;
+     * @type {string}
+     */
+    role: {
+        get(){
+            return this._role;
+        }
+    },
+
+    /**
+     * @instance
+     * @memberof Game_OnlinePlayer
+     * @type {string}
+     */
+    isHost: {
+        get(){
+            return this._isHost;
         }
     }
 })</code></pre>
@@ -154,13 +235,13 @@ Object.defineProperties(Game_OnlinePlayer.prototype, {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Externals</h3><ul><li><a href="Game_Event_external_initialize.html">initialize</a></li><li><a href="Game_Event_external_isPlayer.html">isPlayer</a></li><li><a href="Game_Player_external_executeMove.html">executeMove</a></li><li><a href="Game_Player_external_updateDashing.html">updateDashing</a></li><li><a href="Scene_Map_external_update.html">update</a></li></ul><h3>Namespaces</h3><ul><li><a href="MessageProcessor.html">MessageProcessor</a></li></ul><h3>Classes</h3><ul><li><a href="Game_Chat.html">Game_Chat</a></li><li><a href="Game_Lobby.html">Game_Lobby</a></li><li><a href="Game_OnlinePlayer.html">Game_OnlinePlayer</a></li><li><a href="Game_Room.html">Game_Room</a></li><li><a href="Game_Server.html">Game_Server</a></li><li><a href="Util_MessageProcessor.html">Util_MessageProcessor</a></li><li><a href="Window_ChatBubble.html">Window_ChatBubble</a></li><li><a href="Window_ChatInput.html">Window_ChatInput</a></li><li><a href="Window_TypingIndicator.html">Window_TypingIndicator</a></li><li><a href="Window_Username.html">Window_Username</a></li></ul><h3>Global</h3><ul><li><a href="global.html#BroadcastMessageEventCode">BroadcastMessageEventCode</a></li><li><a href="global.html#CloseCode">CloseCode</a></li><li><a href="global.html#IndividualMessageEventCode">IndividualMessageEventCode</a></li><li><a href="global.html#MessageType">MessageType</a></li><li><a href="global.html#currentInput">currentInput</a></li><li><a href="global.html#isActive">isActive</a></li><li><a href="global.html#isInputting">isInputting</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Externals</h3><ul><li><a href="Game_Event_external_initialize.html">initialize</a></li><li><a href="Game_Event_external_isNpc.html">isNpc</a></li><li><a href="Game_Event_external_isPlayer.html">isPlayer</a></li><li><a href="Game_Event_external_setQueuedPosition.html">setQueuedPosition</a></li><li><a href="Game_Event_external_update.html">update</a></li><li><a href="Game_Player_external_initialize.html">initialize</a></li><li><a href="Game_Player_external_update.html">update</a></li><li><a href="Game_Player_external_updateDashing.html">updateDashing</a></li><li><a href="Scene_Map_external_update.html">update</a></li></ul><h3>Namespaces</h3><ul><li><a href="MessageProcessor.html">MessageProcessor</a></li></ul><h3>Classes</h3><ul><li><a href="Game_Chat.html">Game_Chat</a></li><li><a href="Game_Lobby.html">Game_Lobby</a></li><li><a href="Game_OnlinePlayer.html">Game_OnlinePlayer</a></li><li><a href="Game_Room.html">Game_Room</a></li><li><a href="Game_Server.html">Game_Server</a></li><li><a href="Util_MessageProcessor.html">Util_MessageProcessor</a></li><li><a href="Window_ChatBubble.html">Window_ChatBubble</a></li><li><a href="Window_ChatInput.html">Window_ChatInput</a></li><li><a href="Window_TypingIndicator.html">Window_TypingIndicator</a></li><li><a href="Window_Username.html">Window_Username</a></li></ul><h3>Global</h3><ul><li><a href="global.html#BroadcastMessageEventCode">BroadcastMessageEventCode</a></li><li><a href="global.html#CloseCode">CloseCode</a></li><li><a href="global.html#IndividualMessageEventCode">IndividualMessageEventCode</a></li><li><a href="global.html#MessageType">MessageType</a></li><li><a href="global.html#_isCurrentlyMoving">_isCurrentlyMoving</a></li><li><a href="global.html#_isPlaying">_isPlaying</a></li><li><a href="global.html#_mostPreviousDirection">_mostPreviousDirection</a></li><li><a href="global.html#_queuedDirection">_queuedDirection</a></li><li><a href="global.html#_queuedPosition">_queuedPosition</a></li><li><a href="global.html#_stopCountThreshold">_stopCountThreshold</a></li><li><a href="global.html#chatInputWindow">chatInputWindow</a></li><li><a href="global.html#chatLogWindow">chatLogWindow</a></li><li><a href="global.html#currentInput">currentInput</a></li><li><a href="global.html#isActive">isActive</a></li><li><a href="global.html#isInputting">isInputting</a></li><li><a href="global.html#isTyping">isTyping</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon May 29 2023 10:29:56 GMT+1000 (Australian Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Jun 01 2023 08:20:51 GMT+1000 (Australian Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -48,6 +48,10 @@ Window_ChatBubble.prototype.initMembers = function(player){
 
     this._isActive = false;
 
+    /**
+     * @private
+     * @type {Game_OnlinePlayer}
+     */
     this._player = player;
 }
 

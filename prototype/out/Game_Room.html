@@ -144,6 +144,74 @@ A subset of the server that holds a group of common players together.
 
         
             
+<h4 class="name" id="_chatMessageLog"><span class="type-signature">(private) </span>_chatMessageLog<span class="type-signature"> :Array.&lt;string></span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Array.&lt;string></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line37">line 37</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
 <h4 class="name" id="_code"><span class="type-signature">(private) </span>_code<span class="type-signature"> :string</span></h4>
 
 
@@ -352,6 +420,74 @@ A subset of the server that holds a group of common players together.
 
         
             
+<h4 class="name" id="chatMessageLog"><span class="type-signature"></span>chatMessageLog<span class="type-signature"> :Object</span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Object</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line245">line 245</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
 <h4 class="name" id="code"><span class="type-signature"></span>code<span class="type-signature"> :string</span></h4>
 
 
@@ -402,7 +538,7 @@ A subset of the server that holds a group of common players together.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line142">line 142</a>
+        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line223">line 223</a>
     </li></ul></dd>
     
 
@@ -470,7 +606,75 @@ A subset of the server that holds a group of common players together.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line153">line 153</a>
+        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line234">line 234</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="players"><span class="type-signature"></span>players<span class="type-signature"> :Set.&lt;<a href="Game_OnlinePlayer.html">Game_OnlinePlayer</a>></span></h4>
+
+
+
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Set.&lt;<a href="Game_OnlinePlayer.html">Game_OnlinePlayer</a>></span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line256">line 256</a>
     </li></ul></dd>
     
 
@@ -491,6 +695,162 @@ A subset of the server that holds a group of common players together.
 
     
         <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="addMessageToLog"><span class="type-signature"></span>addMessageToLog<span class="signature">(player, chatMessage)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>player</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Game_OnlinePlayer.html">Game_OnlinePlayer</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>chatMessage</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line75">line 75</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
             
@@ -595,7 +955,7 @@ A subset of the server that holds a group of common players together.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line37">line 37</a>
+        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line43">line 43</a>
     </li></ul></dd>
     
 
@@ -728,7 +1088,163 @@ A subset of the server that holds a group of common players together.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line93">line 93</a>
+        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line152">line 152</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="broadcastMapTransfer"><span class="type-signature"></span>broadcastMapTransfer<span class="signature">(mapId, coords)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>mapId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>coords</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line184">line 184</a>
     </li></ul></dd>
     
 
@@ -861,7 +1377,7 @@ A subset of the server that holds a group of common players together.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line103">line 103</a>
+        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line162">line 162</a>
     </li></ul></dd>
     
 
@@ -998,7 +1514,163 @@ A subset of the server that holds a group of common players together.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line83">line 83</a>
+        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line135">line 135</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="broadcastPlayerRoleAssignment"><span class="type-signature"></span>broadcastPlayerRoleAssignment<span class="signature">(player, role)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>player</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Game_OnlinePlayer.html">Game_OnlinePlayer</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>role</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line173">line 173</a>
     </li></ul></dd>
     
 
@@ -1131,7 +1803,7 @@ A subset of the server that holds a group of common players together.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line59">line 59</a>
+        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line65">line 65</a>
     </li></ul></dd>
     
 
@@ -1168,6 +1840,108 @@ A subset of the server that holds a group of common players together.
     <dd>
         
 <span class="param-type">Game_Player</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getHost"><span class="type-signature"></span>getHost<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="Game_OnlinePlayer.html">Game_OnlinePlayer</a>}</span></h4>
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line113">line 113</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="Game_OnlinePlayer.html">Game_OnlinePlayer</a></span>
 
 
     </dd>
@@ -1315,7 +2089,7 @@ A subset of the server that holds a group of common players together.
             <td class="type">
             
                 
-<span class="param-type">Game_Event</span>
+<span class="param-type"><a href="Game_Event.html">Game_Event</a></span>
 
 
             
@@ -1389,7 +2163,7 @@ A subset of the server that holds a group of common players together.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line114">line 114</a>
+        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line195">line 195</a>
     </li></ul></dd>
     
 
@@ -1522,7 +2296,7 @@ A subset of the server that holds a group of common players together.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line129">line 129</a>
+        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line210">line 210</a>
     </li></ul></dd>
     
 
@@ -1655,7 +2429,7 @@ A subset of the server that holds a group of common players together.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line44">line 44</a>
+        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line50">line 50</a>
     </li></ul></dd>
     
 
@@ -1788,7 +2562,7 @@ A subset of the server that holds a group of common players together.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line68">line 68</a>
+        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line120">line 120</a>
     </li></ul></dd>
     
 
@@ -1921,7 +2695,7 @@ A subset of the server that holds a group of common players together.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line75">line 75</a>
+        <a href="room_Game_Room.js.html">room/Game_Room.js</a>, <a href="room_Game_Room.js.html#line127">line 127</a>
     </li></ul></dd>
     
 
@@ -1967,13 +2741,13 @@ A subset of the server that holds a group of common players together.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Externals</h3><ul><li><a href="Game_Event_external_initialize.html">initialize</a></li><li><a href="Game_Event_external_isPlayer.html">isPlayer</a></li><li><a href="Game_Player_external_executeMove.html">executeMove</a></li><li><a href="Game_Player_external_updateDashing.html">updateDashing</a></li><li><a href="Scene_Map_external_update.html">update</a></li></ul><h3>Namespaces</h3><ul><li><a href="MessageProcessor.html">MessageProcessor</a></li></ul><h3>Classes</h3><ul><li><a href="Game_Chat.html">Game_Chat</a></li><li><a href="Game_Lobby.html">Game_Lobby</a></li><li><a href="Game_OnlinePlayer.html">Game_OnlinePlayer</a></li><li><a href="Game_Room.html">Game_Room</a></li><li><a href="Game_Server.html">Game_Server</a></li><li><a href="Util_MessageProcessor.html">Util_MessageProcessor</a></li><li><a href="Window_ChatBubble.html">Window_ChatBubble</a></li><li><a href="Window_ChatInput.html">Window_ChatInput</a></li><li><a href="Window_TypingIndicator.html">Window_TypingIndicator</a></li><li><a href="Window_Username.html">Window_Username</a></li></ul><h3>Global</h3><ul><li><a href="global.html#BroadcastMessageEventCode">BroadcastMessageEventCode</a></li><li><a href="global.html#CloseCode">CloseCode</a></li><li><a href="global.html#IndividualMessageEventCode">IndividualMessageEventCode</a></li><li><a href="global.html#MessageType">MessageType</a></li><li><a href="global.html#currentInput">currentInput</a></li><li><a href="global.html#isActive">isActive</a></li><li><a href="global.html#isInputting">isInputting</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Externals</h3><ul><li><a href="Game_Event_external_initialize.html">initialize</a></li><li><a href="Game_Event_external_isNpc.html">isNpc</a></li><li><a href="Game_Event_external_isPlayer.html">isPlayer</a></li><li><a href="Game_Event_external_setQueuedPosition.html">setQueuedPosition</a></li><li><a href="Game_Event_external_update.html">update</a></li><li><a href="Game_Player_external_initialize.html">initialize</a></li><li><a href="Game_Player_external_update.html">update</a></li><li><a href="Game_Player_external_updateDashing.html">updateDashing</a></li><li><a href="Scene_Map_external_update.html">update</a></li></ul><h3>Namespaces</h3><ul><li><a href="MessageProcessor.html">MessageProcessor</a></li></ul><h3>Classes</h3><ul><li><a href="Game_Chat.html">Game_Chat</a></li><li><a href="Game_Lobby.html">Game_Lobby</a></li><li><a href="Game_OnlinePlayer.html">Game_OnlinePlayer</a></li><li><a href="Game_Room.html">Game_Room</a></li><li><a href="Game_Server.html">Game_Server</a></li><li><a href="Util_MessageProcessor.html">Util_MessageProcessor</a></li><li><a href="Window_ChatBubble.html">Window_ChatBubble</a></li><li><a href="Window_ChatInput.html">Window_ChatInput</a></li><li><a href="Window_TypingIndicator.html">Window_TypingIndicator</a></li><li><a href="Window_Username.html">Window_Username</a></li></ul><h3>Global</h3><ul><li><a href="global.html#BroadcastMessageEventCode">BroadcastMessageEventCode</a></li><li><a href="global.html#CloseCode">CloseCode</a></li><li><a href="global.html#IndividualMessageEventCode">IndividualMessageEventCode</a></li><li><a href="global.html#MessageType">MessageType</a></li><li><a href="global.html#_isCurrentlyMoving">_isCurrentlyMoving</a></li><li><a href="global.html#_isPlaying">_isPlaying</a></li><li><a href="global.html#_mostPreviousDirection">_mostPreviousDirection</a></li><li><a href="global.html#_queuedDirection">_queuedDirection</a></li><li><a href="global.html#_queuedPosition">_queuedPosition</a></li><li><a href="global.html#_stopCountThreshold">_stopCountThreshold</a></li><li><a href="global.html#chatInputWindow">chatInputWindow</a></li><li><a href="global.html#chatLogWindow">chatLogWindow</a></li><li><a href="global.html#currentInput">currentInput</a></li><li><a href="global.html#isActive">isActive</a></li><li><a href="global.html#isInputting">isInputting</a></li><li><a href="global.html#isTyping">isTyping</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon May 29 2023 10:29:56 GMT+1000 (Australian Eastern Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Jun 01 2023 08:20:51 GMT+1000 (Australian Eastern Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

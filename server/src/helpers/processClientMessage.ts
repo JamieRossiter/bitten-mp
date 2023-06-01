@@ -45,27 +45,14 @@ function processBroadcastClientMessage(event: BroadcastMessageEventCode, message
     }
 
     switch(event){
-        case BroadcastMessageEventCode.PlayerMoveStraight:
-
-            if(!("PlayerId" in message || "X" in message || "Y" in message || "Dir" in message)){
-                // Handle error
-                return;
-            }
-
-            broadcastingPlayer = playerManager.getPlayerById(message.PlayerId);
-            broadcastingPlayer?.setX(message.X);
-            broadcastingPlayer?.setY(message.Y);
-            broadcastingPlayer?.setDirection(message.Dir);
-
-            break;
-        case "playerIsMoving" as BroadcastMessageEventCode:
+        case BroadcastMessageEventCode.PlayerIsMoving:
 
             if(!("PlayerId" in message || "Dir" in message || "IsMoving" in message || "X" in message || "Y" in message)){
                 // Handle error
                 return;
             }
 
-            broadcastingPlayer = playerManager.getPlayerById(message.playerId);
+            broadcastingPlayer = playerManager.getPlayerById(message.PlayerId);
 
             break;
         case BroadcastMessageEventCode.ChatMessage:

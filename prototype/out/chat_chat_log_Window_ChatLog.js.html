@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: utils/message_processor/Util_MessageProcessor.js</title>
+    <title>JSDoc: Source: chat/chat_log/Window_ChatLog.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: utils/message_processor/Util_MessageProcessor.js</h1>
+    <h1 class="page-title">Source: chat/chat_log/Window_ChatLog.js</h1>
 
     
 
@@ -26,105 +26,55 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @namespace MessageProcessor
-*/
+            <pre class="prettyprint source linenums"><code>function Window_ChatLog(){
+    this.initialize(...arguments);
+}
 
-/** 
- * @class
- * @static
- * @description Processes various messages from the server
-*/
-function Util_MessageProcessor(){}
+Object.setPrototypeOf(Window_ChatLog.prototype, Window_Base.prototype);
+Window_ChatLog.prototype.constructor = Window_ChatLog;
 
 /**
- * @static
- * @member {object}
- * @desc Contains all methods for processing server messages tagged as "individual" messages (not to be broadcasted)
+ * @private
  */
-Util_MessageProcessor.individual = {};
+Window_ChatLog.prototype.initialize = function(){
+    Window_Base.prototype.initialize.call(this, new Rectangle(0, 0, Graphics.boxWidth, Graphics.boxHeight));
+    if(!$gameChat.chatInputWindow) return;
 
-/**
- * @static 
- * @member {object}
- * @desc Contains all methods for processing server messages tagged as "broadcast" messages
- */
-Util_MessageProcessor.broadcast = {};
-
-/**
- * @static
- * @arg {object} message 
- * @desc Processes a message received from the server
- */
-Util_MessageProcessor.processMessage = function(message){
-    switch(message.type)
-    {
-        case MessageType.Individual:
-            Util_MessageProcessor.processIndividualMessage(message.event, message.message);
-            break;
-        case MessageType.Broadcast:
-            Util_MessageProcessor.processBroadcastMessage(message.event, message.message);
-            break;
-    }
+    this.x = $gameChat.chatInputWindow.x;
+    this.height = Graphics.boxHeight - $gameChat.chatInputWindow.height;
+    this.width = $gameChat.chatInputWindow.width;
 }
 
 /**
- * @static 
- * @arg {string} event 
- * @arg {object} message 
- * @desc Processes a message received from the server marked as an "individual" message (not to be broadcasted)
+ * @private
  */
-Util_MessageProcessor.processIndividualMessage = function(event, message){
-
-    switch(event)
-    {
-        case IndividualMessageEventCode.RoomNoExist:
-            Util_MessageProcessor.individual.roomNoExist(message);
-            break;
-        case IndividualMessageEventCode.PlayerInformation:
-            Util_MessageProcessor.individual.playerInformation(message);
-            break;
-        case IndividualMessageEventCode.RoomInformation:
-            Util_MessageProcessor.individual.roomInformation(message);
-            break;
-    }
-
+Window_ChatLog.prototype.update = function(){
+    this.contents.clear();
+    this.drawChatMessageLog();
 }
 
 /**
- * @static
- * @arg {string} event 
- * @arg {object} message 
- * @desc Processes a message received from the server marked as a "broadcast" message
+ * @private
+ * @desc Draws the log text 
  */
-Util_MessageProcessor.processBroadcastMessage = function(event, message){
+Window_ChatLog.prototype.drawChatMessageLog = function(){
 
-    switch(event)
-    {
-        case BroadcastMessageEventCode.PlayerJoinedRoom:
-            Util_MessageProcessor.broadcast.playerJoinedRoom(message);
-            break;
-        case BroadcastMessageEventCode.PlayerLeftRoom:
-            Util_MessageProcessor.broadcast.playerLeftRoom(message);
-            break;
-        case BroadcastMessageEventCode.PlayerIsMoving:
-            Util_MessageProcessor.broadcast.playerIsMoving(message);
-            break;
-        case BroadcastMessageEventCode.ChatMessage:
-            Util_MessageProcessor.broadcast.chatMessage(message);
-            break;
-        case BroadcastMessageEventCode.PlayerIsTyping:
-            Util_MessageProcessor.broadcast.playerIsTyping(message);
-            break;
-        case BroadcastMessageEventCode.RoleInformation:
-            Util_MessageProcessor.broadcast.playerAssignedRole(message);
-            break;
-        case BroadcastMessageEventCode.MapTransfer:
-            Util_MessageProcessor.broadcast.mapTransfer(message);
-            break;
-    }
+    if(!$gameRoom.chatMessageLog) return;
+    
+    $gameRoom.chatMessageLog.toReversed().forEach(({player, message}, index) => {
 
-}</code></pre>
+        let x = 10;
+        let y = this.height - ($gameChat.chatInputWindow.height + (30 * (index + 1)));
+
+        if(!player){
+            this.drawTextEx(message, x, y - 5);
+            return;
+        }
+
+        this.drawTextEx(`\\c[2]${player.username}\\c[0]: ${message}`, x, y);
+    })
+}
+</code></pre>
         </article>
     </section>
 

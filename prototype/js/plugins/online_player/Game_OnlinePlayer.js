@@ -24,6 +24,12 @@ Game_OnlinePlayer.prototype.initialize = function(id, username, isHost){
     */
     this._username = username;
 
+    /**
+     * @private
+     * @type {boolean}
+     */
+    this._isHost = isHost;
+
     /** 
      * @private 
      * @type {Game_Event} 
@@ -31,10 +37,23 @@ Game_OnlinePlayer.prototype.initialize = function(id, username, isHost){
     */
     this._mapEvent = null;
 
-    this._isHost = isHost;
-
+    /**
+     * @private
+     * @type {Window_ChatBubble}
+     */
     this._chatBubbleWindow = null;
+
+    /**
+     * @private
+     * @type {Window_TypingIndicator}
+     */
     this._typingIndicatorWindow = null;
+
+    /**
+     * @private
+     * @type {string}
+     * @desc The role (vampire or hunter) the player assumes
+     */
     this._role = null;
 }
 
@@ -61,20 +80,33 @@ Game_OnlinePlayer.prototype.destroyUsernameWindow = function(){
     this._usernameWindow = null;
 }
 
+/**
+ * @desc Creates the chat bubble window
+ */
 Game_OnlinePlayer.prototype.createChatBubbleWindow = function(){
     this._chatBubbleWindow = new Window_ChatBubble(this);
     SceneManager._scene.addChild(this._chatBubbleWindow);
 }
 
+/**
+ * @desc Creates the typing indicator window
+ */
 Game_OnlinePlayer.prototype.createTypingIndicatorWindow = function(){
     this._typingIndicatorWindow = new Window_TypingIndicator(this);
     SceneManager._scene.addChild(this._typingIndicatorWindow);
 }
 
+/**
+ * @desc Destroys the typing indicator window
+ */
 Game_OnlinePlayer.prototype.destroyTypingIndicatorWindow = function(){
     SceneManager._scene.removeChild(this._typingIndicatorWindow);
 }
 
+/**
+ * @desc Sets the player's role
+ * @param {string} role 
+ */
 Game_OnlinePlayer.prototype.setRole = function(role){
     this._role = role;
 
@@ -122,24 +154,44 @@ Object.defineProperties(Game_OnlinePlayer.prototype, {
         }
     },
 
+    /**
+     * @instance
+     * @memberof Game_OnlinePlayer
+     * @type {Window_ChatBubble}
+     */
     chatBubbleWindow: {
         get(){
             return this._chatBubbleWindow;
         }
     },
 
+    /** 
+     * @instance
+     * @memberof Game_OnlinePlayer
+     * @type {Window_TypingIndicator}
+     */
     typingIndicatorWindow: {
         get(){
             return this._typingIndicatorWindow;
         }
     },
 
+    /**
+     * @instance
+     * @memberof Game_OnlinePlayer;
+     * @type {string}
+     */
     role: {
         get(){
             return this._role;
         }
     },
 
+    /**
+     * @instance
+     * @memberof Game_OnlinePlayer
+     * @type {string}
+     */
     isHost: {
         get(){
             return this._isHost;

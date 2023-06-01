@@ -132,6 +132,7 @@ Game_Chat.prototype.keyboardReleaseListener = function(_){
 }
 
 /**
+ * @private
  * @param {string} key 
  * @returns {boolean}
  */
@@ -141,6 +142,7 @@ Game_Chat.prototype.isKeyValid = function(key){
 }
 
 /**
+ * @private
  * @param {string} key 
  * @returns {boolean}
  */
@@ -149,7 +151,8 @@ Game_Chat.prototype.isKeyBackspace = function(key){
 }
 
 /**
- * @param {*} key 
+ * @private
+ * @param {string} key 
  * @returns {boolean}
  */
 Game_Chat.prototype.isKeySpace = function(key){
@@ -157,13 +160,18 @@ Game_Chat.prototype.isKeySpace = function(key){
 }
 
 /**
- * @param {*} key 
+ * @private
+ * @param {string} key 
  * @returns {boolean}
  */
 Game_Chat.prototype.isKeyEnter = function(key){
     return key === "Enter";
 }
 
+/**
+ * @private
+ * @desc Handles logic when user presses the backspace key
+ */
 Game_Chat.prototype.handleBackspacePressed = function(){
     // Handle text scroll
     if(this._scrolledInput.length > 0){
@@ -179,6 +187,10 @@ Game_Chat.prototype.handleBackspacePressed = function(){
     this._currentInput = this._currentInput.slice(0, -1);
 }
 
+/**
+ * @private
+ * @desc Handles logic when user presses a valid alphanumeric or special key
+ */
 Game_Chat.prototype.handleValidKeyPressed = function(key){
 
     this._currentInput += key;
@@ -192,10 +204,18 @@ Game_Chat.prototype.handleValidKeyPressed = function(key){
     
 }
 
+/**
+ * @private
+ * @desc Handles logic when user presses the space key
+ */
 Game_Chat.prototype.handleSpacePressed = function(){
     this._currentInput += " ";
 }
 
+/**
+ * @private
+ * @desc Handles logic when user presses the enter key
+ */
 Game_Chat.prototype.handleEnterPressed = function(){
 
     if(!this._totalInput.trim()) return; 
@@ -212,6 +232,10 @@ Game_Chat.prototype.handleEnterPressed = function(){
 
 }
 
+/**
+ * @private
+ * @desc Handles the scrolling of text once text has reached the end of the window
+ */
 Game_Chat.prototype.handleTextScroll = function(){
 
     if(this._currentInput.length >= this._maxInputCharacters){
