@@ -122,6 +122,11 @@ Game_Lobby.prototype.validatePromptInput = function(promptInput){
     return (isAlphanumerical || trimmed) || input === "";
 }
 
+// FOR TESTING PURPOSES ONLY - THIS SHOULD BE IN THE MAIN GAME CLASS
+Game_Lobby.prototype.activateNpcs = function(){
+    $gameRoom.getNpcs().forEach(npc => npc.randomisePath())
+    $gameRoom.broadcastActivateNpcs();
+}
 
 Object.defineProperties(Game_Lobby.prototype, {
     /**

@@ -94,6 +94,9 @@ Util_MessageProcessor.processBroadcastMessage = function(event, message){
         case BroadcastMessageEventCode.MapTransfer:
             Util_MessageProcessor.broadcast.mapTransfer(message);
             break;
+        case BroadcastMessageEventCode.ActivateNpcs:
+            Util_MessageProcessor.broadcast.activateNpcs(message);
+            break;
     }
 
 }

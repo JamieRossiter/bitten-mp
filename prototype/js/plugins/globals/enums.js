@@ -29,7 +29,8 @@ const BroadcastMessageEventCode = {
     ChatMessage: "chatMessage",
     PlayerIsTyping: "playerIsTyping",
     PlayerAssignedRole: "playerAssignedRole",
-    MapTransfer: "mapTransfer"
+    MapTransfer: "mapTransfer",
+    ActivateNpcs: "activateNpcs"
 }
 
 /** 

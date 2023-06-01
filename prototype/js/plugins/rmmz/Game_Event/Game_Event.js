@@ -1,3 +1,7 @@
+/**
+ * @namespace Game_Event
+ */
+
 const rmmz_gameEvent_initialize_alias = Game_Event.prototype.initialize;
 /**
  * @external
@@ -43,14 +47,24 @@ Game_Event.prototype.update = function(){
     rmmz_gameEvent_update_alias.call(this);
 
     // Tell the event to move forward again once it has finished its step
-    if(this._isCurrentlyMoving && this.isStopping()){
-        this.moveStraight(this._queuedDirection);
-    } else if(!this._isCurrentlyMoving && this._stopCount > 1 && (this._queuedPosition.x > -1 || this._queuedPosition.y > -1)){
-        const correctionDir = this.findDirectionTo(this._queuedPosition.x, this._queuedPosition.y);
-        this.setDirection(correctionDir);
-        this.moveStraight(correctionDir);
-        this._queuedPosition = {x: -1, y: -1};
+    if(this.isPlayer()){
+
+        if(this._isCurrentlyMoving && this.isStopping()){
+            this.moveStraight(this._queuedDirection);
+        } else if(!this._isCurrentlyMoving && this._stopCount > 1 && (this._queuedPosition.x > -1 || this._queuedPosition.y > -1)){
+            const correctionDir = this.findDirectionTo(this._queuedPosition.x, this._queuedPosition.y);
+            this.setDirection(correctionDir);
+            this.moveStraight(correctionDir);
+            if(this.x === this._queuedPosition.x && this.y === this._queuedPosition.y){
+                this._queuedPosition = {x: -1, y: -1};
+            }
+        }
+
     }
+}
+
+Game_Event.prototype.randomisePath = function(){
+    this.setPath("updown");
 }
 
 /** 
@@ -64,20 +78,20 @@ Game_Event.prototype.isPlayer = function(){
 
 /**
  * @external
+ * @description Determines if the event is tagged as an NPC event
+ */
+Game_Event.prototype.isNpc = function(){
+    return this.event().note.includes("npc");
+}
+
+/**
+ * @external
  * @param {number} x 
  * @param {number} y 
  */
 Game_Event.prototype.setQueuedPosition = function(x, y){
     this._queuedPosition.x = x;
     this._queuedPosition.y = y;
-}
-
-/**
- * @external
- * @description Determines if the event is tagged as an NPC event
- */
-Game_Event.prototype.isNpc = function(){
-    return this.event().note.includes("npc");
 }
 
 Object.defineProperties(Game_Event.prototype, {

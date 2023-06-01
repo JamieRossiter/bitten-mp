@@ -94,6 +94,15 @@ function processBroadcastClientMessage(event: BroadcastMessageEventCode, message
             broadcastingPlayer = playerManager.getPlayerById(message.HostId);
             
         break;
+
+        case BroadcastMessageEventCode.ActivateNpcs:
+
+        if(!("HostId" in message || "NpcData" in message)){
+            // Handle error
+            return;
+        }
+
+        broadcastingPlayer = playerManager.getPlayerById(message.HostId);
     }
 
     roomManager.broadcastMessageToRoom(targetRoom, event, message, broadcastingPlayer);
