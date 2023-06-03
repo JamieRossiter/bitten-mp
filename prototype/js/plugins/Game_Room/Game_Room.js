@@ -23,7 +23,7 @@ Game_Room.prototype.initialize = function(){
 
     /**
      * @private 
-     * @type {Set<Game_Player>}
+     * @type {Set<Game_OnlinePlayer>}
      */
     this._players = new Set();
 
@@ -36,7 +36,7 @@ Game_Room.prototype.initialize = function(){
 
     /**
      * @private
-     * @type {string[]}
+     * @type {{player: Game_OnlinePlayer, message: string}[]}
      */
     this._chatMessageLog = [];
 }

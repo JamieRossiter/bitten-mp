@@ -4,6 +4,7 @@
 */
 
 import { Player, PlayerManager, Room, RoomManager } from "../classes";
+import { Npc } from "../classes/Npc";
 import { BroadcastMessageEventCode, IndividualMessageEventCode, MessageType } from "../enums";
 
 export function processClientMessage(messageData: any, roomManager: RoomManager, playerManager: PlayerManager): void{
@@ -97,12 +98,24 @@ function processBroadcastClientMessage(event: BroadcastMessageEventCode, message
 
         case BroadcastMessageEventCode.ActivateNpcs:
 
-        if(!("HostId" in message || "NpcData" in message)){
-            // Handle error
-            return;
-        }
+            if(!("HostId" in message || "NpcData" in message)){
+                // Handle error
+                return;
+            }
 
-        broadcastingPlayer = playerManager.getPlayerById(message.HostId);
+            message.NpcData.forEach((data: any) => {
+                
+                if(!("Id" in data || "Path" in data)){
+                    // Handle error
+                    return;
+                }
+                targetRoom.addNpc(new Npc(data.Id, data.Path));
+
+            })
+
+            broadcastingPlayer = playerManager.getPlayerById(message.HostId);
+        break;
+
     }
 
     roomManager.broadcastMessageToRoom(targetRoom, event, message, broadcastingPlayer);

@@ -59,10 +59,8 @@ Game_Room.prototype.broadcastActivateNpcs = function(){
             HostId: this._currentPlayer.id, 
             NpcData: this.getNpcs().map(filteredEv => { 
                 return {
-                    id: filteredEv.eventId(), 
-                    x: filteredEv.x,
-                    y: filteredEv.y,
-                    path: filteredEv.getCurrentPath()
+                    Id: filteredEv.eventId(),
+                    Path: filteredEv.getCurrentPath()
                 }
         }
     )});
