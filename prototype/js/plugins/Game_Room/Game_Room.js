@@ -77,8 +77,6 @@ Game_Room.prototype.findPlayerById = function(id){
  * @param {string} chatMessage 
  */
 Game_Room.prototype.addMessageToLog = function(player, chatMessage){
-    if(!$gameChat.chatLogWindow) return;
-
     let messageToLog = "";
     let isWrapped = false;
     const playerUsernameWidth = $gameChat.chatLogWindow.textWidth(player.username + ": ");
@@ -132,6 +130,10 @@ Game_Room.prototype.setCurrentPlayer = function(player){
     this._currentPlayer = player;
 }
 
+Game_Room.prototype.getNpcById = function(npcId){
+    return this.getNpcs().find(npc => npc.eventId() === npcId);
+}
+
 Game_Room.prototype.getNpcs = function(){
     return $gameMap.events().filter(ev => ev.event().note.includes("npc"));
 }
@@ -147,7 +149,6 @@ Game_Room.prototype.joinGame = function(mapEvent, onlinePlayer){
     onlinePlayer.createTypingIndicatorWindow();
     onlinePlayer.mapEvent.setTransparent(false);
     onlinePlayer.mapEvent.setPattern(2);
-    onlinePlayer.mapEvent.setPosition(8, 6);
     $gameRoom.addPlayer(onlinePlayer);
     onlinePlayer.mapEvent.isPlaying = true;
 }

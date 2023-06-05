@@ -85,8 +85,16 @@ Game_Lobby.prototype.showPrompts = function(){
  * @param {Role} role 
  */
 Game_Lobby.prototype.assignRole = function(role){
-    $gameRoom.broadcastPlayerRoleAssignment(role);
-    $gameRoom.currentPlayer.setRole(role);
+    const currentPlayer = $gameRoom.currentPlayer;
+
+    if(role === Role.Vampire){
+        currentPlayer.randomiseNpcDisguise();
+        $gameRoom.broadcastRoleInformation(role, currentPlayer.npcDisguise);
+    } else {
+        $gameRoom.broadcastRoleInformation(role);
+    }
+    
+    currentPlayer.setRole(role);
 }
 
 /**

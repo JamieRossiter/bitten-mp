@@ -34,8 +34,9 @@ Game_Event.prototype.getCurrentPath = function(){
     return this.getCurrentPage("path");
 }
 
-Game_Event.prototype.setDown = function(){
-    this.setPage("state", "down");
+Game_Event.prototype.setState = function(targetState){
+    this.setPage("state", targetState);
+    $gameRoom.broadcastNpcStateChange(this.eventId(), targetState);
 }
 
 Game_Event.prototype.setPath = function(targetPath){

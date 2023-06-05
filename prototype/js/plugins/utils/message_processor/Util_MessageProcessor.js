@@ -89,13 +89,19 @@ Util_MessageProcessor.processBroadcastMessage = function(event, message){
             Util_MessageProcessor.broadcast.playerIsTyping(message);
             break;
         case BroadcastMessageEventCode.RoleInformation:
-            Util_MessageProcessor.broadcast.playerAssignedRole(message);
+            Util_MessageProcessor.broadcast.roleInformation(message);
             break;
         case BroadcastMessageEventCode.MapTransfer:
             Util_MessageProcessor.broadcast.mapTransfer(message);
             break;
         case BroadcastMessageEventCode.ActivateNpcs:
             Util_MessageProcessor.broadcast.activateNpcs(message);
+            break;
+        case BroadcastMessageEventCode.NpcStateChange:
+            Util_MessageProcessor.broadcast.npcStateChange(message);
+            break;
+        case BroadcastMessageEventCode.TogglePlayerDisguise:
+            Util_MessageProcessor.broadcast.togglePlayerDisguise(message);
             break;
     }
 

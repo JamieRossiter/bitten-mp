@@ -55,6 +55,8 @@ Game_OnlinePlayer.prototype.initialize = function(id, username, isHost){
      * @desc The role (vampire or hunter) the player assumes
      */
     this._role = null;
+
+    this._npcDisguise = {isDisguised: true, gender: "male", npc: 1};
 }
 
 /**
@@ -105,18 +107,69 @@ Game_OnlinePlayer.prototype.destroyTypingIndicatorWindow = function(){
 
 /**
  * @desc Sets the player's role
- * @param {string} role 
+ * @param {Role} role 
  */
 Game_OnlinePlayer.prototype.setRole = function(role){
     this._role = role;
 
     switch(this._role){
         case Role.Vampire:
-            this.mapEvent.setImage("npc4", 3);
+            this.mapEvent.setImage(`npc/walk/$npc_${this._npcDisguise.gender}_${this._npcDisguise.npc}`);
+            this.mapEvent.setMoveSpeed(2);
             this.destroyUsernameWindow();
             break;
         case Role.Hunter:
+            this.mapEvent.setImage("hunter/walk/$hunter");
+            this.mapEvent.setMoveSpeed(4);
+            this.createUsernameWindow();
             break;
+    }
+}
+
+Game_OnlinePlayer.prototype.randomiseNpcDisguise = function(){
+    this._npcDisguise.gender = ["male", "female"][Util.getRandomIntWithinRange(0, 1)];
+    this._npcDisguise.npc = Util.getRandomIntWithinRange(1, 3);
+}
+
+Game_OnlinePlayer.prototype.toggleDisguise = function(){
+    
+    // Check if has vampire role
+    if(!this.isVampire()){
+        // Handle error
+        return;
+    }
+
+    // Toggle disguised
+    if(this._npcDisguise.isDisguised) this._npcDisguise.isDisguised = false;
+    else this._npcDisguise.isDisguised = true;
+
+    // Set disguise
+    this.setDisguise(this._npcDisguise.isDisguised, this._npcDisguise.gender, this._npcDisguise.npc);
+
+    // Broadcast
+    $gameRoom.broadcastTogglePlayerDisguise(this._npcDisguise.isDisguised);
+}
+
+Game_OnlinePlayer.prototype.isVampire = function(){
+    return this._role === Role.Vampire;
+}
+
+Game_OnlinePlayer.prototype.isHunter = function(){
+    return this._role === Role.Hunter;
+}
+
+Game_OnlinePlayer.prototype.setDisguise = function(isDisguised, gender, npc){
+    this._npcDisguise.isDisguised = isDisguised;
+    this._npcDisguise.gender = gender;
+    this._npcDisguise.npc = npc;
+
+    // Set image based on diguised status
+    if(this._npcDisguise.isDisguised){
+        this.mapEvent.setImage(`npc/walk/$npc_${this._npcDisguise.gender}_${this._npcDisguise.npc}`);
+        this.mapEvent.setMoveSpeed(2);
+    } else {
+        this.mapEvent.setImage(`vampire/walk/$vampire_${this._npcDisguise.gender}`);
+        this.mapEvent.setMoveSpeed(4);
     }
 }
 
@@ -195,6 +248,18 @@ Object.defineProperties(Game_OnlinePlayer.prototype, {
     isHost: {
         get(){
             return this._isHost;
+        }
+    },
+
+    npcDisguise: {
+        get(){
+            return this._npcDisguise;
+        }
+    },
+
+    isDisguised: {
+        get(){
+            return this._npcDisguise.isDisguised;
         }
     }
 })

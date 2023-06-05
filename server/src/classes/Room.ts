@@ -19,6 +19,10 @@ export class Room {
         this._npcs.push(newNpc);
     }
 
+    public getNpcById(id: number): Npc | undefined {
+        return this._npcs.find((npc: Npc) => npc.id === id);
+    }
+
     get npcs(): Npc[] {
         return this._npcs;
     }

@@ -34,10 +34,17 @@ Game_Room.prototype.broadcastPlayerIsTyping = function(isTyping){
  * @param {Game_OnlinePlayer} player 
  * @param {number} role 
  */
-Game_Room.prototype.broadcastPlayerRoleAssignment = function(role){
+Game_Room.prototype.broadcastRoleInformation = function(role, disguiseData){
     $gameServer.broadcastMessageToRoom(
         BroadcastMessageEventCode.RoleInformation,
-        { PlayerId: this._currentPlayer.id, Role: role }
+        { PlayerId: this._currentPlayer.id, Role: role, Disguise: disguiseData }
+    )
+}
+
+Game_Room.prototype.broadcastTogglePlayerDisguise = function(isDisguised){
+    $gameServer.broadcastMessageToRoom(
+        BroadcastMessageEventCode.TogglePlayerDisguise,
+        { PlayerId: this._currentPlayer.id, IsDisguised: isDisguised }
     )
 }
 
@@ -65,3 +72,15 @@ Game_Room.prototype.broadcastActivateNpcs = function(){
         }
     )});
 }
+
+Game_Room.prototype.broadcastNpcStateChange = function(npcId, targetState){
+    $gameServer.broadcastMessageToRoom(
+        BroadcastMessageEventCode.NpcStateChange,
+        {
+            PlayerId: this._currentPlayer.id,
+            NpcId: npcId,
+            TargetState: targetState
+        }
+    )
+}
+

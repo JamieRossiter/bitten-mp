@@ -54,6 +54,12 @@ function processBroadcastClientMessage(event: BroadcastMessageEventCode, message
             }
 
             broadcastingPlayer = playerManager.getPlayerById(message.PlayerId);
+            if(!broadcastingPlayer){
+                // Handle error
+                return;
+            }
+            broadcastingPlayer.setX(message.X);
+            broadcastingPlayer.setY(message.Y);
 
             break;
         case BroadcastMessageEventCode.ChatMessage:
@@ -74,7 +80,7 @@ function processBroadcastClientMessage(event: BroadcastMessageEventCode, message
 
             break;
 
-        case BroadcastMessageEventCode.PlayerAssignedRole:
+        case BroadcastMessageEventCode.RoleInformation:
 
             if(!("PlayerId" in message || "Role" in message)){
                 // Handle error
@@ -82,6 +88,11 @@ function processBroadcastClientMessage(event: BroadcastMessageEventCode, message
             }
 
             broadcastingPlayer = playerManager.getPlayerById(message.PlayerId);
+            if(!broadcastingPlayer){
+                // Handle error
+                return;
+            }
+            broadcastingPlayer.setRole(message.Role);
 
         break;
         
@@ -114,6 +125,33 @@ function processBroadcastClientMessage(event: BroadcastMessageEventCode, message
             })
 
             broadcastingPlayer = playerManager.getPlayerById(message.HostId);
+        break;
+
+        case BroadcastMessageEventCode.NpcStateChange:
+
+            if(!("PlayerId" in message || "NpcId" in message || "TargetState" in message)){
+                // Handle error
+                return;
+            }
+
+            broadcastingPlayer = playerManager.getPlayerById(message.PlayerId);
+            const targetNpc: Npc | undefined = targetRoom.getNpcById(parseInt(message.NpcId));
+            if(!targetNpc){
+                // Handle error
+                return;
+            }
+            targetNpc.setState(message.TargetState);
+        break;
+
+        case BroadcastMessageEventCode.TogglePlayerDisguise:
+
+            if(!("PlayerId" in message || "IsDisguised" in message)){
+                // Handle error
+                return;
+            }
+
+            broadcastingPlayer = playerManager.getPlayerById(message.PlayerId);
+
         break;
 
     }

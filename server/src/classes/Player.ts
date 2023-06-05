@@ -14,6 +14,7 @@ export class Player {
     private _isHost: boolean;
     private _socket: WebSocket.WebSocket;
     private _pos: PlayerPos;
+    private _role: number;
 
     constructor(init: ConnectionQueryData){
         this._id = init.id;
@@ -21,6 +22,7 @@ export class Player {
         this._isHost = init.isHost;
         this._socket = init.socket;
         this._pos = { x: init.position.x, y: init.position.y, dir: init.position.dir };
+        this._role = -1;
     }
 
     public sendMessage(event: IndividualMessageEventCode | BroadcastMessageEventCode, message: object): void{
@@ -41,6 +43,10 @@ export class Player {
 
     public setY(y: number): void {
         this._pos.y = y;
+    }
+
+    public setRole(role: number): void {
+        this._role = role;
     }
 
     get id(): string {

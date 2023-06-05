@@ -32,6 +32,7 @@ Util_MessageProcessor.individual.playerInformation = function(message){
     }
     const currentPlayer = new Game_OnlinePlayer(message.PlayerId, message.PlayerUsername, message.IsHost);
     $gameRoom.setCurrentPlayer(currentPlayer);
+    $gamePlayer.setPosition(8, 6);
     $gameRoom.joinGame($gamePlayer, currentPlayer);
 }
 
@@ -91,6 +92,7 @@ Util_MessageProcessor.broadcast.playerJoinedRoom = function(message){
         // Handle error
         return;
     }
+    newPlayerEvent.setPosition(8, 6);
     $gameRoom.joinGame(newPlayerEvent, newOnlinePlayer);
     console.info(`${message.PlayerUsername}(${message.PlayerId}) has joined ${message.RoomCode}`);
 }

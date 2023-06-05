@@ -376,3 +376,10 @@ Scene_Map.prototype.update = function(){
         $gameChat.isTyping = false;
     }
 }
+
+const gameChat_sceneMap_start_alias = Scene_Map.prototype.start;
+Scene_Map.prototype.start = function(){
+    gameChat_sceneMap_start_alias.call(this);
+    $gameChat.activate();
+    $gameChat.deactivate();
+}
