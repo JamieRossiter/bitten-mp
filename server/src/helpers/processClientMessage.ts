@@ -38,6 +38,8 @@ function processBroadcastClientMessage(event: BroadcastMessageEventCode, message
     }
 
     let broadcastingPlayer: Player | undefined;
+    let targetPlayer: Player | undefined;
+    let targetNpc: Npc | undefined;
 
     const message: any = messageData.Message;
     if(!message){
@@ -82,17 +84,18 @@ function processBroadcastClientMessage(event: BroadcastMessageEventCode, message
 
         case BroadcastMessageEventCode.RoleInformation:
 
-            if(!("PlayerId" in message || "Role" in message)){
+            if(!("PlayerId" in message || "TargetPlayerId" in message || "Role" in message)){
                 // Handle error
                 return;
             }
 
             broadcastingPlayer = playerManager.getPlayerById(message.PlayerId);
-            if(!broadcastingPlayer){
+            targetPlayer = playerManager.getPlayerById(message.TargetPlayerId);
+            if(!targetPlayer){
                 // Handle error
                 return;
             }
-            broadcastingPlayer.setRole(message.Role);
+            targetPlayer.setRole(message.Role);
 
         break;
         
@@ -135,7 +138,8 @@ function processBroadcastClientMessage(event: BroadcastMessageEventCode, message
             }
 
             broadcastingPlayer = playerManager.getPlayerById(message.PlayerId);
-            const targetNpc: Npc | undefined = targetRoom.getNpcById(parseInt(message.NpcId));
+            
+            targetNpc = targetRoom.getNpcById(parseInt(message.NpcId));
             if(!targetNpc){
                 // Handle error
                 return;
@@ -150,6 +154,18 @@ function processBroadcastClientMessage(event: BroadcastMessageEventCode, message
                 return;
             }
 
+            broadcastingPlayer = playerManager.getPlayerById(message.PlayerId);
+
+        break;
+
+        case BroadcastMessageEventCode.PlayerDeath:
+
+            if(!("PlayerId" in message || "TargetPlayerId" in message)){
+                // Handle error
+                return;
+            }
+
+            targetPlayer = playerManager.getPlayerById(message.TargetPlayerId);
             broadcastingPlayer = playerManager.getPlayerById(message.PlayerId);
 
         break;

@@ -103,6 +103,9 @@ Util_MessageProcessor.processBroadcastMessage = function(event, message){
         case BroadcastMessageEventCode.TogglePlayerDisguise:
             Util_MessageProcessor.broadcast.togglePlayerDisguise(message);
             break;
+        case BroadcastMessageEventCode.PlayerDeath:
+            Util_MessageProcessor.broadcast.playerDeath(message);
+            break;
     }
 
 }

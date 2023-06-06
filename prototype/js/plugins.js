@@ -19,6 +19,7 @@ var $plugins =
 {"name":"rmmz/InputKeyMapper","status":true,"description":"","parameters":{}},
 {"name":"Game_Event/Game_Event","status":true,"description":"","parameters":{}},
 {"name":"Game_Event/GE_EventPage","status":true,"description":"","parameters":{}},
+{"name":"Game_Event/GE_Npc","status":true,"description":"","parameters":{}},
 {"name":"server/Game_Server","status":true,"description":"","parameters":{}},
 {"name":"Game_Room/Game_Room","status":true,"description":"","parameters":{}},
 {"name":"Game_Room/GR_Broadcast","status":true,"description":"","parameters":{}},

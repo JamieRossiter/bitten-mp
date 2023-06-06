@@ -82,22 +82,6 @@ Game_Lobby.prototype.showPrompts = function(){
 }
 
 /**
- * @param {Role} role 
- */
-Game_Lobby.prototype.assignRole = function(role){
-    const currentPlayer = $gameRoom.currentPlayer;
-
-    if(role === Role.Vampire){
-        currentPlayer.randomiseNpcDisguise();
-        $gameRoom.broadcastRoleInformation(role, currentPlayer.npcDisguise);
-    } else {
-        $gameRoom.broadcastRoleInformation(role);
-    }
-    
-    currentPlayer.setRole(role);
-}
-
-/**
  * @desc Tells the current player (must be a host) and every other player in the lobby to perform a map transfer to the game map in preparation for game start
  */
 Game_Lobby.prototype.startGame = function(){

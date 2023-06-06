@@ -61,6 +61,89 @@ Game_Event.prototype.update = function(){
         }
 
     }
+
+    // Handle player interaction
+    this.handleInteraction();
+}
+
+/**
+ * @external
+ * @override
+ * @returns {number}
+ */
+Game_Event.prototype.isNearThePlayer = function() {
+    const sx = Math.abs(this.deltaXFrom($gamePlayer.x));
+    const sy = Math.abs(this.deltaYFrom($gamePlayer.y));
+    return sx + sy < 3;
+};
+
+Game_Event.prototype.handleInteraction = function(){
+    
+    const currentPlayer = $gameRoom.currentPlayer;
+
+    if(
+        this.isNearThePlayer() // Event is within 3 tiles of the player
+        && Input.isTriggered("ok") // Player pressed prompt
+    ){
+
+        // If NPC
+        if(this.isNpc()){
+            if(this.getCurrentState() === "down") return; // If the event is already downed, don't continue processing
+
+            switch(currentPlayer.role){
+                case Role.Vampire:
+    
+                    if(currentPlayer.isDisguised) return;
+                    currentPlayer.darkFormFrames = currentPlayer.darkFormMaxFrames;
+                    // Kill NPC and extract blood points
+    
+                break;
+                case Role.Hunter:
+        
+                    // Kill NPC, arrest hunter for killing an innocent
+
+                break
+            }
+    
+            this.setState("down"); 
+        }
+
+        // If Player
+        if(this.isPlayer()){
+
+            const targetPlayer = $gameRoom.getPlayerByMapEvent(this);
+            if(!targetPlayer){
+                // Handle error
+                return;
+            }
+
+            switch(currentPlayer.role){
+                case Role.Vampire:
+
+                    if(targetPlayer.role === Role.Hunter){
+                        $gameRoom.assignRole(Role.Vampire, targetPlayer);
+                        console.log("Turn into vampire");
+                    }
+                    // Turn event player into vampire
+
+                break;
+
+                case Role.Hunter:
+
+                    if(targetPlayer.role === Role.Vampire){
+                        targetPlayer.kill();
+                        $gameRoom.broadcastPlayerDeath(targetPlayer);
+                    }
+                    // Kill event player if the player is a vampire
+
+                break;
+            }
+
+        }
+
+
+    }
+
 }
 
 Game_Event.prototype.randomisePath = function(){
@@ -74,14 +157,6 @@ Game_Event.prototype.randomisePath = function(){
 */
 Game_Event.prototype.isPlayer = function(){
     return this.event().note.includes("player");
-}
-
-/**
- * @external
- * @description Determines if the event is tagged as an NPC event
- */
-Game_Event.prototype.isNpc = function(){
-    return this.event().note.includes("npc");
 }
 
 /**

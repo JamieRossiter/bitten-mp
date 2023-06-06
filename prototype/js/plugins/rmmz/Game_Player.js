@@ -32,6 +32,8 @@ const rmmz_gamePlayer_update_alias = Game_Player.prototype.update;
 Game_Player.prototype.update = function(sceneActive){
     rmmz_gamePlayer_update_alias.call(this, sceneActive)
 
+    if(!$gameRoom.currentPlayer) return;
+    
     if(!this._isCurrentlyMoving && this.isMoving()){
         // If the player starts moving
         this._isCurrentlyMoving = true;
@@ -50,6 +52,19 @@ Game_Player.prototype.update = function(sceneActive){
     }
 
 }
+
+/**
+ * @external
+ * @override
+ * @param {number} d 
+ */
+Game_Player.prototype.moveStraight = function(d) {
+    if($gameRoom.currentPlayer.isDead) return;
+    if (this.canPass(this.x, this.y, d)) {
+        this._followers.updateMove();
+    }
+    Game_Character.prototype.moveStraight.call(this, d);
+};
 
 /**
  * @external

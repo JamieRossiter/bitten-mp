@@ -56,7 +56,48 @@ Game_OnlinePlayer.prototype.initialize = function(id, username, isHost){
      */
     this._role = null;
 
+    /**
+     * @private
+     * @type {{isDisguised: boolean, gender: string, npc: number}}
+     * @desc The object that holds npc disguise data
+     */
     this._npcDisguise = {isDisguised: true, gender: "male", npc: 1};
+
+    /**
+     * @private
+     * @type {number}
+     * @desc Frames to keep track of how long a player is in dark form
+     */
+    this._darkFormFrames = 0;
+
+    /**
+     * @private
+     * @type {number}
+     * @desc The max number of frames that a player can be in dark form
+     */
+    this._darkFormMaxFrames = 600;
+
+    /**
+     * @private
+     * @type {boolean}
+     */
+    this._isDead = false;
+}
+
+Game_OnlinePlayer.prototype.update = function(){
+
+    // If in dark form, update how long dark form lasts
+    if(!this._npcDisguise.isDisguised){
+
+        this._darkFormFrames++;
+
+        if(this._darkFormFrames >= this._darkFormMaxFrames){ // 3 seconds
+            this.toggleDisguise();
+            this._darkFormFrames = 0;
+        }
+
+    }
+
 }
 
 /**
@@ -70,6 +111,7 @@ Game_OnlinePlayer.prototype.setMapEvent = function(event){
  * @desc Creates the username window that follows the player around
 */
 Game_OnlinePlayer.prototype.createUsernameWindow = function(){
+    if(this._usernameWindow) return;
     this._usernameWindow = new Window_Username(this);
     SceneManager._scene.addChild(this._usernameWindow);
 }
@@ -78,6 +120,7 @@ Game_OnlinePlayer.prototype.createUsernameWindow = function(){
  * @desc Creates the username window that follows the player around
 */
 Game_OnlinePlayer.prototype.destroyUsernameWindow = function(){
+    if(!this._usernameWindow) return;
     SceneManager._scene.removeChild(this._usernameWindow);
     this._usernameWindow = null;
 }
@@ -140,8 +183,8 @@ Game_OnlinePlayer.prototype.toggleDisguise = function(){
     }
 
     // Toggle disguised
-    if(this._npcDisguise.isDisguised) this._npcDisguise.isDisguised = false;
-    else this._npcDisguise.isDisguised = true;
+    if(this._npcDisguise.isDisguised) this._npcDisguise.isDisguised = false; // Dark form
+    else this._npcDisguise.isDisguised = true; // Disguise
 
     // Set disguise
     this.setDisguise(this._npcDisguise.isDisguised, this._npcDisguise.gender, this._npcDisguise.npc);
@@ -165,12 +208,18 @@ Game_OnlinePlayer.prototype.setDisguise = function(isDisguised, gender, npc){
 
     // Set image based on diguised status
     if(this._npcDisguise.isDisguised){
-        this.mapEvent.setImage(`npc/walk/$npc_${this._npcDisguise.gender}_${this._npcDisguise.npc}`);
-        this.mapEvent.setMoveSpeed(2);
+        this._mapEvent.setImage(`npc/walk/$npc_${this._npcDisguise.gender}_${this._npcDisguise.npc}`);
+        this._mapEvent.setMoveSpeed(2);
     } else {
-        this.mapEvent.setImage(`vampire/walk/$vampire_${this._npcDisguise.gender}`);
-        this.mapEvent.setMoveSpeed(4);
+        this._mapEvent.setImage(`vampire/walk/$vampire_${this._npcDisguise.gender}`);
+        this._mapEvent.setMoveSpeed(4);
     }
+}
+
+Game_OnlinePlayer.prototype.kill = function(){
+    this._isDead = true;
+    this._mapEvent.setDirection(2);
+    this._mapEvent.setImage(`vampire/down/$vampire_${this._npcDisguise.gender}`);
 }
 
 Object.defineProperties(Game_OnlinePlayer.prototype, {
@@ -261,5 +310,33 @@ Object.defineProperties(Game_OnlinePlayer.prototype, {
         get(){
             return this._npcDisguise.isDisguised;
         }
+    },
+
+    darkFormFrames: {
+        get(){
+            return this._darkFormFrames;
+        },
+        set(frames){
+            this._darkFormFrames = frames;
+        }
+    },
+
+    darkFormMaxFrames: {
+        get(){
+            return this._darkFormMaxFrames;
+        }
+    },
+
+    isDead: {
+        get(){
+            return this._isDead;
+        }
     }
 })
+
+const gameOnlinePlayer_sceneMap_update_alias = Scene_Map.prototype.update;
+Scene_Map.prototype.update = function(){
+    gameOnlinePlayer_sceneMap_update_alias.call(this);
+    if(!$gameRoom.currentPlayer) return;
+    $gameRoom.currentPlayer.update();
+}

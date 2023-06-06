@@ -34,10 +34,10 @@ Game_Room.prototype.broadcastPlayerIsTyping = function(isTyping){
  * @param {Game_OnlinePlayer} player 
  * @param {number} role 
  */
-Game_Room.prototype.broadcastRoleInformation = function(role, disguiseData){
+Game_Room.prototype.broadcastRoleInformation = function(role, player){
     $gameServer.broadcastMessageToRoom(
         BroadcastMessageEventCode.RoleInformation,
-        { PlayerId: this._currentPlayer.id, Role: role, Disguise: disguiseData }
+        { PlayerId: this._currentPlayer.id, TargetPlayerId: player.id, Role: role, Disguise: player.npcDisguise }
     )
 }
 
@@ -80,6 +80,16 @@ Game_Room.prototype.broadcastNpcStateChange = function(npcId, targetState){
             PlayerId: this._currentPlayer.id,
             NpcId: npcId,
             TargetState: targetState
+        }
+    )
+}
+
+Game_Room.prototype.broadcastPlayerDeath = function(player){
+    $gameServer.broadcastMessageToRoom(
+        BroadcastMessageEventCode.PlayerDeath,
+        {
+            PlayerId: this._currentPlayer.id,
+            TargetPlayerId: player.id
         }
     )
 }

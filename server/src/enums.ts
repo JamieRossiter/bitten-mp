@@ -19,7 +19,8 @@ export enum BroadcastMessageEventCode {
     MapTransfer = "mapTransfer",
     ActivateNpcs = "activateNpcs",
     NpcStateChange = "npcStateChange",
-    TogglePlayerDisguise = "togglePlayerDisguise"
+    TogglePlayerDisguise = "togglePlayerDisguise",
+    PlayerDeath = "playerDeath"
 }
 
 export enum MessageType {

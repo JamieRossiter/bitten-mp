@@ -72,6 +72,16 @@ Game_Room.prototype.findPlayerById = function(id){
     return targetPlayer;
 }
 
+Game_Room.prototype.getPlayerByMapEvent = function(mapEvent){
+    const playerArr = Array.from(this._players);
+    const targetPlayer = playerArr.find(player => {
+        if(player.mapEvent instanceof Game_Event){
+            return player.mapEvent.eventId() === mapEvent.eventId()
+        }
+    });
+    return targetPlayer;
+}
+
 /**
  * @param {Game_OnlinePlayer} player 
  * @param {string} chatMessage 
@@ -161,6 +171,18 @@ Game_Room.prototype.leaveGame = function(onlinePlayer){
     onlinePlayer.mapEvent.setPosition(-100, -100);
     onlinePlayer.destroyUsernameWindow();
     this.removePlayerById(onlinePlayer.id);
+}
+
+/**
+ * @param {Role} role 
+ */
+Game_Room.prototype.assignRole = function(role, player){
+
+    if(role === Role.Vampire){
+        player.randomiseNpcDisguise();
+    }
+    this.broadcastRoleInformation(role, player);
+    player.setRole(role);
 }
 
 Object.defineProperties(Game_Room.prototype, {
